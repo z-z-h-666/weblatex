@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.7.9)  12 APR 2026 08:04
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.7.9)  14 APR 2026 11:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1145,9 +1145,6 @@ Package hyperref Info: Link coloring ON on input line 21.
 
 
 
-Package hyperref Warning: Rerun to get /PageLabels entry.
-
-
 Package fontspec Warning: Font "FandolHei-Regular" does not contain requested
 (fontspec)                Script "CJK".
 
@@ -1274,7 +1271,9 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\leavevmode@ifvmode' on input line 101.
 
 
-Package hyperref Warning: Token not allowed in a PDF string (Un          removed on input line 101.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 101.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
@@ -1375,31 +1374,33 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removed on input line 137.
 
 
-! LaTeX Error: Environment algorithm undefined.
+! Package caption Error: \caption outside float.
 
-See the LaTeX manual or LaTeX Companion for explanation.
+See the caption package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.147 \begin{algorithm}
-                       [t]
+l.151 \caption
+              {NL2SQL-Driven Query and Analysis}
 ? 
 ! Emergency stop.
  ...                                              
                                                   
-l.147 \begin{algorithm}
-                       [t]
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
+l.151 \caption
+              {NL2SQL-Driven Query and Analysis}
+If you do not understand this error, please take a closer look
+at the documentation of the `caption' package, especially the
+section about errors.
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
  
 Here is how much of TeX's memory you used:
- 33414 strings out of 475890
- 715473 string characters out of 5778499
+ 33373 strings out of 475890
+ 714293 string characters out of 5778499
  1933875 words of memory out of 5000000
- 53856 multiletter control sequences out of 15000+600000
- 568058 words of font info for 126 fonts, out of 8000000 for 9000
+ 53816 multiletter control sequences out of 15000+600000
+ 568050 words of font info for 125 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  108i,12n,114p,497b,499s stack positions out of 10000i,1000n,20000p,200000b,200000s
 Output written on PDF/example.pdf (5 pages).
