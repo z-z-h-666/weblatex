@@ -23,17 +23,17 @@
 
 \maketitle
 \begin{abstract}
-    本文针对两个连通教室内空气中示踪气体浓度的变化问题，基于物质守恒定律和流体混合原理，建立了双室耦合的微分方程动力学模型，并对空气混合过程及净化策略进行了深入研究。
+	本文针对两个连通教室内空气中示踪气体浓度的变化问题，基于物质守恒定律和流体混合原理，建立了双室耦合的微分方程动力学模型，并对空气混合过程及净化策略进行了深入研究。
 
-    \textbf{针对问题一}，我们将两个教室视为两个通过空气交换相互作用的“隔室”，利用质量守恒定律建立了关于两个教室气体浓度随时间变化的\textbf{一阶线性常微分方程组}。模型考虑了教室容积差异及恒定的\textbf{交换流速}，能够准确描述浓度动态演变过程。
+	\textbf{针对问题一}，我们将两个教室视为两个通过空气交换相互作用的“隔室”，利用质量守恒定律建立了关于两个教室气体浓度随时间变化的\textbf{一阶线性常微分方程组}。模型考虑了教室容积差异及恒定的\textbf{交换流速}，能够准确描述浓度动态演变过程。
 
-    \textbf{针对问题二}，通过解析求解上述微分方程组，我们得到了两个教室内气体浓度的显式时间函数。分析表明，系统最终将达到动态平衡。计算得出，两个教室的空气大约需要 \textbf{18至30分钟} 才能达到工程意义上的“混合均匀”（达到最终平衡值的95\%以上），最终两个教室的示踪气体浓度均将稳定在 \textbf{0.48 g/m³}。我们还为后勤部门撰写了通俗易懂的解释说明。
+	\textbf{针对问题二}，通过解析求解上述微分方程组，我们得到了两个教室内气体浓度的显式时间函数。分析表明，系统最终将达到动态平衡。计算得出，两个教室的空气大约需要 \textbf{18至30分钟} 才能达到工程意义上的“混合均匀”（达到最终平衡值的95\%以上），最终两个教室的示踪气体浓度均将稳定在 \textbf{0.48 g/m³}。我们还为后勤部门撰写了通俗易懂的解释说明。
 
-    \textbf{针对问题三}，为了实现教室B空气的快速净化，我们引入了与外部环境进行空气交换的控制变量，建立了含外部通风项的改进模型。通过对比不同通风速率下的\textbf{浓度衰减曲线}，论证了引入外部新风,如开窗通风或开启排气扇的必要性。仿真结果显示，增加对流至室外的通风量能显著破坏原有的封闭平衡，使污染物浓度呈指数级快速下降。
+	\textbf{针对问题三}，为了实现教室B空气的快速净化，我们引入了与外部环境进行空气交换的控制变量，建立了含外部通风项的改进模型。通过对比不同通风速率下的\textbf{浓度衰减曲线}，论证了引入外部新风,如开窗通风或开启排气扇的必要性。仿真结果显示，增加对流至室外的通风量能显著破坏原有的封闭平衡，使污染物浓度呈指数级快速下降。
 
-    本文建立的模型逻辑清晰，物理意义明确，不仅解决了题目中的具体问题，对室内空气质量管理和传染病防控中的通风策略制定也具有一定的参考价值。
+	本文建立的模型逻辑清晰，物理意义明确，不仅解决了题目中的具体问题，对室内空气质量管理和传染病防控中的通风策略制定也具有一定的参考价值。
 
-    \keywords{\quad  微分方程模型\quad 物质守恒\quad 隔室模型\quad 动态平衡\quad 空气流通}
+	\keywords{\quad  微分方程模型\quad 物质守恒\quad 隔室模型\quad 动态平衡\quad 空气流通}
 \end{abstract}
 
 %目录  2019 明确不要目录，我觉得这个规定太好了
@@ -72,30 +72,30 @@
 任务三要求在结构化数据基础上融合个股与行业研报知识库以增强分析深度。首先需对非结构化研报文本进行切片与向量索引构建，实现针对具体问题的相似段落召回。针对多意图复合问题，需设计基于大语言模型的任务规划器，将复杂问句拆解为有向无环图结构的子任务序列。最后，为增强结果可信度，需建立“数据—SQL—研报摘要”的输出追溯链，在结果中明确标注引用来源与推理依据，实现从黑盒回答到可解释归因分析的跃升。
 \section{符号说明}
 \begin{table}[H]
-    \centering
-    \begin{tabular}{ccc}
-        \toprule[1.5pt]
-        \makebox[0.3\textwidth][c]{变量名} & \makebox[0.4\textwidth][c]{符号说明} & \makebox[0.2\textwidth][c]{单位} \\
-        \midrule[1pt]
-        $V_A$                           & 教室A的容积                           & $\text{m}^3$                   \\
-        $V_B$                           & 教室B的容积                           & $\text{m}^3$                   \\
-        $Q$                             & 教室间空气交换速率                        & $\text{m}^3/\text{min}$        \\
-        $x(t)$                          & $t$时刻教室A中示踪气体的浓度                 & $\text{g/m}^3$                 \\
-        $y(t)$                          & $t$时刻教室B中示踪气体的浓度                 & $\text{g/m}^3$                 \\
-        $t$                             & 时间                               & $\text{min}$                   \\
-        \bottomrule[1pt]
-    \end{tabular}
+	\centering
+	\begin{tabular}{ccc}
+		\toprule[1.5pt]
+		\makebox[0.3\textwidth][c]{变量名} & \makebox[0.4\textwidth][c]{符号说明} & \makebox[0.2\textwidth][c]{单位} \\
+		\midrule[1pt]
+		$V_A$                           & 教室A的容积                           & $\text{m}^3$                   \\
+		$V_B$                           & 教室B的容积                           & $\text{m}^3$                   \\
+		$Q$                             & 教室间空气交换速率                        & $\text{m}^3/\text{min}$        \\
+		$x(t)$                          & $t$时刻教室A中示踪气体的浓度                 & $\text{g/m}^3$                 \\
+		$y(t)$                          & $t$时刻教室B中示踪气体的浓度                 & $\text{g/m}^3$                 \\
+		$t$                             & 时间                               & $\text{min}$                   \\
+		\bottomrule[1pt]
+	\end{tabular}
 \end{table}
 \section{模型假设}
 
 为了简化复杂的流体动力学过程，使模型具备可解性，同时保留问题的核心物理特征，本文提出以下基本假设：
 
 \begin{enumerate}
-    \item 假设教室 A、走廊和教室 B 均为理想的“完全混合箱室”。即污染物一旦进入某区域，瞬间与该区域内的空气均匀混合，浓度仅随时间变化，不随空间位置变化。
-    \item 假设空气流动主要由压差或通风系统驱动，主导流向为“教室 A $\to$ 走廊 $\to$ 教室 B”以及“各区域 $\to$ 室外”。忽略微小的反向扩散（如从教室 B 逆流回走廊）。
-    \item 假设各区域体积固定，且空气作为不可压缩流体，流入与流出的空气体积流量保持平衡（$Q_{in} = Q_{out}$）。
-    \item 假设在模拟的时间段内，各房间的通风率、温度及扩散系数保持恒定，不随时间波动。
-    \item 假设 $t=0$ 时刻，仅教室 A 存在初始污染物浓度 $C_0$，走廊和教室 B 的初始浓度均为 0。
+	\item 假设教室 A、走廊和教室 B 均为理想的“完全混合箱室”。即污染物一旦进入某区域，瞬间与该区域内的空气均匀混合，浓度仅随时间变化，不随空间位置变化。
+	\item 假设空气流动主要由压差或通风系统驱动，主导流向为“教室 A $\to$ 走廊 $\to$ 教室 B”以及“各区域 $\to$ 室外”。忽略微小的反向扩散（如从教室 B 逆流回走廊）。
+	\item 假设各区域体积固定，且空气作为不可压缩流体，流入与流出的空气体积流量保持平衡（$Q_{in} = Q_{out}$）。
+	\item 假设在模拟的时间段内，各房间的通风率、温度及扩散系数保持恒定，不随时间波动。
+	\item 假设 $t=0$ 时刻，仅教室 A 存在初始污染物浓度 $C_0$，走廊和教室 B 的初始浓度均为 0。
 \end{enumerate}
 \newpage
 \section{模型的建立与求解}
@@ -122,8 +122,7 @@
 引发的外键级联问题。
 
 \paragraph{异常回滚}
-在任意环节发生异常（如字
-段类型不匹配、网络中断等），事务将整体回滚，同时批次表的状态被更新为
+在任意环节发生异常（如字段类型不匹配、网络中断等），事务将整体回滚，同时批次表的状态被更新为
 \texttt{failed}并记录完整的异常堆栈信息。通过该设计确保了数据库不会写入残留的脏数据，
 维持了数据的全局一致性。
 
@@ -134,87 +133,123 @@
 在任务一所构建的结构化财报数据库基础之上，本文设计并实现了一款面向上市公司财务数据的“智能问数”助手系统。
 该系统遵循“自然语言输入→意图识别→SQL生成→数据查询→可视化呈现→分析结论输出”的全链路自动化架构，具备单轮基础查询、多轮上下文对话、
 意图澄清引导及动态图表生成四项核心能力，最终以结构化JSON格式输出响应内容。
-
+\subsubsection{系统总体架构}
+本文将任务二抽象为四个协作层：
+\begin{enumerate}
+	\item \textbf{交互层}：接收用户输入并以流式方式实时回传状态与答案；
+	\item \textbf{理解层}：完成意图识别、上下文继承与澄清决策；
+	\item \textbf{执行层}：NL2SQL生成、安全校验、数据库查询；
+	\item \textbf{表达层}：自动图表生成、文字结论组织、JSON结构化输出。
+\end{enumerate}
+该分层设计不仅使系统职责清晰、模块化程度高，还为后续的功能迭代与性能优化提供了便利的切入点。
 \subsubsection{基于大语言模型的NL2SQL生成引擎}
 本模块旨在将用户自然语言查询自动转化为可执行的结构化查询语句，并在数据库内容基础上生成可解释的分析结论。
 其核心逻辑为先让大语言模型完成“语义理解与查询规划”，再由数据库返回事实数据，最后由大语言模型负责归纳与解释，
 从而避免数据伪造提高结果的可核验性。
 从形式化角度，给定用户问题 $q$、数据库模式信息 $S$（表结构、字段语义）与对话上下文 $C$，NL2SQL 任务可表示为：
 \[
-    \hat{s} = \arg\max_{s \in \mathcal{S}} P(s \mid q, S, C; \theta),
+	\hat{s} = \arg\max_{s \in \mathcal{S}} P(s \mid q, S, C; \theta),
 \]
 其中 $\hat{s}$ 为生成的 SQL，$\theta$ 为大语言模型参数。查询执行后得到结果集 $R = \text{Exec}(\hat{s})$，最终分析结论为：
 \[
-    \hat{a} = G(q, R, C),
+	\hat{a} = G(q, R, C),
 \]
 其中 $G(\cdot)$ 表示基于结构化结果的分析生成函数。
 \paragraph{算法 1：NL2SQL 生成与执行主流程}
 \begin{figure}[H]
-    \caption{NL2SQL-Driven Query and Analysis}
-    \label{alg:nl2sql}
-    \begin{algorithmic}[1] % [1] 显示行号
-        \REQUIRE
-        $q$: 用户自然语言问题 \\
-        $C$: 最近多轮对话上下文 \\
-        $S$: 数据库模式描述（表、字段、口径） \\
-        $T_{\text{allow}}$: 允许访问的表白名单
-        \ENSURE
-        $A$: 最终回答（含分析结论） \\
-        $M$: 中间元信息（SQL、命中行数、样例记录）
+	\caption{NL2SQL-Driven Query and Analysis}
+	\label{alg:nl2sql}
+	\begin{algorithmic}[1] % [1] 显示行号
+		\REQUIRE
+		$q$: 用户自然语言问题 \\
+		$C$: 最近多轮对话上下文 \\
+		$S$: 数据库模式描述（表、字段、口径） \\
+		$T_{\text{allow}}$: 允许访问的表白名单
+		\ENSURE
+		$A$: 最终回答（含分析结论） \\
+		$M$: 中间元信息（SQL、命中行数、样例记录）
 
-        % 行1-3：非金融问题直接返回通用回答
-        \IF{$\neg \text{IsFinanceQuery}(q)$}
-        \STATE \textbf{return} $\text{GeneralLLMAnswer}(q, C), \{\}$
-        \ENDIF
+		% 行1-3：非金融问题直接返回通用回答
+		\IF{$\neg \text{IsFinanceQuery}(q)$}
+		\STATE \textbf{return} $\text{GeneralLLMAnswer}(q, C), \{\}$
+		\ENDIF
 
-        % 行4：构建提示词
-        \STATE $P \leftarrow \text{BuildPrompt}(q, C, S)$
+		% 行4：构建提示词
+		\STATE $P \leftarrow \text{BuildPrompt}(q, C, S)$
 
-        % 行5：LLM生成约束JSON
-        \STATE $J \leftarrow \text{LLM\_Generate\_JSON}(P)$
+		% 行5：LLM生成约束JSON
+		\STATE $J \leftarrow \text{LLM\_Generate\_JSON}(P)$
 
-        % 行6-8：解析失败/无需SQL
-        \IF{$\text{ParseFailed}(J) \text{ or } J.\text{need\_sql} = \text{false}$}
-        \STATE \textbf{return} $\text{GeneralLLMAnswer}(q, C), \{\}$
-        \ENDIF
+		% 行6-8：解析失败/无需SQL
+		\IF{$\text{ParseFailed}(J) \text{ or } J.\text{need\_sql} = \text{false}$}
+		\STATE \textbf{return} $\text{GeneralLLMAnswer}(q, C), \{\}$
+		\ENDIF
 
-        % 行9：提取SQL
-        \STATE $\text{sql} \leftarrow J.\text{sql}$
+		% 行9：提取SQL
+		\STATE $\text{sql} \leftarrow J.\text{sql}$
 
-        % 行10-12：SQL安全校验
-        \IF{$\neg \text{IsSafeSelect}(\text{sql}, T_{\text{allow}})$}
-        \STATE \textbf{return} $\text{SafeFallbackAnswer}(q), \{\text{reason: ``unsafe\_sql''}\}$
-        \ENDIF
+		% 行10-12：SQL安全校验
+		\IF{$\neg \text{IsSafeSelect}(\text{sql}, T_{\text{allow}})$}
+		\STATE \textbf{return} $\text{SafeFallbackAnswer}(q), \{\text{reason: ``unsafe\_sql''}\}$
+		\ENDIF
 
-        % 行13：执行带限制的SQL
-        \STATE $R \leftarrow \text{ExecSQLWithLimit}(\text{sql}, L_{\text{max}})$
+		% 行13：执行带限制的SQL
+		\STATE $R \leftarrow \text{ExecSQLWithLimit}(\text{sql}, L_{\text{max}})$
 
-        % 行14-19：构造中间元信息M
-        \STATE $M \leftarrow \{$
-        \STATE \quad $\text{sql}: \text{sql},$
-        \STATE \quad $\text{row\_count}: |R|,$
-        \STATE \quad $\text{columns}: \text{Cols}(R),$
-        \STATE \quad $\text{sample\_rows}: \text{Head}(R, k)$
-        \STATE $\}$
+		% 行14-19：构造中间元信息M
+		\STATE $M \leftarrow \{$
+		\STATE \quad $\text{sql}: \text{sql},$
+		\STATE \quad $\text{row\_count}: |R|,$
+		\STATE \quad $\text{columns}: \text{Cols}(R),$
+		\STATE \quad $\text{sample\_rows}: \text{Head}(R, k)$
+		\STATE $\}$
 
-        % 行20-22：生成结果上下文+流式分析回答
-        \STATE $K \leftarrow \text{BuildResultContext}(M, R)$
-        \STATE $A \leftarrow \text{StreamAnalysisAnswer}(q, C, K)$
-        \STATE \textbf{return} $A, M$
-    \end{algorithmic}
+		% 行20-22：生成结果上下文+流式分析回答
+		\STATE $K \leftarrow \text{BuildResultContext}(M, R)$
+		\STATE $A \leftarrow \text{StreamAnalysisAnswer}(q, C, K)$
+		\STATE \textbf{return} $A, M$
+	\end{algorithmic}
 \end{figure}
+
+\subsubsection{多轮对话与澄清机制}
+智能助手并不是简单保留聊天记录，而是维护可执行查询所需的\textbf{状态变量}。系统维护的核心状态包括公司实体、报告期窗口、指标口径与上一轮查询结
+果摘要。对于追问类问题（如“那同比呢”“换成2024Q3看一下”），系统优先复用上一轮状态，只更新添加状态变量。
+
+当用户输入关键信息缺失时，系统触发澄清模块。澄清模块采用“模板保底+LLM增强”的混合策略：
+\begin{enumerate}
+	\item 首轮优先使用模板追问；
+	\item 在用户模糊回答或复杂场景下调用LLM二次追问；
+	\item 信息满足执行条件后自动进入NL2SQL流程。
+\end{enumerate}
+通过该策略在评测中有效减少了“错误SQL”和“答非所问”现象。
+\subsubsection{自动图表生成与证据化表达}
+为满足题目“可视化输出”要求，系统在SQL结果返回后自动进行图表规划。不同于直接让模型执行任意代码，本文采用“\textbf{模型决策+固定渲染器执行}”方案：
+\begin{enumerate}
+	\item 大语言模型根据结果字段与问题语义给出图表规格（如折线/柱状/饼图）；
+	\item 后端受控渲染器执行绘图并将图片保存到\texttt{result}目录；
+	\item 在流式回复中实时告知图片文件名与保存路径，并结合图表给出结论解释。
+\end{enumerate}
+\subsubsection{流式交互与最终输出结构}
+在用户体验层，系统采用事件驱动流式输出。每轮交互会按阶段返回状态：意图分析、SQL生成、SQL执行、图表生成、结论生成。用户可以直观看到系统
+“正在做什么”。
+
+最终输出与要求格式保持一致：
+\begin{equation}
+	\text{Answer} = \{\text{content},\ \text{image},\ \text{references}\}
+\end{equation}
+其中\texttt{image}为自动生成图表的相对路径列表，\texttt{content}为结合数据证据的分析结论。
 
 \section{灵敏度分析 }
 \section{模型评价 }
 
 \subsection{模型的优点}
 \begin{enumerate}
-    \item 模型基于物质守恒定律和流体混合原理，具有坚实的物理基础，能够准确描述两个教室内示踪气体浓度随时间的动态演变过程。
+	\item 模型基于物质守恒定律和流体混合原理，具有坚实的物理基础，能够准确描述两个教室内示踪气体浓度随时间的动态演变过程。
 \end{enumerate}
 
 \subsection{模型的缺点与改进}
 \begin{enumerate}
-    \item “均匀混合”假设的局限性：模型假设教室内空气瞬间均匀混合，忽略了污染物在房间角落或远离门窗区域的空间分布差异。在实际大空间教室中，可能存在局部浓度过高的死角。
+	\item “均匀混合”假设的局限性：模型假设教室内空气瞬间均匀混合，忽略了污染物在房间角落或远离门窗区域的空间分布差异。在实际大空间教室中，可能存在局部浓度过高的死角。
 \end{enumerate}
 
 % =============================================================
@@ -223,8 +258,8 @@
 
 \begin{thebibliography}{99}
 
-    \bibitem{jiang2011}
-    姜启源, 谢金星, 叶俊. \textit{数学建模 (第4版)}. 北京: 高等教育出版社, 2011.
+	\bibitem{jiang2011}
+	姜启源, 谢金星, 叶俊. \textit{数学建模 (第4版)}. 北京: 高等教育出版社, 2011.
 
 
 \end{thebibliography}
@@ -234,14 +269,14 @@
 %附录
 \begin{appendices}
 
-    \newpage
-    \appendix % 开始附录环境，章节编号变为 A, B...
-    \section{附录：主要Python求解代码}
+	\newpage
+	\appendix % 开始附录环境，章节编号变为 A, B...
+	\section{附录：主要Python求解代码}
 
-    \subsection{问题二：双教室气体交换动力学模拟}
-    \label{code:prob1}
+	\subsection{问题二：双教室气体交换动力学模拟}
+	\label{code:prob1}
 
-    \begin{lstlisting}[caption={问题一浓度变化模拟代码}, label={lst:code1}]
+	\begin{lstlisting}[caption={问题一浓度变化模拟代码}, label={lst:code1}]
 	import numpy as np
 	import matplotlib.pyplot as plt
 	from scipy.integrate import odeint
@@ -272,12 +307,12 @@
 	plt.show()
 \end{lstlisting}
 
-    \subsection{问题三：不同净化策略的对比分析}
-    \label{code:prob3}
+	\subsection{问题三：不同净化策略的对比分析}
+	\label{code:prob3}
 
-    该脚本用于对比“基准策略”、“仅通风策略”与“隔离+通风策略”的效果。
+	该脚本用于对比“基准策略”、“仅通风策略”与“隔离+通风策略”的效果。
 
-    \begin{lstlisting}[caption={问题三净化策略对比仿真代码}, label={lst:code3}]
+	\begin{lstlisting}[caption={问题三净化策略对比仿真代码}, label={lst:code3}]
 	import numpy as np
 	import matplotlib.pyplot as plt
 	from scipy.integrate import odeint
@@ -317,12 +352,12 @@
 	plt.show()
 \end{lstlisting}
 
-    \subsection{灵敏度分析代码}
-    \label{code:sensitivity}
+	\subsection{灵敏度分析代码}
+	\label{code:sensitivity}
 
-    用于分析走廊/门洞交换速率的不确定性对混合时间的影响。
+	用于分析走廊/门洞交换速率的不确定性对混合时间的影响。
 
-    \begin{lstlisting}[caption={参数灵敏度分析代码}, label={lst:code_sens}]
+	\begin{lstlisting}[caption={参数灵敏度分析代码}, label={lst:code_sens}]
 	# 定义灵敏度分析函数
 	def get_mixing_time(Q_val):
 	# 求解特定Q下的方程
