@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.7.9)  14 APR 2026 12:05
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.7.9)  19 APR 2026 07:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -849,6 +849,60 @@ Package hyperref Info: Option `bookmarksopen' set `true' on input line 239.
 Package hyperref Info: Option `colorlinks' set `true' on input line 239.
 Package hyperref Info: Option `breaklinks' set `true' on input line 239.
 )
+(/usr/local/texlive/2023/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
+Invalid UTF-8 byte or sequence at line 284 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 299 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 550 replaced by U+FFFD.
+Package: algorithm2e 2017/07/18 v5.2 algorithms environments
+\c@AlgoLine=\count368
+\algocf@hangindent=\skip107
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+Package: ifoddpage 2022/10/18 v1.2 Conditionals for odd/even page detection
+\c@checkoddpage=\count369
+)
+(/usr/local/texlive/2023/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+)
+(/usr/local/texlive/2023/texmf-dist/tex/latex/relsize/relsize.sty
+Package: relsize 2013/03/29 ver 4.1
+)
+\skiptotal=\skip108
+\skiplinenumber=\skip109
+\skiprule=\skip110
+\skiphlne=\skip111
+\skiptext=\skip112
+\skiplength=\skip113
+\algomargin=\skip114
+\skipalgocfslide=\skip115
+\algowidth=\dimen294
+\inoutsize=\dimen295
+\inoutindent=\dimen296
+\interspacetitleruled=\dimen297
+\interspacealgoruled=\dimen298
+\interspacetitleboxruled=\dimen299
+\algocf@ruledwidth=\skip116
+\algocf@inoutbox=\box73
+\algocf@inputbox=\box74
+\AlCapSkip=\skip117
+\AlCapHSkip=\skip118
+\algoskipindent=\skip119
+\algocf@nlbox=\box75
+\algocf@hangingbox=\box76
+\algocf@untilbox=\box77
+\algocf@skipuntil=\skip120
+\algocf@capbox=\box78
+\algocf@lcaptionbox=\skip121
+\algoheightruledefault=\skip122
+\algoheightrule=\skip123
+\algotitleheightruledefault=\skip124
+\algotitleheightrule=\skip125
+\c@algocfline=\count370
+\c@algocfproc=\count371
+\c@algocf=\count372
+\algocf@algoframe=\box79
+\algocf@algobox=\box80
+)
 (/usr/local/texlive/2023/texmf-dist/tex/latex/mdframed/mdframed.sty
 Package: mdframed 2013/07/01 1.9b: mdframed
 
@@ -865,53 +919,53 @@ Package zref Info: New property list: main on input line 767.
 Package zref Info: New property: default on input line 768.
 Package zref Info: New property: page on input line 769.
 )
-\c@abspage=\count368
+\c@abspage=\count373
 Package zref Info: New property: abspage on input line 65.
 )
 (/usr/local/texlive/2023/texmf-dist/tex/latex/needspace/needspace.sty
 Package: needspace 2010/09/12 v1.3d reserve vertical space
 )
-\mdf@templength=\skip107
-\c@mdf@globalstyle@cnt=\count369
-\mdf@skipabove@length=\skip108
-\mdf@skipbelow@length=\skip109
-\mdf@leftmargin@length=\skip110
-\mdf@rightmargin@length=\skip111
-\mdf@innerleftmargin@length=\skip112
-\mdf@innerrightmargin@length=\skip113
-\mdf@innertopmargin@length=\skip114
-\mdf@innerbottommargin@length=\skip115
-\mdf@splittopskip@length=\skip116
-\mdf@splitbottomskip@length=\skip117
-\mdf@outermargin@length=\skip118
-\mdf@innermargin@length=\skip119
-\mdf@linewidth@length=\skip120
-\mdf@innerlinewidth@length=\skip121
-\mdf@middlelinewidth@length=\skip122
-\mdf@outerlinewidth@length=\skip123
-\mdf@roundcorner@length=\skip124
-\mdf@footenotedistance@length=\skip125
-\mdf@userdefinedwidth@length=\skip126
-\mdf@needspace@length=\skip127
-\mdf@frametitleaboveskip@length=\skip128
-\mdf@frametitlebelowskip@length=\skip129
-\mdf@frametitlerulewidth@length=\skip130
-\mdf@frametitleleftmargin@length=\skip131
-\mdf@frametitlerightmargin@length=\skip132
-\mdf@shadowsize@length=\skip133
-\mdf@extratopheight@length=\skip134
-\mdf@subtitleabovelinewidth@length=\skip135
-\mdf@subtitlebelowlinewidth@length=\skip136
-\mdf@subtitleaboveskip@length=\skip137
-\mdf@subtitlebelowskip@length=\skip138
-\mdf@subtitleinneraboveskip@length=\skip139
-\mdf@subtitleinnerbelowskip@length=\skip140
-\mdf@subsubtitleabovelinewidth@length=\skip141
-\mdf@subsubtitlebelowlinewidth@length=\skip142
-\mdf@subsubtitleaboveskip@length=\skip143
-\mdf@subsubtitlebelowskip@length=\skip144
-\mdf@subsubtitleinneraboveskip@length=\skip145
-\mdf@subsubtitleinnerbelowskip@length=\skip146
+\mdf@templength=\skip126
+\c@mdf@globalstyle@cnt=\count374
+\mdf@skipabove@length=\skip127
+\mdf@skipbelow@length=\skip128
+\mdf@leftmargin@length=\skip129
+\mdf@rightmargin@length=\skip130
+\mdf@innerleftmargin@length=\skip131
+\mdf@innerrightmargin@length=\skip132
+\mdf@innertopmargin@length=\skip133
+\mdf@innerbottommargin@length=\skip134
+\mdf@splittopskip@length=\skip135
+\mdf@splitbottomskip@length=\skip136
+\mdf@outermargin@length=\skip137
+\mdf@innermargin@length=\skip138
+\mdf@linewidth@length=\skip139
+\mdf@innerlinewidth@length=\skip140
+\mdf@middlelinewidth@length=\skip141
+\mdf@outerlinewidth@length=\skip142
+\mdf@roundcorner@length=\skip143
+\mdf@footenotedistance@length=\skip144
+\mdf@userdefinedwidth@length=\skip145
+\mdf@needspace@length=\skip146
+\mdf@frametitleaboveskip@length=\skip147
+\mdf@frametitlebelowskip@length=\skip148
+\mdf@frametitlerulewidth@length=\skip149
+\mdf@frametitleleftmargin@length=\skip150
+\mdf@frametitlerightmargin@length=\skip151
+\mdf@shadowsize@length=\skip152
+\mdf@extratopheight@length=\skip153
+\mdf@subtitleabovelinewidth@length=\skip154
+\mdf@subtitlebelowlinewidth@length=\skip155
+\mdf@subtitleaboveskip@length=\skip156
+\mdf@subtitlebelowskip@length=\skip157
+\mdf@subtitleinneraboveskip@length=\skip158
+\mdf@subtitleinnerbelowskip@length=\skip159
+\mdf@subsubtitleabovelinewidth@length=\skip160
+\mdf@subsubtitlebelowlinewidth@length=\skip161
+\mdf@subsubtitleaboveskip@length=\skip162
+\mdf@subsubtitlebelowskip@length=\skip163
+\mdf@subsubtitleinneraboveskip@length=\skip164
+\mdf@subsubtitleinnerbelowskip@length=\skip165
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
 (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
@@ -919,11 +973,11 @@ Package: needspace 2010/09/12 v1.3d reserve vertical space
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.te
 x
 \pgfutil@everybye=\toks33
-\pgfutil@tempdima=\dimen294
-\pgfutil@tempdimb=\dimen295
+\pgfutil@tempdima=\dimen300
+\pgfutil@tempdimb=\dimen301
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
-\pgfutil@abb=\box73
+\pgfutil@abb=\box81
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/pgf.revision.tex)
 Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
@@ -942,26 +996,26 @@ Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
 tered.code.tex
 \pgfkeys@tmptoks=\toks36
 ))
-\pgf@x=\dimen296
-\pgf@y=\dimen297
-\pgf@xa=\dimen298
-\pgf@ya=\dimen299
-\pgf@xb=\dimen300
-\pgf@yb=\dimen301
-\pgf@xc=\dimen302
-\pgf@yc=\dimen303
-\pgf@xd=\dimen304
-\pgf@yd=\dimen305
+\pgf@x=\dimen302
+\pgf@y=\dimen303
+\pgf@xa=\dimen304
+\pgf@ya=\dimen305
+\pgf@xb=\dimen306
+\pgf@yb=\dimen307
+\pgf@xc=\dimen308
+\pgf@yc=\dimen309
+\pgf@xd=\dimen310
+\pgf@yd=\dimen311
 \w@pgf@writea=\write4
 \r@pgf@reada=\read2
-\c@pgf@counta=\count370
-\c@pgf@countb=\count371
-\c@pgf@countc=\count372
-\c@pgf@countd=\count373
+\c@pgf@counta=\count375
+\c@pgf@countb=\count376
+\c@pgf@countc=\count377
+\c@pgf@countd=\count378
 \t@pgf@toka=\toks37
 \t@pgf@tokb=\toks38
 \t@pgf@tokc=\toks39
-\pgf@sys@id@count=\count374
+\pgf@sys@id@count=\count379
 
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
@@ -980,13 +1034,13 @@ File: pgfsys-dvipdfmx.def 2023-01-15 v3.1.10 (3.1.10)
 df.def
 File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
 )
-\pgfsys@objnum=\count375
+\pgfsys@objnum=\count380
 )))
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.
 code.tex
 File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfsyssoftpath@smallbuffer@items=\count376
-\pgfsyssoftpath@bigbuffer@items=\count377
+\pgfsyssoftpath@smallbuffer@items=\count381
+\pgfsyssoftpath@bigbuffer@items=\count382
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.
 code.tex
@@ -997,9 +1051,9 @@ Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
-\pgfmath@dimen=\dimen306
-\pgfmath@count=\count378
-\pgfmath@box=\box74
+\pgfmath@dimen=\dimen312
+\pgfmath@count=\count383
+\pgfmath@box=\box82
 \pgfmath@toks=\toks40
 \pgfmath@stack@operand=\toks41
 \pgfmath@stack@operation=\toks42
@@ -1024,57 +1078,57 @@ code.tex)
 erarithmetics.code.tex)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count379
+\c@pgfmathroundto@lastzeros=\count384
 )) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.co
 de.tex
 File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@picminx=\dimen307
-\pgf@picmaxx=\dimen308
-\pgf@picminy=\dimen309
-\pgf@picmaxy=\dimen310
-\pgf@pathminx=\dimen311
-\pgf@pathmaxx=\dimen312
-\pgf@pathminy=\dimen313
-\pgf@pathmaxy=\dimen314
-\pgf@xx=\dimen315
-\pgf@xy=\dimen316
-\pgf@yx=\dimen317
-\pgf@yy=\dimen318
-\pgf@zx=\dimen319
-\pgf@zy=\dimen320
+\pgf@picminx=\dimen313
+\pgf@picmaxx=\dimen314
+\pgf@picminy=\dimen315
+\pgf@picmaxy=\dimen316
+\pgf@pathminx=\dimen317
+\pgf@pathmaxx=\dimen318
+\pgf@pathminy=\dimen319
+\pgf@pathmaxy=\dimen320
+\pgf@xx=\dimen321
+\pgf@xy=\dimen322
+\pgf@yx=\dimen323
+\pgf@yy=\dimen324
+\pgf@zx=\dimen325
+\pgf@zy=\dimen326
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconst
 ruct.code.tex
 File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@path@lastx=\dimen321
-\pgf@path@lasty=\dimen322
+\pgf@path@lastx=\dimen327
+\pgf@path@lasty=\dimen328
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage
 .code.tex
 File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@shorten@end@additional=\dimen323
-\pgf@shorten@start@additional=\dimen324
+\pgf@shorten@end@additional=\dimen329
+\pgf@shorten@start@additional=\dimen330
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.co
 de.tex
 File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfpic=\box75
-\pgf@hbox=\box76
-\pgf@layerbox@main=\box77
-\pgf@picture@serial@count=\count380
+\pgfpic=\box83
+\pgf@hbox=\box84
+\pgf@layerbox@main=\box85
+\pgf@picture@serial@count=\count385
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicst
 ate.code.tex
 File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgflinewidth=\dimen325
+\pgflinewidth=\dimen331
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransform
 ations.code.tex
 File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@pt@x=\dimen326
-\pgf@pt@y=\dimen327
-\pgf@pt@temp=\dimen328
+\pgf@pt@x=\dimen332
+\pgf@pt@y=\dimen333
+\pgf@pt@temp=\dimen334
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.cod
 e.tex
@@ -1091,14 +1145,14 @@ File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.co
 de.tex
 File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfarrowsep=\dimen329
+\pgfarrowsep=\dimen335
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.cod
 e.tex
 File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@max=\dimen330
-\pgf@sys@shading@range@num=\count381
-\pgf@shadingcount=\count382
+\pgf@max=\dimen336
+\pgf@sys@shading@range@num=\count386
+\pgf@shadingcount=\count387
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.cod
 e.tex
@@ -1107,7 +1161,7 @@ File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.
 code.tex
 File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfexternal@startupbox=\box78
+\pgfexternal@startupbox=\box86
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.co
 de.tex
@@ -1128,7 +1182,7 @@ File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.cod
 e.tex
 File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfnodeparttextbox=\box79
+\pgfnodeparttextbox=\box87
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.
 tex
@@ -1137,8 +1191,8 @@ File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version
 -0-65.sty
 Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
-\pgf@nodesepstart=\dimen331
-\pgf@nodesepend=\dimen332
+\pgf@nodesepstart=\dimen337
+\pgf@nodesepend=\dimen338
 )
 (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version
 -1-18.sty
@@ -1151,8 +1205,8 @@ Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
 Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
-\pgffor@iter=\dimen333
-\pgffor@skip=\dimen334
+\pgffor@iter=\dimen339
+\pgffor@skip=\dimen340
 \pgffor@stack=\toks43
 \pgffor@toks=\toks44
 ))
@@ -1163,34 +1217,34 @@ Package: tikz 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothan
 dlers.code.tex
 File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@plot@mark@count=\count383
-\pgfplotmarksize=\dimen335
+\pgf@plot@mark@count=\count388
+\pgfplotmarksize=\dimen341
 )
-\tikz@lastx=\dimen336
-\tikz@lasty=\dimen337
-\tikz@lastxsaved=\dimen338
-\tikz@lastysaved=\dimen339
-\tikz@lastmovetox=\dimen340
-\tikz@lastmovetoy=\dimen341
-\tikzleveldistance=\dimen342
-\tikzsiblingdistance=\dimen343
-\tikz@figbox=\box80
-\tikz@figbox@bg=\box81
-\tikz@tempbox=\box82
-\tikz@tempbox@bg=\box83
-\tikztreelevel=\count384
-\tikznumberofchildren=\count385
-\tikznumberofcurrentchild=\count386
-\tikz@fig@count=\count387
+\tikz@lastx=\dimen342
+\tikz@lasty=\dimen343
+\tikz@lastxsaved=\dimen344
+\tikz@lastysaved=\dimen345
+\tikz@lastmovetox=\dimen346
+\tikz@lastmovetoy=\dimen347
+\tikzleveldistance=\dimen348
+\tikzsiblingdistance=\dimen349
+\tikz@figbox=\box88
+\tikz@figbox@bg=\box89
+\tikz@tempbox=\box90
+\tikz@tempbox@bg=\box91
+\tikztreelevel=\count389
+\tikznumberofchildren=\count390
+\tikznumberofcurrentchild=\count391
+\tikz@fig@count=\count392
 
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.cod
 e.tex
 File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfmatrixcurrentrow=\count388
-\pgfmatrixcurrentcolumn=\count389
-\pgf@matrix@numberofcolumns=\count390
+\pgfmatrixcurrentrow=\count393
+\pgfmatrixcurrentcolumn=\count394
+\pgf@matrix@numberofcolumns=\count395
 )
-\tikz@expandcount=\count391
+\tikz@expandcount=\count396
 
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
 s/tikzlibrarytopaths.code.tex
@@ -1199,59 +1253,59 @@ File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/latex/mdframed/md-frame-1.mdf
 File: md-frame-1.mdf 2013/07/01\ 1.9b: md-frame-1
 )
-\mdf@frametitlebox=\box84
-\mdf@footnotebox=\box85
-\mdf@splitbox@one=\box86
-\mdf@splitbox@two=\box87
-\mdf@splitbox@save=\box88
-\mdfsplitboxwidth=\skip147
-\mdfsplitboxtotalwidth=\skip148
-\mdfsplitboxheight=\skip149
-\mdfsplitboxdepth=\skip150
-\mdfsplitboxtotalheight=\skip151
-\mdfframetitleboxwidth=\skip152
-\mdfframetitleboxtotalwidth=\skip153
-\mdfframetitleboxheight=\skip154
-\mdfframetitleboxdepth=\skip155
-\mdfframetitleboxtotalheight=\skip156
-\mdffootnoteboxwidth=\skip157
-\mdffootnoteboxtotalwidth=\skip158
-\mdffootnoteboxheight=\skip159
-\mdffootnoteboxdepth=\skip160
-\mdffootnoteboxtotalheight=\skip161
-\mdftotallinewidth=\skip162
-\mdfboundingboxwidth=\skip163
-\mdfboundingboxtotalwidth=\skip164
-\mdfboundingboxheight=\skip165
-\mdfboundingboxdepth=\skip166
-\mdfboundingboxtotalheight=\skip167
-\mdf@freevspace@length=\skip168
-\mdf@horizontalwidthofbox@length=\skip169
-\mdf@verticalmarginwhole@length=\skip170
-\mdf@horizontalspaceofbox=\skip171
-\mdfsubtitleheight=\skip172
-\mdfsubsubtitleheight=\skip173
-\c@mdfcountframes=\count392
+\mdf@frametitlebox=\box92
+\mdf@footnotebox=\box93
+\mdf@splitbox@one=\box94
+\mdf@splitbox@two=\box95
+\mdf@splitbox@save=\box96
+\mdfsplitboxwidth=\skip166
+\mdfsplitboxtotalwidth=\skip167
+\mdfsplitboxheight=\skip168
+\mdfsplitboxdepth=\skip169
+\mdfsplitboxtotalheight=\skip170
+\mdfframetitleboxwidth=\skip171
+\mdfframetitleboxtotalwidth=\skip172
+\mdfframetitleboxheight=\skip173
+\mdfframetitleboxdepth=\skip174
+\mdfframetitleboxtotalheight=\skip175
+\mdffootnoteboxwidth=\skip176
+\mdffootnoteboxtotalwidth=\skip177
+\mdffootnoteboxheight=\skip178
+\mdffootnoteboxdepth=\skip179
+\mdffootnoteboxtotalheight=\skip180
+\mdftotallinewidth=\skip181
+\mdfboundingboxwidth=\skip182
+\mdfboundingboxtotalwidth=\skip183
+\mdfboundingboxheight=\skip184
+\mdfboundingboxdepth=\skip185
+\mdfboundingboxtotalheight=\skip186
+\mdf@freevspace@length=\skip187
+\mdf@horizontalwidthofbox@length=\skip188
+\mdf@verticalmarginwhole@length=\skip189
+\mdf@horizontalspaceofbox=\skip190
+\mdfsubtitleheight=\skip191
+\mdfsubsubtitleheight=\skip192
+\c@mdfcountframes=\count397
 
 ****** mdframed patching \endmdf@trivlist
 
 ****** -- success******
 
-\mdf@envdepth=\count393
-\c@mdf@env@i=\count394
-\c@mdf@env@ii=\count395
-\c@mdf@zref@counter=\count396
+\mdf@envdepth=\count398
+\c@mdf@env@i=\count399
+\c@mdf@env@ii=\count400
+\c@mdf@zref@counter=\count401
 Package zref Info: New property: mdf@pagevalue on input line 895.
 )
 (/usr/local/texlive/2023/texmf-dist/tex/latex/algorithms/algorithmic.sty
 Invalid UTF-8 byte or sequence at line 11 replaced by U+FFFD.
 Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
-\c@ALC@unique=\count397
-\c@ALC@line=\count398
-\c@ALC@rem=\count399
-\c@ALC@depth=\count400
-\ALC@tlm=\skip174
-\algorithmicindent=\skip175
+\c@ALC@unique=\count402
+\c@ALC@line=\count403
+\c@ALC@rem=\count404
+\c@ALC@depth=\count405
+\ALC@tlm=\skip193
+\algorithmicindent=\skip194
 )
 (PDF/example.aux)
 \openout1 = `example.aux'.
@@ -1376,7 +1430,7 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\c@lstlisting=\count401
+\c@lstlisting=\count406
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
@@ -1621,243 +1675,302 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 145.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 144.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 145.
+(hyperref)                removed on input line 144.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 145.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 145.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 145.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 144.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 145.
+(hyperref)                removed on input line 144.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 145.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 144.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 145.
+(hyperref)                removed on input line 144.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 144.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 144.
+
+File: 1.png Graphic file (type bmp)
+<1.png>
+
+Package fontspec Warning: Font "FandolSong-Regular" does not contain requested
+(fontspec)                Script "CJK".
+
+
+Package fontspec Info: Font family 'FandolSong-Regular(1)' created for font
+(fontspec)             'FandolSong-Regular' with options
+(fontspec)             [Script={CJK},Extension={.otf},BoldFont={FandolSong-Bold
+}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"[FandolSong-Regular.otf]/OT:language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->"[FandolSong-Bold.otf]/OT:language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 [6]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 210.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 161.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 210.
+(hyperref)                removed on input line 161.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 210.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 210.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 210.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 161.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 210.
+(hyperref)                removed on input line 161.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 210.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 161.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 210.
+(hyperref)                removed on input line 161.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 161.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 161.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 215.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 215.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 215.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 215.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 215.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 215.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 215.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 215.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 222.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 222.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 222.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 222.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 222.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 222.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 222.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 222.
 
 [7]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 221.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 231.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 221.
+(hyperref)                removed on input line 231.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 221.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 221.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 221.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 231.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 221.
+(hyperref)                removed on input line 231.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 221.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 221.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 228.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 231.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 228.
+(hyperref)                removed on input line 231.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 228.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 228.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 228.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 231.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 228.
+(hyperref)                removed on input line 231.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 228.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 228.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 241.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 235.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 241.
+(hyperref)                removed on input line 235.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 241.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 241.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 246.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 235.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 246.
+(hyperref)                removed on input line 235.
 
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 246.
-
+[8]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 246.
-
-[8] [9]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 272.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 240.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 272.
+(hyperref)                removed on input line 240.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 272.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 240.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 272.
+(hyperref)                removed on input line 240.
+
+[9]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 266.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 266.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 266.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 266.
 
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 275.
+nput line 269.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 306.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 306.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 306.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 300.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 306.
+(hyperref)                removed on input line 300.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 300.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00876pt
+(hyperref)                removed on input line 300.
 
 [10]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 351.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 351.
+(hyperref)                removed on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 351.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00876pt
-(hyperref)                removed on input line 351.
+(hyperref)                removed on input line 345.
 
 [11]
 
@@ -1869,23 +1982,16 @@ See the caption package documentation for explanation.
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2022/08/05>
  ***********
-
-
-Package rerunfilecheck Warning: File `example.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `example.out':
-(rerunfilecheck)             Before: DDBACC558EE375A21BAC1F6712C6E959;4564
-(rerunfilecheck)             After:  E18ABC99B29E607BB5C8AF089A24C221;4564.
+Package rerunfilecheck Info: File `example.out' has not changed.
+(rerunfilecheck)             Checksum: F097F08E388BA4B5389DC26BC675B736;4736.
  ) 
 Here is how much of TeX's memory you used:
- 33657 strings out of 475890
- 723006 string characters out of 5778499
- 1999875 words of memory out of 5000000
- 54089 multiletter control sequences out of 15000+600000
- 568098 words of font info for 131 fonts, out of 8000000 for 9000
+ 34679 strings out of 475890
+ 742988 string characters out of 5778499
+ 2000875 words of memory out of 5000000
+ 55091 multiletter control sequences out of 15000+600000
+ 568138 words of font info for 136 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 108i,12n,114p,474b,1906s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,13n,114p,474b,1907s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on PDF/example.pdf (12 pages).

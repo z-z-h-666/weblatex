@@ -1,7 +1,7 @@
 %!TEX program = xelatex
 %\documentclass{cumcmthesis}
 \documentclass[withoutpreface,bwprint]{cumcmthesis} %去掉封面与编号页，电子版提交的时候使用。
-
+\usepackage[ruled, linesnumbered]{algorithm2e}
 
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{url}   % 网页链接
@@ -129,104 +129,98 @@
 \paragraph{数据的可视化追溯}
 通过每行数据携带\texttt{batch\_id}字段，用户可以便捷地追溯任意一条财务记录的“前世今生”。通过连接查询
 \texttt{financial\_import\_batches}表，系统可回答以下溯源问题（如记录来源于哪个Excel文件，数据执行导入的操作者是谁等）
-\subsection{任务二：面向财报的“智能询问”助手构建}
+\subsection{任务二：面向财报的“智能询问”助手构建}\textbf{（这里可以放任务二的流程图）}
 在任务一所构建的结构化财报数据库基础之上，本文设计并实现了一款面向上市公司财务数据的“智能问数”助手系统。
 该系统遵循“自然语言输入→意图识别→SQL生成→数据查询→可视化呈现→分析结论输出”的全链路自动化架构，具备单轮基础查询、多轮上下文对话、
 意图澄清引导及动态图表生成四项核心能力，最终以结构化JSON格式输出响应内容。
 \subsubsection{系统总体架构}
-本文将任务二抽象为四个协作层：
+针对任务二，为使系统职责清晰、模块化程度高，本文采取了分层设计。将智能询问助手系统拆解成四个协作层：\textbf{（这里可以放简单的框架图）}
 \begin{enumerate}
 	\item \textbf{交互层}：接收用户输入并以流式方式实时回传状态与答案；
 	\item \textbf{理解层}：完成意图识别、上下文继承与澄清决策；
 	\item \textbf{执行层}：NL2SQL生成、安全校验、数据库查询；
 	\item \textbf{表达层}：自动图表生成、文字结论组织、JSON结构化输出。
 \end{enumerate}
-该分层设计不仅使系统职责清晰、模块化程度高，还为后续的功能迭代与性能优化提供了便利的切入点。
-\subsubsection{基于大语言模型的NL2SQL生成引擎}
-本模块旨在将用户自然语言查询自动转化为可执行的结构化查询语句，并在数据库内容基础上生成可解释的分析结论。
-其核心逻辑为先让大语言模型完成“语义理解与查询规划”，再由数据库返回事实数据，最后由大语言模型负责归纳与解释，
-从而避免数据伪造提高结果的可核验性。
-从形式化角度，给定用户问题 $q$、数据库模式信息 $S$（表结构、字段语义）与对话上下文 $C$，NL2SQL 任务可表示为：
-\[
-	\hat{s} = \arg\max_{s \in \mathcal{S}} P(s \mid q, S, C; \theta),
-\]
-其中 $\hat{s}$ 为生成的 SQL，$\theta$ 为大语言模型参数。查询执行后得到结果集 $R = \text{Exec}(\hat{s})$，最终分析结论为：
-\[
-	\hat{a} = G(q, R, C),
-\]
-其中 $G(\cdot)$ 表示基于结构化结果的分析生成函数。
-\paragraph{算法 1：NL2SQL 生成与执行主流程}
-\begin{algorithmic}[1]
-	\REQUIRE
-	$q$: 用户自然语言问题 \\
-	$C$: 最近多轮对话上下文 \\
-	$S$: 数据库模式描述（表、字段、口径） \\
-	$T_{\text{allow}}$: 允许访问的表白名单
-	\ENSURE
-	$A$: 最终回答（含分析结论） \\
-	$M$: 中间元信息（SQL、命中行数、样例记录）
-
-	% 行1-3：非金融问题直接返回通用回答
-	\IF{$\neg \text{IsFinanceQuery}(q)$}
-	\STATE \textbf{return} $\text{GeneralLLMAnswer}(q, C), \{\}$
-	\ENDIF
-
-	% 行4：构建提示词
-	\STATE $P \leftarrow \text{BuildPrompt}(q, C, S)$
-
-	% 行5：LLM生成约束JSON
-	\STATE $J \leftarrow \text{LLM\_Generate\_JSON}(P)$
-
-	% 行6-8：解析失败/无需SQL
-	\IF{$\text{ParseFailed}(J) \text{ or } J.\text{need\_sql} = \text{false}$}
-	\STATE \textbf{return} $\text{GeneralLLMAnswer}(q, C), \{\}$
-	\ENDIF
-
-	% 行9：提取SQL
-	\STATE $\text{sql} \leftarrow J.\text{sql}$
-
-	% 行10-12：SQL安全校验
-	\IF{$\neg \text{IsSafeSelect}(\text{sql}, T_{\text{allow}})$}
-	\STATE \textbf{return} $\text{SafeFallbackAnswer}(q), \{\text{reason: ``unsafe\_sql''}\}$
-	\ENDIF
-
-	% 行13：执行带限制的SQL
-	\STATE $R \leftarrow \text{ExecSQLWithLimit}(\text{sql}, L_{\text{max}})$
-
-	% 行14-19：构造中间元信息M
-	\STATE $M \leftarrow \{$
-	\STATE \quad $\text{sql}: \text{sql},$
-	\STATE \quad $\text{row\_count}: |R|,$
-	\STATE \quad $\text{columns}: \text{Cols}(R),$
-	\STATE \quad $\text{sample\_rows}: \text{Head}(R, k)$
-	\STATE $\}$
-
-	% 行20-22：生成结果上下文+流式分析回答
-	\STATE $K \leftarrow \text{BuildResultContext}(M, R)$
-	\STATE $A \leftarrow \text{StreamAnalysisAnswer}(q, C, K)$
-	\STATE \textbf{return} $A, M$
-\end{algorithmic}
-
 \subsubsection{多轮对话与澄清机制}
 智能助手并不是简单保留聊天记录，而是维护可执行查询所需的\textbf{状态变量}。系统维护的核心状态包括公司实体、报告期窗口、指标口径与上一轮查询结
-果摘要。对于追问类问题（如“那同比呢”“换成2024Q3看一下”），系统优先复用上一轮状态，只更新添加状态变量。
+果摘要。对于追问类问题，系统优先复用上一轮状态，只更新添加状态变量。通过状态变量的设置让系统能理解上下文语境，处理用户的追问，提高用户的交互效率与体验。
 
-当用户输入关键信息缺失时，系统触发澄清模块。澄清模块采用“模板保底+LLM增强”的混合策略：
+针对用户输入关键信息缺失或意图模糊时，系统触发澄清模块。澄清模块采用“模板保底+LLM增强”的混合策略：
 \begin{enumerate}
 	\item 首轮优先使用模板追问；
 	\item 在用户模糊回答或复杂场景下调用LLM二次追问；
 	\item 信息满足执行条件后自动进入NL2SQL流程。
 \end{enumerate}
-通过该策略在评测中有效减少了“错误SQL”和“答非所问”现象。
+通过该策略在评测中有效减少了“错误SQL”和“答非所问”现象。\textbf{（这里可以放一张对比图）}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.70\textwidth]{1.png}
+	\caption{澄清策略前后效果对比}
+	\label{fig:单图}
+\end{figure}
+\subsubsection{基于大语言模型的NL2SQL生成引擎}
+本模块旨在将用户自然语言查询自动转化为可执行的结构化查询语句，并在数据库内容基础上生成可解释的分析结论。
+其核心逻辑为先让大语言模型完成“语义理解与查询规划”，再由数据库返回事实数据，最后由大语言模型负责归纳与解释，
+从而避免数据伪造提高结果的可核验性。\par
+从形式化角度，给定用户问题 $q$、数据库模式信息 $S$与对话上下文 $C$，NL2SQL 任务可表示为：
+\[
+	\hat{s} = \arg\max_{s \in \mathcal{S}} P(s \mid q, S, C; \theta),
+\]\par
+其中 $\hat{s}$ 为生成的 SQL，$\theta$ 为大语言模型参数。查询执行后得到结果集 $R = \text{Exec}(\hat{s})$，最终分析结论为：
+\[
+	\hat{a} = G(q, R, C),
+\]\par
+其中 $G(\cdot)$ 表示基于结构化结果的分析生成函数。\par
+
+\begin{algorithm}[htbp]
+	\caption{NL2SQL 生成与执行主流程}
+	\SetKwInOut{Input}{输入}
+	\SetKwInOut{Output}{输出}
+	\SetInd{0.5em}{1em} % 调整缩进间距
+
+	\Input{用户问题 $q$, 对话上下文 $C$, 数据库模式 $S$, 表白名单 $T_{allow}$}
+	\Output{回答 $A$, 元信息 $M$}
+	\BlankLine % 中间的分隔线（类似 midrule 效果）
+
+	% 步骤1：意图识别
+	\If{$\neg \text{IsFinanceQuery}(q)$}{
+		\Return $\text{GeneralLLMAnswer}(q, C), \emptyset$\;
+	}
+
+	% 步骤2：JSON 生成与解析
+	$P \leftarrow \text{BuildPrompt}(q, C, S)$\;
+	$J \leftarrow \text{LLM\_Generate\_JSON}(P)$\;
+
+	\If{$\text{ParseFailed}(J) \lor \neg J.\text{need\_sql}$}{
+		\Return $\text{GeneralLLMAnswer}(q, C), \emptyset$\;
+	}
+
+	% 步骤3：SQL 安全校验
+	$sql \leftarrow J.\text{sql}$\;
+	\If{$\neg \text{IsSafeSelect}(sql, T_{allow})$}{
+		\Return $\text{SafeFallbackAnswer}(q), \{\text{reason: ``unsafe''}\}$\;
+	}
+
+	% 步骤4：数据执行与元信息构建
+	$R \leftarrow \text{ExecSQLWithLimit}(sql, L_{max})$\;
+	$M \leftarrow \{ \text{sql}: sql, \text{count}: |R|, \text{cols}: \text{Cols}(R), \text{data}: \text{Head}(R, k) \}$\;
+
+	% 步骤5：结果生成
+	$K \leftarrow \text{BuildResultContext}(M, R)$\;
+	$A \leftarrow \text{StreamAnalysisAnswer}(q, C, K)$\;
+
+	\Return $(A, M)$\;
+\end{algorithm}
+
 \subsubsection{自动图表生成与证据化表达}
-为满足题目“可视化输出”要求，系统在SQL结果返回后自动进行图表规划。不同于直接让模型执行任意代码，本文采用“\textbf{模型决策+固定渲染器执行}”方案：
+为满足“可视化输出”要求，系统在SQL结果返回后自动进行图表规划。不同于直接让模型执行任意代码，本文采用“\textbf{模型决策+固定渲染器执行}”方案：
 \begin{enumerate}
 	\item 大语言模型根据结果字段与问题语义给出图表规格（如折线/柱状/饼图）；
-	\item 后端受控渲染器执行绘图并将图片保存到\texttt{result}目录；
-	\item 在流式回复中实时告知图片文件名与保存路径，并结合图表给出结论解释。
+	\item 后端受控渲染器执行绘图并将图片保存到\texttt{result}目录下；
+	\item 在流式回复中实时告知图片文件名与保存路径，并结合图表给出结论分析解释。
 \end{enumerate}
 \subsubsection{流式交互与最终输出结构}
-在用户体验层，系统采用事件驱动流式输出。每轮交互会按阶段返回状态：意图分析、SQL生成、SQL执行、图表生成、结论生成。用户可以直观看到系统
+在用户体验层，系统采用事件驱动流式输出。每轮交互会按阶段返回状态：意图分析、SQL生成、SQL执行、图表生成、结论生成。用户可以通过后端的可视化界面，看到系统
 “正在做什么”。
 
 最终输出与要求格式保持一致：
@@ -234,7 +228,7 @@
 	\text{Answer} = \{\text{content},\ \text{image},\ \text{references}\}
 \end{equation}
 其中\texttt{image}为自动生成图表的相对路径列表，\texttt{content}为结合数据证据的分析结论。
-
+\subsubsection{模型展示与结果输出}
 \section{灵敏度分析 }
 \section{模型评价 }
 
