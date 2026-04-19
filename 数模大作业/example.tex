@@ -156,60 +156,56 @@
 \]
 其中 $G(\cdot)$ 表示基于结构化结果的分析生成函数。
 \paragraph{算法 1：NL2SQL 生成与执行主流程}
-\begin{figure}[H]
-	\caption{NL2SQL-Driven Query and Analysis}
-	\label{alg:nl2sql}
-	\begin{algorithmic}[1] % [1] 显示行号
-		\REQUIRE
-		$q$: 用户自然语言问题 \\
-		$C$: 最近多轮对话上下文 \\
-		$S$: 数据库模式描述（表、字段、口径） \\
-		$T_{\text{allow}}$: 允许访问的表白名单
-		\ENSURE
-		$A$: 最终回答（含分析结论） \\
-		$M$: 中间元信息（SQL、命中行数、样例记录）
+\begin{algorithmic}[1]
+	\REQUIRE
+	$q$: 用户自然语言问题 \\
+	$C$: 最近多轮对话上下文 \\
+	$S$: 数据库模式描述（表、字段、口径） \\
+	$T_{\text{allow}}$: 允许访问的表白名单
+	\ENSURE
+	$A$: 最终回答（含分析结论） \\
+	$M$: 中间元信息（SQL、命中行数、样例记录）
 
-		% 行1-3：非金融问题直接返回通用回答
-		\IF{$\neg \text{IsFinanceQuery}(q)$}
-		\STATE \textbf{return} $\text{GeneralLLMAnswer}(q, C), \{\}$
-		\ENDIF
+	% 行1-3：非金融问题直接返回通用回答
+	\IF{$\neg \text{IsFinanceQuery}(q)$}
+	\STATE \textbf{return} $\text{GeneralLLMAnswer}(q, C), \{\}$
+	\ENDIF
 
-		% 行4：构建提示词
-		\STATE $P \leftarrow \text{BuildPrompt}(q, C, S)$
+	% 行4：构建提示词
+	\STATE $P \leftarrow \text{BuildPrompt}(q, C, S)$
 
-		% 行5：LLM生成约束JSON
-		\STATE $J \leftarrow \text{LLM\_Generate\_JSON}(P)$
+	% 行5：LLM生成约束JSON
+	\STATE $J \leftarrow \text{LLM\_Generate\_JSON}(P)$
 
-		% 行6-8：解析失败/无需SQL
-		\IF{$\text{ParseFailed}(J) \text{ or } J.\text{need\_sql} = \text{false}$}
-		\STATE \textbf{return} $\text{GeneralLLMAnswer}(q, C), \{\}$
-		\ENDIF
+	% 行6-8：解析失败/无需SQL
+	\IF{$\text{ParseFailed}(J) \text{ or } J.\text{need\_sql} = \text{false}$}
+	\STATE \textbf{return} $\text{GeneralLLMAnswer}(q, C), \{\}$
+	\ENDIF
 
-		% 行9：提取SQL
-		\STATE $\text{sql} \leftarrow J.\text{sql}$
+	% 行9：提取SQL
+	\STATE $\text{sql} \leftarrow J.\text{sql}$
 
-		% 行10-12：SQL安全校验
-		\IF{$\neg \text{IsSafeSelect}(\text{sql}, T_{\text{allow}})$}
-		\STATE \textbf{return} $\text{SafeFallbackAnswer}(q), \{\text{reason: ``unsafe\_sql''}\}$
-		\ENDIF
+	% 行10-12：SQL安全校验
+	\IF{$\neg \text{IsSafeSelect}(\text{sql}, T_{\text{allow}})$}
+	\STATE \textbf{return} $\text{SafeFallbackAnswer}(q), \{\text{reason: ``unsafe\_sql''}\}$
+	\ENDIF
 
-		% 行13：执行带限制的SQL
-		\STATE $R \leftarrow \text{ExecSQLWithLimit}(\text{sql}, L_{\text{max}})$
+	% 行13：执行带限制的SQL
+	\STATE $R \leftarrow \text{ExecSQLWithLimit}(\text{sql}, L_{\text{max}})$
 
-		% 行14-19：构造中间元信息M
-		\STATE $M \leftarrow \{$
-		\STATE \quad $\text{sql}: \text{sql},$
-		\STATE \quad $\text{row\_count}: |R|,$
-		\STATE \quad $\text{columns}: \text{Cols}(R),$
-		\STATE \quad $\text{sample\_rows}: \text{Head}(R, k)$
-		\STATE $\}$
+	% 行14-19：构造中间元信息M
+	\STATE $M \leftarrow \{$
+	\STATE \quad $\text{sql}: \text{sql},$
+	\STATE \quad $\text{row\_count}: |R|,$
+	\STATE \quad $\text{columns}: \text{Cols}(R),$
+	\STATE \quad $\text{sample\_rows}: \text{Head}(R, k)$
+	\STATE $\}$
 
-		% 行20-22：生成结果上下文+流式分析回答
-		\STATE $K \leftarrow \text{BuildResultContext}(M, R)$
-		\STATE $A \leftarrow \text{StreamAnalysisAnswer}(q, C, K)$
-		\STATE \textbf{return} $A, M$
-	\end{algorithmic}
-\end{figure}
+	% 行20-22：生成结果上下文+流式分析回答
+	\STATE $K \leftarrow \text{BuildResultContext}(M, R)$
+	\STATE $A \leftarrow \text{StreamAnalysisAnswer}(q, C, K)$
+	\STATE \textbf{return} $A, M$
+\end{algorithmic}
 
 \subsubsection{多轮对话与澄清机制}
 智能助手并不是简单保留聊天记录，而是维护可执行查询所需的\textbf{状态变量}。系统维护的核心状态包括公司实体、报告期窗口、指标口径与上一轮查询结
