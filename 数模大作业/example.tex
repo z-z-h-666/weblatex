@@ -143,6 +143,13 @@
 	\item \textbf{执行层}：NL2SQL生成、安全校验、数据库查询；
 	\item \textbf{表达层}：自动图表生成、文字结论组织、JSON结构化输出。
 \end{enumerate}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.90\textwidth]{3.png}
+	\caption{询问助手协作层结构图}
+	\label{fig:单图}
+\end{figure}
+\subsubsection{系统总体架构}
 \subsubsection{多轮对话与澄清机制}
 智能助手并不是简单保留聊天记录，而是维护可执行查询所需的\textbf{状态变量}。系统维护的核心状态包括公司实体、报告期窗口、指标口径与上一轮查询结
 果摘要。对于追问类问题，系统优先复用上一轮状态，只更新添加状态变量。通过状态变量的设置让系统能理解上下文语境，处理用户的追问，提高用户的交互效率与体验。
