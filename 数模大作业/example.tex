@@ -6,7 +6,7 @@
 \usepackage{url}   % 网页链接
 \usepackage{subcaption} % 子标题
 \usepackage{algorithmic} % 算法伪代码环境
-\title{\textbf{泰迪杯}}
+\title{\textbf{基于多源异构解析与知识增强的财报“智能问数”助手}}
 \tihao{A}
 \schoolname{XX大学}
 \membera{ }
@@ -21,23 +21,23 @@
 
 \maketitle
 \begin{abstract}
-	本文针对两个连通教室内空气中示踪气体浓度的变化问题，基于物质守恒定律和流体混合原理，建立了双室耦合的微分方程动力学模型，并对空气混合过程及净化策略进行了深入研究。
+	针对上市公司财报场景中非结构化数据难解析、自然语言问答难约束、分析结论难追溯等问题，本文构建了一套面向财报分析的“智能问数”自动化系统。系统以结构化财报数据库为事实底座，以受控 NL2SQL 为查询接口，以研报知识库为分析增强模块，实现了从财报 PDF 解析、数据库构建，到自然语言问答、图表生成、归因解释与结果导出的全流程闭环。
 
-	\textbf{针对问题一}，我们将两个教室视为两个通过空气交换相互作用的“隔室”，利用质量守恒定律建立了关于两个教室气体浓度随时间变化的\textbf{一阶线性常微分方程组}。模型考虑了教室容积差异及恒定的\textbf{交换流速}，能够准确描述浓度动态演变过程。
+	\textbf{针对任务一}，提出基于\textbf{多源异构解析}与\textbf{勾稽校验}的结构化建模方法。通过PDF-Word格式转换、上下文感知的表格抽取、跨页表格合并、单位规范化等步骤,进一步结合会计恒等式校验、异常识别、联合唯一约束、事务回滚与批次溯源机制,建立了包含核心业绩指标表、资产负债表、利润表及现金流量表的\textbf{结构化财务数据库}。设计了由强结构到弱结构的\textbf{四层瀑布流数据映射机制}，在充分利用结构化表格精度的基础上，通过金融专用\textbf{SBERT语义匹配}弥补非结构化文本检索的不足，实现了核心指标的准确提取与交叉验证。
 
-	\textbf{针对问题二}，通过解析求解上述微分方程组，我们得到了两个教室内气体浓度的显式时间函数。分析表明，系统最终将达到动态平衡。计算得出，两个教室的空气大约需要 \textbf{18至30分钟} 才能达到工程意义上的“混合均匀”（达到最终平衡值的95\%以上），最终两个教室的示踪气体浓度均将稳定在 \textbf{0.48 g/m³}。我们还为后勤部门撰写了通俗易懂的解释说明。
+	\textbf{针对任务二}，构建了面向财报问答的分层式智能助手架构，形成“意图识别、槽位补全、NL2SQL 生成、SQL 安全执行、结果序列化、自动图表生成、结论输出”的智能问数链路。通过\textbf{意图识别}与\textbf{槽位填充}机制准确解析用户提问；引入对话状态跟踪与\textbf{上下文管理}维护多轮交互的语义连贯性；基于\textbf{关键要素熵值}建立主动类澄清机制提升交互效率；构建图表类型匹配规则库与统计描述模板库，自动生成符合数据特征的可视化结果与定量分析结论。
 
-	\textbf{针对问题三}，为了实现教室B空气的快速净化，我们引入了与外部环境进行空气交换的控制变量，建立了含外部通风项的改进模型。通过对比不同通风速率下的\textbf{浓度衰减曲线}，论证了引入外部新风,如开窗通风或开启排气扇的必要性。仿真结果显示，增加对流至室外的通风量能显著破坏原有的封闭平衡，使污染物浓度呈指数级快速下降。
+	\textbf{针对任务三}，进一步融合个股与行业研报知识库，建立结构化与非结构化证据协同的\textbf{混合检索机制}，增强了系统在复杂财报问题下的可靠性、可解释性与可追溯性。对非结构化研报文本进行\textbf{向量索引}与\textbf{语义切片}，支持精准的相似段落召回；设计基于大语言模型的\textbf{任务规划器}，将复杂复合问题拆解为有序的子任务序列；建立“数据-SQL-研报"的多维追溯链，在输出结果中明确标注引用来源与推理依据，实现从黑盒回答到全过程可解释的跃升。
 
-	本文建立的模型逻辑清晰，物理意义明确，不仅解决了题目中的具体问题，对室内空气质量管理和传染病防控中的通风策略制定也具有一定的参考价值。
+	本文方案避免了通用大模型在无约束条件下直接作答所带来的数值幻觉与口径漂移问题，形成了数据库、问答、批处理、导出与追溯一体化的工程闭环。研究结果可为上市公司财报自动解析、投研辅助决策以及可解释智能问答系统的设计提供参考。
 
-	\keywords{\quad  微分方程模型\quad 物质守恒\quad 隔室模型\quad 动态平衡\quad 空气流通}
+	\keywords{财报数据库;自然语言处理;知识增强检索;多意图规划;多源异构融合}
 \end{abstract}
 
-%目录  2019 明确不要目录，我觉得这个规定太好了
-%\tableofcontents
 
-%\newpage
+\tableofcontents
+
+\newpage
 
 \section{问题重述}
 
@@ -79,7 +79,10 @@
 
 任务三要求在结构化数据基础上融合个股与行业研报知识库以增强分析深度。首先
 需对非结构化研报文本进行切片与向量索引构建，实现针对具体问题的相似段落召
-回。针对多意图复合问题，需设计基于大语言模型的任务规划器，将复杂问句拆解
+回。针对多意图复合问题，需设计
+
+
+基于大语言模型的任务规划器，将复杂问句拆解
 为有序的子任务序列集。最后，为增强结果可信度，需建立“数据—SQL—研
 报摘要”的输出追溯链，在结果中明确标注引用来源与推理依据，实现从黑盒回答到
 可解释归因分析的跃升。
@@ -123,7 +126,7 @@
 \newpage
 \section{模型的建立与求解}
 \subsection{任务一：非结构化财报数据的解析与数据库构建}
-为确保上市公司财报数据的结构化存储与高效查询，本文设计并实现了一套端到端的自动化数据处理流水线，将非结构化PDF格式的财务报告转化为规范化的关系型数据库。该过程涵盖数据预处理、数据映射查找及计算、一致性校验三个核心环节。为后续智能助手平台搭建，我们构建了数据库，将解析得到的数据写入数据库。最终构建了包含核心业绩指标表、资产负债表、利润表及现金流量表四张核心表的财务数据库。\par
+为确保上市公司财报数据的结构化存储与高效查询，本文设计并实现了一套端到端的自动化数据处理流水线，将非结构化PDF格式的财务报告转化为规范化的关系型数据库。该过程涵盖数据预处理、数据映射查找及计算、一致性校验三个核心环节。我们将解析得到的数据处理后写入数据库，最终构建了包含核心业绩指标表、资产负债表、利润表及现金流量表四张核心表的财务数据库，为后续智能助手平台搭建提供了可靠数据基础。
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.90\textwidth]{4.png}
@@ -131,7 +134,7 @@
 	\label{fig:任务一处理流程架构图}
 \end{figure}
 \subsubsection{非结构化财报数据的解析}
-原始财务报告以 PDF 格式呈现，普遍存在版式复杂、表格与正文混排、关键数据跨页拆分等问题，难以直接用于结构化分析与建模。为此，本文先对报告进行解析将其从非结构化的pdf格式转换为可编辑的word格式，并从中精准提取财务表格，再经标准化数据清洗与规整处理，完成从非结构化财报到标准化结构化数据的转换。
+原始财务报告以 PDF 格式呈现，普遍存在版式复杂、表格与正文混排、关键数据跨页拆分等问题，难以直接用于结构化分析与建模。为此，本文先对报告进行解析将其从非结构化的PDF格式转换为可编辑的Word格式，并从中精准提取财务表格，再经标准化数据清洗与规整处理，完成从非结构化财报到标准化结构化数据的转换。
 
 （1）PDF格式转为Word格式
 
@@ -143,7 +146,7 @@
 	% 两列：左对齐 + 左对齐（可换成 c 居中）
 	\begin{tabular}{cc}
 		\toprule  % 顶线
-		PDF                 & WORD              \\
+		PDF                 & Word              \\
 		\midrule  % 中线
 		适合扫描件与图像化表格,无内在行列结构 & 原生结构化强,自带行列标签     \\
 		文本碎片化, 文字常被拆分为独立文本框 & 文本连续完整,便于直接复制使用   \\
@@ -153,7 +156,7 @@
 	\end{tabular}
 \end{table}
 
-财务报告形式上为报告类文字，非扫描件图片，转换可行性非常强。直接从pdf解析得到的表格，易出现列数错乱，数字与符号混乱，数据乱序等问题。我们借助 pdf2docx 将 PDF 精准还原为具备原生表格结构的 Word 文档，按版式还原并保留原生表格结构，使表格行列边界、单元格归属、文本对齐关系得到完整保留。
+财务报告形式上为报告类文字，非扫描件图片，转换可行性非常强。直接从PDF解析得到的表格，易出现列数错乱，数字与符号混乱，数据乱序等问题。我们借助 pdf2docx 将 PDF 精准还原为具备原生表格结构的 Word 文档，按版式还原并保留原生表格结构，使表格行列边界、单元格归属、文本对齐关系得到完整保留。
 
 在此基础上再进行表格提取与数据清洗，能够显著提升表格结构还原度，避免因 PDF 非结构化渲染导致的数据错位、符号丢失与数值错乱，确保财务数据的完整性与准确性。
 
@@ -184,7 +187,6 @@
 \begin{equation}
 	x^{*} = \lambda \cdot x
 \end{equation}
-
 其中，$\lambda$ 为单位转换系数，$x^{*}$ 为标准化后的数值（单位统一为“元”）。
 
 同时，对表格数据进行规范化处理，包括：1.千分位符号去除、2.括号负数转换（如“(100)”$\rightarrow$-100）、3.百分比数值还原
@@ -194,12 +196,12 @@
 	% 两列：左对齐 + 左对齐（可换成 c 居中）
 	\begin{tabular}{cccccc}
 		\toprule  % 顶线
-		stock\_code & stock\_abbr & net\_profit(万元) ··· & repor\_period & report\_year \\
+		stock\_code & stock\_abbr & net\_profit(万元) ··· & repoeriod & r\_year \\
 		\midrule  % 中线
-		600080      & 金花股份        & 3345.950516                  & FY            & 2022         \\
-		600080      & 金花股份        & 468.093536                   & Q1            & 2023         \\
-		600080      & 金花股份        & 339.02983                    & Q3            & 2023         \\
-		600080      & 金花股份        & 2396.242714                  & FY            & 2023         \\
+		600080      & 金花股份        & 3345.950516         & FY        & 2022    \\
+		600080      & 金花股份        & 468.093536          & Q1        &         \\
+		600080      & 金花股份        & 339.02983           & Q3                  \\
+		600080      & 金花股份        & 2396.242714         & FY        & 2023    \\
 
 		\bottomrule % 底线
 	\end{tabular}
@@ -276,7 +278,6 @@
 \[
 	\text{sim}(q,t)=\frac{q\cdot t}{\|q\|\|t\|}
 \]
-
 其中$q$为目标字段名称的向量表示，$t$为财报候选文本的向量表示，$\text{sim}(q,t)\in[0,1]$，值越大表
 示语义相似度越高。
 
@@ -405,17 +406,18 @@
 \texttt{failed}并记录完整的异常堆栈信息。通过该设计确保了数据库不会写入残留的脏数据，
 维持了数据的全局一致性。
 
-\paragraph{数据的可视化追溯}系统为每一条财务数据记录配置了唯一\texttt{id}字段，实现了数据全生命周期的可追溯管理。通过关联数据导入批次信息，可对任意一条财务记录的来源与变更过程进行完整溯源，具体支持以下追溯场景：（如记录来源于哪个Excel文件，数据执行导入的操作者是谁等）
+\paragraph{数据的可视化追溯}系统为每一条财务数据记录配置了唯一\texttt{id}字段，实现了数据全生命周期的可追溯管理。通过关联数据导入批次信息，可对任意一条财务记录的来源与变更过程进行完整溯源，具体支持以下追溯场景：如记录来源于哪个Excel文件，数据执行导入的操作者是谁等。
 \subsection{任务二：面向财报的“智能询问”助手构建}
 在任务一所构建的结构化财报数据库基础之上，本文设计并实现了一款面向上市公司财务数据的“智能问数”助手系统。
 该系统遵循“自然语言输入→意图识别→SQL生成→数据查询→可视化呈现→分析结论输出”的全链路自动化架构，具备单轮基础查询、多轮上下文对话、
 意图澄清引导及动态图表生成四项核心能力，最终以结构化JSON格式输出响应内容。
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.90\textwidth]{2.png}
+	\includegraphics[width=0.80\textwidth]{2.png}
 	\caption{智能询问助手系统架构图}
 	\label{fig:智能询问助手系统架构图}
 \end{figure}
+
 \subsubsection{系统总体架构}
 针对任务二，为使系统职责清晰、模块化程度高，本文采取了分层设计。将智能询问助手系统拆解成四个协作层：
 \begin{enumerate}
@@ -426,7 +428,7 @@
 \end{enumerate}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.90\textwidth]{3.png}
+	\includegraphics[width=0.80\textwidth]{3.png}
 	\caption{询问助手协作层结构图}
 	\label{fig:协作层结构图}
 \end{figure}
@@ -453,11 +455,11 @@
 从形式化角度，给定用户问题 $q$、数据库模式信息 $S$与对话上下文 $C$，NL2SQL 任务可表示为：
 \[
 	\hat{s} = \arg\max_{s \in \mathcal{S}} P(s \mid q, S, C; \theta),
-\]\par
+\]
 其中 $\hat{s}$ 为生成的 SQL，$\theta$ 为大语言模型参数。查询执行后得到结果集 $R = \text{Exec}(\hat{s})$，最终分析结论为：
 \[
 	\hat{a} = G(q, R, C),
-\]\par
+\]
 其中 $G(\cdot)$ 表示基于结构化结果的分析生成函数。\par
 
 \begin{algorithm}[htbp]
@@ -648,7 +650,7 @@
 \end{equation}
 其中 $\mathcal{E}(c_j)$ 为支持主张 $c_j$ 的证据集合，$\mathrm{sim}(c_j,e)$ 为主张与证据的语义相似度，$\mathrm{ent}(c_j,e)$ 为主张与证据的实体一致性得分，$\mathrm{src}(e)$ 为证据来源的可信度得分，$\omega_1,\omega_2,\omega_3$ 分别为三项得分的权重。若 $\mathrm{Sup}(c_j)$ 低于阈值，则该主张不进入最终答案。
 
-当用户发起“依据是什么”类追问时，系统调用解释函数，从归因链路中抽取与质疑点最相关的局部子图，返回对应的报表字段、研报摘录及推理路径。设质疑问题为$$Q^\dagger$$，则解释函数定义为
+当用户发起“依据是什么”类追问时，系统调用解释函，从归因链路中抽取与疑点最相关的局部子图，返回对应的报表字段、研报摘录及推理路径。设质疑问题为$$Q^\dagger$$，则解释函数定义为
 \begin{equation}
 	A^\dagger=\Phi(Q^\dagger,\mathcal{P}(Q)),
 	\tag{5-22}
@@ -664,31 +666,39 @@
 \end{equation}
 当 $\mathrm{Conf}(A)$ 高于阈值 $\xi$ 时输出最终答案，否则进入保守修正或证据补检阶段。最终答案写为
 \begin{equation}
-	A^\ast=\mathrm{Verify}\bigl(\mathrm{Generate}(Q,E(q)),E(q)\bigr).
+	A^\ast=\mathrm{Verify}\bigl(\mathrm{Generate}(Q,E(q)),E(q)\bigr)
 	\tag{5-24}
 \end{equation}
-\section{灵敏度分析 }
-\section{模型评价 }
+\section{模型评价}
 
 \subsection{模型的优点}
 \begin{enumerate}
-	\item 模型基于物质守恒定律和流体混合原理，具有坚实的物理基础，能够准确描述两个教室内示踪气体浓度随时间的动态演变过程。
+	\item 方案覆盖了“PDF解析—结构化入库—自然语言问答—图表生成—研报增强—结果追溯”的完整链路，流程闭环清晰，便于落地实现。
+	\item 采用“结构化优先、文本补充”的分层映射机制，并结合会计恒等式与联合约束校验，能够有效降低财报字段错位、漏提和口径不一致问题。
+	\item 通过意图识别、槽位补全、NL2SQL 与可视化模板联动，提升了自然语言交互的自动化程度，减少了人工干预。
+	\item 引入研报知识库与证据追溯机制后，模型不仅能给出答案，还能说明答案来源，增强了结果的可解释性与可信度。
 \end{enumerate}
 
 \subsection{模型的缺点与改进}
 \begin{enumerate}
-	\item “均匀混合”假设的局限性：模型假设教室内空气瞬间均匀混合，忽略了污染物在房间角落或远离门窗区域的空间分布差异。在实际大空间教室中，可能存在局部浓度过高的死角。
+	\item 系统对财报版式和表格质量较为敏感，若原始 PDF 存在严重扫描噪声、跨页断裂或排版异常，解析精度仍会下降。
+	\item 方案中包含较多规则、阈值和模板设计，虽然可控性较强，但维护成本较高，面对新行业、新披露格式时需要持续调整。
+	\item 语义检索与大模型规划环节仍可能出现召回偏差或推理漂移，后续可通过更强的领域微调、约束解码和人工反馈闭环进一步优化。
 \end{enumerate}
 
 % =============================================================
 % 参考文献
 % =============================================================
-
+\newpage
 \begin{thebibliography}{99}
 
-	\bibitem{jiang2011}
-	姜启源, 谢金星, 叶俊. \textit{数学建模 (第4版)}. 北京: 高等教育出版社, 2011.
-
+	\bibitem{1}Lewis P, Perez E, Piktus A, et al. Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks[C]
+	\bibitem{2} Cormack G V, Clarke C L A, Büttcher S. Reciprocal Rank Fusion Outperforms Condorcet and Individual Rank Learning Methods[C]
+	\bibitem{3} Moreau L, Missier P. PROV-DM: The PROV Data Model[S]. W3C Recommendation, 2013. 
+	\bibitem{4} Yao S, Zhao J, Yu D, et al. ReAct: Synergizing Reasoning and Acting in Language Models[C] 
+	\bibitem{5} Robertson S, Zaragoza H. The Probabilistic Relevance Framework: BM25 and Beyond[J]. Foundations and Trends in Information Retrieval, 2009.
+	\bibitem{6} Deng N, Chen Y, Zhang Y. Recent Advances in Text-to-SQL: A Survey of What We Have and What We Expect[C]
+	\bibitem{7} Zhong V, Xiong C, Socher R. Seq2SQL: Generating Structured Queries from Natural Language Using Reinforcement Learning[EB/OL]
 
 \end{thebibliography}
 
@@ -698,117 +708,229 @@
 \begin{appendices}
 
 	\newpage
-	\section{附录：主要Python求解代码}
+	\section{附录：主要Python代码}
 
-	\subsection{问题二：双教室气体交换动力学模拟}
+	\subsection{任务一：}
 	\label{code:prob1}
 
-	\begin{lstlisting}[caption={问题一浓度变化模拟代码}, label={lst:code1}]
-	import numpy as np
-	import matplotlib.pyplot as plt
-	from scipy.integrate import odeint
-	
-	# 1. 参数设置
-	V_A = 150.0  # 教室A体积 (m^3)
-	V_B = 100.0  # 教室B体积 (m^3)
-	Q = 10.0     # 交换速率 (m^3/min)
-	C_A_init = 0.8
-	C_B_init = 0.0
-	
-	# 2. 定义微分方程组
-	def exchange_model(C, t):
-	C_A, C_B = C
-	dC_A_dt = (Q * C_B - Q * C_A) / V_A
-	dC_B_dt = (Q * C_A - Q * C_B) / V_B
-	return [dC_A_dt, dC_B_dt]
-	
-	# 3. 求解
-	t = np.linspace(0, 60, 1000)
-	sol = odeint(exchange_model, [C_A_init, C_B_init], t)
-	
-	# 4. 绘图 (省略部分格式化代码)
-	plt.plot(t, sol[:, 0], label='Classroom A')
-	plt.plot(t, sol[:, 1], label='Classroom B')
-	plt.axhline(y=0.48, color='green', linestyle='--', label='Equilibrium (0.48)')
-	plt.legend()
-	plt.show()
-\end{lstlisting}
+	\begin{lstlisting}[caption={数据公式计算模块部分代码}, label={lst:code1}]
+	import os
+import pandas as pd
+import re
+from typing import Dict, Optional, Tuple, List
 
-	\subsection{问题三：不同净化策略的对比分析}
-	\label{code:prob3}
+class RatioCalculator:
+    INTERNAL_HELPER_FIELDS = set()
+    def __init__(self, raw_data_path: str, config_excel: str, all_data_map: Dict = None):
+        """
+        :param raw_data_path: 数据提取器输出的中间Excel文件
+        :param config_excel: 附件3 Excel 路径
+        :param all_data_map: 所有报告数据的映射（用于跨表格计算）
+        """
+        self.raw_df = pd.read_excel(raw_data_path)
+        if '备注' in self.raw_df.columns:
+            self.raw_df['备注'] = self.raw_df['备注'].astype(object)
 
-	该脚本用于对比“基准策略”、“仅通风策略”与“隔离+通风策略”的效果。
+        self.config = pd.read_excel(config_excel, sheet_name=None)
+        self.all_data_map = all_data_map if all_data_map else {}
+        
+        self.filename = os.path.basename(raw_data_path)
+        self.report_year, self.report_period = self._parse_filename(self.filename)
+        self.prior_year = self.report_year - 1
 
-	\begin{lstlisting}[caption={问题三净化策略对比仿真代码}, label={lst:code3}]
-	import numpy as np
-	import matplotlib.pyplot as plt
-	from scipy.integrate import odeint
-	
-	# 参数定义
-	V_A, V_B = 150.0, 100.0
-	C_A0, C_B0 = 0.8, 0.0
-	
-	def strategy_model(C, t, Q_door, Q_vent):
-	"""
-	Q_door: 教室间交换率 (关门=0)
-	Q_vent: 教室B排风率
-	"""
-	C_A, C_B = C
-	dC_A_dt = (Q_door * C_B - Q_door * C_A) / V_A
-	dC_B_dt = (Q_door * C_A - Q_door * C_B - Q_vent * C_B) / V_B
-	return [dC_A_dt, dC_B_dt]
-	
-	t = np.linspace(0, 30, 600)
-	init_C = [C_A0, C_B0]
-	
-	# 策略1: 基准 (开门, 无排风)
-	sol1 = odeint(strategy_model, init_C, t, args=(10.0, 0.0))
-	
-	# 策略2: 仅通风 (开门, 排风20)
-	sol2 = odeint(strategy_model, init_C, t, args=(10.0, 20.0))
-	
-	# 策略3: 隔离+通风 (关门, 排风20)
-	sol3 = odeint(strategy_model, init_C, t, args=(0.0, 20.0))
-	
-	# 绘图部分
-	plt.plot(t, sol1[:, 1], label='Strategy 1: Baseline')
-	plt.plot(t, sol2[:, 1], label='Strategy 2: Vent Only')
-	plt.plot(t, sol3[:, 1], label='Strategy 3: Isolation+Vent')
-	plt.axhline(y=0.05, color='r', linestyle=':', label='Threshold')
-	plt.legend()
-	plt.show()
-\end{lstlisting}
+        print(f"处理文件: {self.filename}")
+        print(f"报告年份: {self.report_year}, 报告期: {self.report_period}, 上年: {self.prior_year}")
 
-	\subsection{灵敏度分析代码}
+    def _build_data_map(self) -> Dict[str, float]:
+        """构建本期和上期数据的变量映射表"""
+        data_map = {}
+        
+        for _, row in self.raw_df.iterrows():
+            field_id = row['字段名称']
+            cn_raw = str(row['中文名称'])
+            cn_clean = self._normalize_name(cn_raw)
+
+            val_curr = row.get(f'{self.report_year}年数值')
+            val_prior = row.get(f'{self.prior_year}年数值')
+
+            if self._is_ratio_field(cn_raw):
+                continue
+
+            if pd.notna(val_curr):
+                v = float(val_curr)
+                data_map[field_id] = v
+                data_map[cn_raw] = v
+                data_map[cn_clean] = v
+                data_map[cn_clean.replace('-', '_').replace('（', '_').replace('）', '_')] = v
+
+            if pd.notna(val_prior):
+                v = float(val_prior)
+                data_map[f'{field_id}_prior'] = v
+                data_map[f'{cn_raw}_prior'] = v
+                data_map[f'{cn_clean}_prior'] = v
+                data_map[f'{cn_clean.replace("-", "_").replace("（", "_").replace("）", "_")}_prior'] = v
+		return data_map
+
+
+if __name__ == "__main__":
+    import argparse
+    
+    parser = argparse.ArgumentParser(description="财务比率计算器")
+    parser.add_argument("--input_dir", required=True, help="输入目录")
+    parser.add_argument("--config", required=True, help="附件3配置文件路径")
+    
+    args = parser.parse_args()
+    
+    if not os.path.exists(args.config):
+        print(f"错误：找不到附件3文件 -> {args.config}")
+        exit(1)
+    
+    if not os.path.exists(args.input_dir):
+        print(f"错误：找不到输入文件夹 -> {args.input_dir}")
+        exit(1)
+    
+    calculate_all(args.input_dir, args.config)
+    print("\n=== 批量处理完成 ===")
+	\end{lstlisting}
+
+	\subsection{任务二}
 	\label{code:sensitivity}
+	\begin{lstlisting}[caption={智能体部分主代码}, label={lst:code1}]
+	import os
+	import time
+	import base64
+	import asyncio
+	import re
+	import traceback
+	from typing import Any, List
+	from openai import AsyncOpenAI
+	from app.core.config import settings
+	from app.core.ai_logger import ai_logger
+	from app.services.clarification_service import ClarificationService
+	from app.services.chart_service import chart_service
+	from app.services.task_planner_service import planner_service
+	from app.services.nl2sql_service import nl2sql_service
+	from app.services.prompts.prompts_config import PromptsLoader
+	try:
+	import dashscope
+	from dashscope.audio.asr import Recognition, RecognitionCallback, RecognitionResult
+	except ImportError:
+	dashscope = None
 
-	用于分析走廊/门洞交换速率的不确定性对混合时间的影响。
+	class AIService:
+	def __init__(self):
+	self.kimi_client = AsyncOpenAI(
+	api_key=settings.MOONSHOT_API_KEY or "placeholder",
+	base_url="https://api.moonshot.cn/v1",
+	)
 
-	\begin{lstlisting}[caption={参数灵敏度分析代码}, label={lst:code_sens}]
-	# 定义灵敏度分析函数
-	def get_mixing_time(Q_val):
-	# 求解特定Q下的方程
-	sol = odeint(exchange_model_modified, init_C, t, args=(Q_val,))
-	C_B = sol[:, 1]
-	# 查找达到0.4的时间索引
-	idx = np.where(C_B >= 0.4)[0]
-	if len(idx) > 0:
-	return t[idx[0]]
-	else:
-	return np.nan
-	
-	# 设定波动范围 (-20% to +20%)
-	variations = [0.8, 0.9, 1.0, 1.1, 1.2]
-	base_Q = 10.0
-	
-	print("Sensitivity Analysis Results:")
-	print("Variation | Q Value | Mixing Time | Time Change")
-	for v in variations:
-	Q_new = base_Q * v
-	t_mix = get_mixing_time(Q_new)
-	print(f"{v-1:.0%} | {Q_new:.1f} | {t_mix:.2f} min")
+	self.deepseek_client = AsyncOpenAI(
+	api_key=settings.DEEPSEEK_API_KEY or "placeholder",
+	base_url="https://api.deepseek.com/v1",
+	)
+
+	self.kimi_model = "kimi-k2.5"
+	self.deepseek_model = "deepseek-reasoner"
+
+	# 初始化 ClarificationService
+	self.clarification_service = ClarificationService()
+
+	async def get_image_description(self, file_path: str) -> tuple[str, str | None]:
+	try:
+	with open(file_path, "rb") as f:
+	file_content = f.read()
+
+	file_object = await self.kimi_client.files.create(
+	file=(os.path.basename(file_path), file_content),
+	purpose="image"
+	)
+	file_id = file_object.id
+
+	with open(file_path, "rb") as image_file:
+	base64_image = base64.b64encode(image_file.read()).decode('utf-8')
+
+	response = await self.kimi_client.chat.completions.create(
+	model=self.kimi_model,
+	messages=[
+	{
+	"role": "user",
+	"content": [
+	{"type": "text", "text": "这张图片里有什么？请详细描述。"},
+	{"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}}
+	],
+	}
+	],
+	)
+	return response.choices[0].message.content, file_id
+	except Exception as e:
+	return "无法描述图片内容。", None
+
+	async def get_video_description(self, file_path: str) -> tuple[str, str | None]:
+	try:
+	with open(file_path, "rb") as f:
+	file_object = await self.kimi_client.files.create(
+	file=f,
+	purpose="video"
+	)
+	file_id = file_object.id
+
+	content_list = [
+	{"type": "video_url", "video_url": {"url": f"ms://{file_id}"}},
+	{"type": "text", "text": "请描述这个视频的内容。"}
+	]
+
+	response = await self.kimi_client.chat.completions.create(
+	model=self.kimi_model,
+	messages=[{"role": "user", "content": content_list}],
+	)
+	return response.choices[0].message.content, file_id
+	except Exception as e:
+	return "无法描述视频内容。", None
+
 
 	\end{lstlisting}
+
+	\subsection{任务三：}
+	\label{code:prob1}
+
+	\begin{lstlisting}[caption={部分核心代码}, label={lst:code1}]
+	from __future__ import annotations
+
+import hashlib
+import re
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Iterable, Optional
+
+import chromadb
+import pdfplumber
+import pymysql
+from chromadb.utils import embedding_functions
+from openpyxl import load_workbook
+from pypdf import PdfReader
+
+from app.core.database import get_db_connection
+from app.services.question1_company_reference import (
+    load_company_reference,
+    normalize_stock_code,
+)
+
+
+BACKEND_DIR = Path(__file__).resolve().parents[2]
+FORMAL_DATA_DIR = BACKEND_DIR / "正式数据"
+ATTACHMENT5_DIR = FORMAL_DATA_DIR / "附件5：研报数据"
+STOCK_REPORT_DIR = ATTACHMENT5_DIR / "个股研报"
+INDUSTRY_REPORT_DIR = ATTACHMENT5_DIR / "行业研报"
+STOCK_META_PATH = ATTACHMENT5_DIR / "个股_研报信息.xlsx"
+INDUSTRY_META_PATH = ATTACHMENT5_DIR / "行业_研报信息.xlsx"
+
+COLLECTION_NAME = "attachment5_reports"
+TOP_LEVEL_TYPE_MAP = {
+    "stock": "task3_stock_report",
+    "industry": "task3_industry_report",
+}
+\end{lstlisting}
 \end{appendices}
 
 \end{document}
