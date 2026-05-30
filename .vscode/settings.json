@@ -60,5 +60,26 @@
 			"language": "latex",
 			"scheme": "file"
 		}
+	],
+	"latex-workshop.latex.tools": [
+		{
+			"name": "xelatex",
+			"command": "xelatex",
+			"args": [
+				"-synctex=1",
+				"-interaction=nonstopmode",
+				"-file-line-error",
+				"-output-directory=PDF",
+				"%DOC%"
+			]
+		}
+	],
+	"latex-workshop.latex.recipes": [
+		{
+			"name": "XeLaTeX",
+			"tools": [
+				"xelatex"
+			]
+		}
 	]
 }
