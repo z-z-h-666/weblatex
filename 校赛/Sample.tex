@@ -15,6 +15,12 @@
 	commentstyle=\songti\color[rgb]{0,0.5,0},% 设置注释样式
 	tabsize=4,% 设置制表符缩进
 }
+\titleformat{\paragraph}[block]
+  {\normalfont\bfseries}
+  {}
+  {0pt}
+  {}
+\titlespacing{\paragraph}{0pt}{1.5ex plus .5ex minus .2ex}{0.8em}
 %====================================================
 \title{\textbf{杭电数学建模竞赛}}% 请勿修改
 \date{}%请勿添加自己的信息
@@ -85,13 +91,73 @@
 针对问题三，不再固定问题一中的母材分配方案，而是将母材选取、工件分配、加工顺序和端部拼接方式统一纳入优化过程。与问题二相比，问题三的决策空间明显增大，因为工件不仅可以在同一母材内部重新排序，还可以重新分配到不同母材中。此时模型既要保证每根母材上的实际占用长度不超过其标准长度，又要考虑相邻工件拼接产生的共切收益。由于题目要求母材总长度最小为主要目标，共切收益最大为次要目标，切换次数最少为再次目标，因此可采用分层优化思想：首先确定母材总长度最小的可行方案，再在该方案集合中寻求共切收益较大的排序与拼接方式，最后进一步优化工件切换次数。
 \subsection{问题4的分析}
 针对问题四，模型需要从单批次下料扩展到连续 3 个批次的动态优化。该问题的难点在于余料具有跨批次传递特征：当某批次加工结束后剩余母材长度不小于 0.2m 时，可作为余料入库并在后续批次中优先使用；若不足 0.2m，则视为废料。因此，问题四不仅要分别优化每个批次内部的母材选取、工件排序和拼接方式，还要考虑前一批次余料对后一批次可用材料集合的影响。可将每个批次看作一个阶段，将可用余料状态作为阶段间传递信息，建立多批次动态下料优化模型。在求解目标上，仍应保持母材总长度最小的优先级，同时兼顾总共切收益和总切换次数，从而得到符合企业实际生产逻辑的连续加工方案。
-\section{假设与符号说明}
+
+
+
+
+\section{模型假设与符号说明}
+
+\subsection{模型假设}
+
+为简化问题分析并保证模型具有可求解性，本文作如下假设：
+
+\begin{enumerate}
+    \item 工件均沿母材轴向依次排布，其空间占用可用轴向占用长度表示。
+    \item 同类工件的几何尺寸一致，不考虑测量误差、装夹误差和加工变形对长度的影响。
+    \item 各类工件需求量必须全部满足，不允许欠产，也不额外安排超出需求量的工件。
+    \item 问题四中各批次按时间顺序加工，第 $t$ 批只能调用该批开始前已有余料
+\end{enumerate}
+
+\subsection{符号说明}
+
+本文主要符号说明如表~\ref{tab:symbols} 所示。各问题中特有的辅助变量将在对应模型建立部分另行说明。
+
+\begin{table}[htbp]
+\centering
+\caption{主要符号说明}
+\label{tab:symbols}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{ccc}
+\toprule
+符号 & 说明 & 单位/取值 \\
+\midrule
+$I$ & 工件类型集合 & $I=\{1,2,\ldots,n\}$ \\
+$S$ & 标准母材规格集合 & $S=\{1,2,\ldots,s_{\max}\}$ \\
+$K$ & 候选母材集合 & $K=\{1,2,\ldots,K_{\max}\}$ \\
+$R$ & 单根材料上的加工位置集合 & $R=\{1,2,\ldots,R_{\max}\}$ \\
+$O$ & 工件朝向集合 & $O=\{0,1\}$ \\
+$i,j$ & 工件类型编号 & $i,j\in I$ \\
+$k$ & 候选母材编号 & $k\in K$ \\
+$r$ & 加工位置编号 & $r\in R$ \\
+$o,p,\omega$ & 工件朝向编号 & $0$ 表示正向，$1$ 表示反向 \\
+$l_i$ & 第 $i$ 类工件的轴向占用长度 & mm \\
+$d_i$ & 第 $i$ 类工件的需求量 & 件 \\
+$L_s^S$ & 第 $s$ 类标准母材长度 & mm \\
+$g(i,o,j,p)$ & 工件 $i$ 与工件 $j$ 在给定朝向下的共切收益 & mm \\
+$h(i,j)$ & 工件类型切换指示函数 & $0$ 或 $1$ \\
+$m_{ks}$ & 第 $k$ 根母材是否选择第 $s$ 种规格 & $0$--$1$ 变量 \\
+$x_{ki}$ & 第 $k$ 根母材上安排第 $i$ 类工件的数量 & 非负整数 \\
+$q_{krio}$ & 第 $k$ 根母材第 $r$ 个位置是否安排工件 $i$ 且朝向为 $o$ & $0$--$1$ 变量 \\
+$z_{kriojp}$ & 相邻位置状态转移变量 & $0$--$1$ 变量 \\
+$t$ & 加工批次编号 & $t=1,2,3$ \\
+$\mathcal R_t$ & 第 $t$ 批开始前的库存余料集合 & -- \\
+$P_t$ & 第 $t$ 批可用材料集合 & -- \\
+$A_\rho$ & 库存余料 $\rho$ 的可用长度 & mm \\
+$E_{tp}$ & 第 $t$ 批材料 $p$ 加工后的剩余长度 & mm \\
+$F^*$ & 问题一第一阶段最优母材总长度 & mm \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+
 \section{数据预处理}
 本节对原始三维测绘点云数据进行必要的降重与异常值检测，保证后续轴向长度计算与下料模型建立的输入质量。
 
 \subsection{重复值检测与去重}
 
-首先对每个工件的原始点集进行了重复点检测与去重（降重），去重后点数及异常值检测结果汇总见表\ref{tab:dedup}。
+首先对每个工件的原始点集进行了重复点检测与去重，去重后点数及异常值检测结果汇总见表\ref{tab:dedup}。
 \begin{table}[htbp]
 \centering
 \caption{点云去重统计表}
@@ -116,27 +182,27 @@
 
 \subsection{异常值检测及处理}
 
-为直观判断数据质量，我们绘制了各工件的离散点散点图与提供的stp文件对比图，如下图\ref{fig:pipe1_comparison}，发现测得点云主要来自工件两端切面的截面扫描（即只对器件最外端截面进行了密集采样），数据量较少，且对比观察异常值不明显。基于这一观察，本文放弃盲目采用诸如双边滤波或统计离群点剔除（SOR）等可能导致过平滑（over‑smoothing）的复杂去噪方法，以免破坏截面几何特征。
+为直观判断数据质量，我们绘制了各工件的离散点散点图与提供的stp文件对比图，如下图\ref{fig:pipe1_comparison}，发现测得点云主要来自工件两端切面的截面扫描（即只对器件最外端截面进行了密集采样），数据量较少，且对比观察异常值不明显。基于这一观察，本文放弃盲目采用双边滤波或统计离群点剔除等可能导致过平滑的复杂去噪方法，以免破坏截面几何特征。
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.62\textwidth]{圆管1_comparison.png}
+	\includegraphics[width=0.8\textwidth]{圆管1_comparison.png}
 	\caption{圆管1点云与STP文件对比图}
 	\label{fig:pipe1_comparison}
 \end{figure}
-为检验是否存在异常值，将去重后数据与标准 CAD 曲面对比，采用三维空间偏差分析（3D deviation analysis）。设去重后点云为 $\{P_i(x_i,y_i,z_i)\}_{i=1}^n$，标准 CAD 数学曲面为 $\mathcal{S}$，对每个采样点 $P_i$，记其在曲面 $\mathcal{S}$ 上的最近投影点为 $Q_i^*$，曲面在 $Q_i^*$ 处的单位外法向量为 $\mathbf{n}(Q_i^*)$，
+为检验是否存在异常值，将去重后数据与标准 CAD 曲面对比，采用三维空间偏差分析。设去重后点云为 $\{P_i(x_i,y_i,z_i)\}_{i=1}^n$，标准 CAD 数学曲面为 $\mathcal{S}$，对每个采样点 $P_i$，记其在曲面 $\mathcal{S}$ 上的最近投影点为 $Q_i^*$，曲面在 $Q_i^*$ 处的单位外法向量为 $\mathbf{n}(Q_i^*)$，
 则第 $i$ 个点的有符号偏差定义为：
 \begin{equation}
 d_i = \mathbf{n}(Q_i^*) \cdot (P_i - Q_i^*), \qquad i=1,2,\dots,n,
 \end{equation}
 其中 $\cdot$ 表示向量点积。偏差的绝对值 $|d_i|$ 反映了点到曲面的距离大小，而符号 $d_i$ 的正负表示点位于曲面外部（正）或内部（负）。
 
-对各点集计算最大绝对偏差与平均绝对偏差作为数据质量判据。表\ref{tab:summary} 列出了各文件的去重后点数、最大绝对偏差、平均绝对偏差以及是否判定为合格（清洁）。从结果可见，唯一的显著异常来自 cleaned\_圆管1（最大绝对偏差约 $437\,$mm、平均绝对偏差约 $417\,$mm），进一步核查发现该问题由单位不一致导致；其余样本的最大/平均绝对偏差均在可接受范围内。所以我们认为不存在异常值。
+对各点集计算最大绝对偏差与平均绝对偏差作为数据质量判据。表\ref{tab:summary_points} 列出了各文件的去重后点数、最大绝对偏差、平均绝对偏差以及是否判定为合格。从结果可见，唯一的显著异常来自 cleaned\_圆管1（最大绝对偏差约 $437\,$mm、平均绝对偏差约 $417\,$mm），进一步核查发现该问题由单位不一致导致；其余样本的最大/平均绝对偏差均在可接受范围内。所以我们认为不存在异常值。
 
 \begin{table}[H]
 \centering
-\caption{去重与异常值检测汇总（summary\_table）}
-\label{tab:summary}
+\caption{去重与异常值检测汇总表}
+\label{tab:summary_points}
 \begin{tabular}{lrrrc}
 \toprule
 文件名 & 点数 & 最大偏差(mm) & 平均偏差(mm) & 是否合格 \\
@@ -159,128 +225,194 @@ cleaned\_圆管9  & 256  & 0.004474   & 0.000837   & 是 \\
 
 本文初探时曾尝试用传统主成分分析（PCA）提取第一主成分作为器件轴向，但由于端面扫描时截面采样点存在局部空间偏置，PCA 得到的方差最大方向往往偏离真实几何轴线，导致轴向长度估计偏差。为此，本文采用空间圆柱拟合方法：先通过 RANSAC 与非线性最小二乘优化求解圆柱轴线参数（轴线由点 $P_0$ 和方向 $\vec{n}$ 确定，半径 $R$，目标函数 $\min\sum\bigl(\|(P_i-P_0)\times\vec{n}\|^2-R^2\bigr)^2$），再将所有测点投影至该轴线得到一维坐标集 $T=\{t_i=(P_i-O)\cdot\vec{n}\}$，最后利用分位数计算轴向长度 $L=Q_{0.995}(T)-Q_{0.005}(T)$。该方法避免了直接使用最远两点，且对边缘微小噪点不敏感；本实验数据已确认无噪声，但分位数处理作为通用稳健策略予以保留。
 \section{模型建立与求解}
+
 \subsection{问题一模型建立与求解}
+\subsubsection{模型建立}
+问题一属于典型的一维下料优化问题。由于题目要求在满足全部工件加工需求的前提下尽可能减少母材消耗，同时还需兼顾加工过程中不同工件之间的切换次数，本文将该问题构造为两阶段混合整数线性规划模型：第一阶段以所用母材总长度最小为目标，得到最优总长度 $F^*$；第二阶段在保持总长度最优的前提下，进一步最小化工件切换次数，从而提高排产方案的加工连续性与可实施性。
 
-\textbf{1. 模型建立}
+\paragraph{决策变量}
 
-下料问题需同时考虑两个目标：最小化所用母材总长度（一阶段），以及在总长度最优的前提下最小化不同工件之间的切换次数（二阶段）。首先定义以下符号：
-
-\begin{itemize}
-    \item 工件集合 $I = \{1,2,\dots,10\}$，每种工件需生产 50 件。
-    \item 母材类型集合 $S = \{1,2,3,4\}$，对应标准长度分别为 $9000$、$10000$、$11000$、$12000$（单位：mm）。
-    \item 候选母材编号 $k \in K$，$K$ 取足够大的整数（例如 $K=50/（9/各类工件长度）$，确保可容纳所有工件）。
-    \item 工件 $i$ 的轴向占用长度为 $L_i$。
-\end{itemize}
-
-决策变量：
-\begin{equation}
-m_{ks} \in \{0,1\},\quad x_{ki} \in \mathbf{Z}_{\ge 0}.
-\end{equation}
-其中 $m_{ks}=1$ 表示第 $k$ 根母材选用 $s$ 型标准长度；$x_{ki}$ 为第 $k$ 根母材上安排的第 $i$ 类工件数量。
-
-辅助变量：
-\begin{equation}
-y_k \in \{0,1\},\quad y_k = \sum_{s\in S} m_{ks}.
-\end{equation}
-$y_k=1$ 表示第 $k$ 根母材被使用，否则为 0。
-
-\paragraph{第一阶段：最小化母材总长度}
-目标函数为：
-\begin{equation}
-\min F_1 = \sum_{k\in K}\sum_{s\in S} L_s m_{ks},
-\end{equation}
-其中 $L_s$ 为各型母材长度：
-\begin{equation}
-L_s = 
+定义母材规格选择变量
+\[
+m_{ks}=
 \begin{cases}
-9000,  & s=1 \\
-10000, & s=2 \\
-11000, & s=3 \\
-12000, & s=4
+1, & \text{第 }k\text{ 根候选母材选择第 }s\text{ 种标准长度},\\
+0, & \text{否则},
 \end{cases}
-\end{equation}
+\quad k\in K,\ s\in S.
+\]
 
-约束条件及其含义如下：
+定义工件数量变量
+\[
+x_{ki}\in \mathbf{Z}_{\ge 0},
+\]
+其中 $x_{ki}$ 表示第 $k$ 根母材上安排第 $i$ 类工件的数量。
 
-(1) 每种工件必须恰好生产 50 件，总量约束。
-\begin{align}
-\sum_{k\in K} x_{ki} = 50, \quad \forall i\in I
-\end{align}
+\paragraph{辅助变量}
 
-(2) 每根母材至多选择一种标准长度；若选择，则 $y_k=1$，否则 $y_k=0$。
-\begin{align}
-\sum_{s\in S} m_{ks} = y_k, \quad \forall k\in K
-\end{align}
+定义母材启用变量
+\[
+y_k=
+\begin{cases}
+1, & \text{第 }k\text{ 根候选母材被使用},\\
+0, & \text{否则},
+\end{cases}
+\quad k\in K.
+\]
 
-(3) 每根母材上工件的总长度不能超过该母材所选的标准长度。
-\begin{align}
-\sum_{i\in I} L_i x_{ki} \le \sum_{s\in S} L_s m_{ks}, \quad \forall k\in K
-\end{align}
+为刻画二阶段中的工件切换次数，引入工件出现指示变量
+\[
+u_{ki}=
+\begin{cases}
+1, & \text{第 }k\text{ 根母材上至少安排一件第 }i\text{ 类工件},\\
+0, & \text{否则},
+\end{cases}
+\quad k\in K,\ i\in I.
+\]
 
-(4) 若母材未被使用（$y_k=0$），则其上不能有工件；$M$ 取足够大数（如 50）。
-\begin{align}
-x_{ki} \le M y_k, \quad \forall k\in K,\forall i\in I,\quad M=50
-\end{align}
+进一步定义 $C_k$ 为第 $k$ 根母材上的最少工件切换次数。由于问题一不考虑工件的几何形状，若第 $k$ 根母材上共出现 $n_k$ 种不同工件，则其最少切换次数为 $n_k-1$；若该母材未使用或仅加工一种工件，则切换次数为 $0$。
 
-(5) 母材按编号顺序使用，禁止跳号，方便排产管理。
-\begin{align}
-y_k \ge y_{k+1}, \quad \forall k\in K
-\end{align}
+\paragraph{目标函数}
 
-(6) 变量类型与取值范围。
-\begin{align}
-m_{ks},y_k\in\{0,1\},\; x_{ki}\in\mathbf{Z}_{\ge 0}
-\end{align}
-
-该模型为混合整数线性规划，用 Gurobi 求解后可得到最优总长度 $F^*$。
-
-\paragraph{第二阶段：最小化切换次数}
-在第一阶段最优总长度 $F^*$ 的约束下，进一步减少不同工件之间的切换，以提高生产效率。引入指示变量 $u_{ki}\in\{0,1\}$，$u_{ki}=1$ 表示第 $k$ 根母材上至少有一件 $i$ 类工件。关系为：
-
-(7) 若 $u_{ki}=1$，则 $x_{ki}\ge1$，即必须有工件。
-\begin{align}
-x_{ki} \ge u_{ki}
-\end{align}
-
-(8) 若 $u_{ki}=0$，则 $x_{ki}=0$，无此类工件。
-\begin{align}
-x_{ki} \le M u_{ki}
-\end{align}
-
-第 $k$ 根母材上的切换次数定义为：
+本文采用两阶段优化策略。第一阶段以最小化所用母材总长度为目标，目标函数为
 \begin{equation}
-C_k = \max\left\{0,\; \sum_{i\in I} u_{ki} - 1\right\}.
+\min F_1=\sum_{k\in K}\sum_{s\in S}L_s^S m_{ks}.
+\label{eq:p1_obj1}
 \end{equation}
-即当母材上出现 $m$ 种不同工件时，切换次数为 $m-1$（若 $m=0$ 或 $1$，切换次数为 0）。
 
-则二阶段模型为：
-\begin{align}
-\min &\quad C_1 = \sum_{k\in K} C_k,
-\end{align}
-约束条件：
-(9) 总长度不超过第一阶段最优值，确保不浪费母材。
-\begin{align}
-\sum_{k\in K}\sum_{s\in S} L_s m_{ks} \le F^*
-\end{align}
-以及约束 (1)—(8)。
+求得第一阶段最优总长度 $F^*$ 后，第二阶段在保持总长度最优的前提下，以最小化总切换次数为目标：
+\begin{equation}
+\min C_1=\sum_{k\in K}C_k.
+\label{eq:p1_obj2}
+\end{equation}
 
-\textbf{2. 模型求解}
+\paragraph{约束条件}
 
-采用 Python 调用 Gurobi 10.0 进行求解。第一阶段求得最优总母材长度 $F^* = 99000$ mm；在此基础上第二阶段最小切换次数得到 $C_1=8$。
+首先，每类工件的总生产数量必须满足需求（$d_i=50$），即
+\begin{equation}
+\sum_{k\in K}x_{ki}=d_i,\quad \forall i\in I.
+\label{eq:p1_demand}
+\end{equation}
 
-\subsubsection{模型一结果与灵敏度分析}
+其次，每根候选母材至多选择一种标准长度。若第 $k$ 根母材被启用，则必须且只能选择一种母材规格；若未被启用，则不选择任何规格：
+\begin{equation}
+\sum_{s\in S}m_{ks}=y_k,\quad \forall k\in K.
+\label{eq:p1_select}
+\end{equation}
 
-表~\ref{tab:lengths} 列出了 10 种工件的轴向占用长度（由三维扫描与圆柱拟合获得）。  
-表~\ref{tab:cutting} 给出了最终的排料方案，共使用 10 根母材（长度分别为 9000, 12000, 9000, 10000, 10000, 9000, 10000, 10000, 10000, 10000 mm）。  
-表~\ref{tab:summary} 汇总了整体指标：总母材长度 99000 mm，总轴向占用长度 98971.2 mm，总体利用率 99.97\%，工件总切换次数 8 次。
+每根母材上安排的工件总轴向长度不能超过该母材所选的标准长度：
+\begin{equation}
+\sum_{i\in I}l_i x_{ki}\leq \sum_{s\in S}L_s^S m_{ks},\quad \forall k\in K.
+\label{eq:p1_capacity}
+\end{equation}
+其中M
 
+若第 $k$ 根母材未被使用，则其上不能安排任何工件：
+\begin{equation}
+x_{ki}\leq M y_k,\quad \forall k\in K,\ i\in I.
+\label{eq:p1_use}
+\end{equation}
+其中 $M$ 是一个足够大的常数，由于一根母材上每种工件的最大数量不超过需求50根，故可取M为50
+
+为消除候选母材编号的对称性，规定母材按编号顺序依次启用，即若第 $k+1$ 根母材被使用，则第 $k$ 根母材也必须被使用：
+\begin{equation}
+y_k\geq y_{k+1},\quad k=1,2,\ldots,K_{\max}-1.
+\label{eq:p1_order}
+\end{equation}
+
+为建立工件数量变量 $x_{ki}$ 与工件出现指示变量 $u_{ki}$ 之间的关系，设置如下逻辑约束：
+\begin{equation}
+x_{ki}\geq u_{ki},\quad \forall k\in K,\ i\in I,
+\label{eq:p1_u_lower}
+\end{equation}
+\begin{equation}
+x_{ki}\leq M u_{ki},\quad \forall k\in K,\ i\in I.
+\label{eq:p1_u_upper}
+\end{equation}
+其中M同理取50
+
+第 $k$ 根母材上的工件切换次数可由如下线性约束刻画：
+\begin{equation}
+C_k\geq \sum_{i\in I}u_{ki}-1,\quad \forall k\in K,
+\label{eq:p1_switch1}
+\end{equation}
+\begin{equation}
+C_k\geq 0,\quad \forall k\in K.
+\label{eq:p1_switch2}
+\end{equation}
+
+变量取值约束为
+\begin{equation}
+m_{ks},y_k,u_{ki}\in\{0,1\},\quad x_{ki}\in \mathbf{Z}_{\ge 0},\quad C_k\in \mathbf{Z}_{\ge 0}.
+\label{eq:p1_domain}
+\end{equation}
+
+
+\subsubsection{模型汇总}
+
+综上，将问题一的两阶段模型整理如下。
+
+第一阶段模型为
+\[
+\min \quad F_1=\sum_{k\in K}\sum_{s\in S}L_s^S m_{ks}
+\]
+\[
+\begin{aligned}
+\mathrm{s.t.}\quad
+&\sum_{k\in K}x_{ki}=d_i, &&\forall i\in I,\\
+&\sum_{s\in S}m_{ks}=y_k, &&\forall k\in K,\\
+&\sum_{i\in I}l_i x_{ki}\leq \sum_{s\in S}L_s^S m_{ks}, &&\forall k\in K,\\
+&x_{ki}\leq M y_k, &&\forall k\in K,\ i\in I,\\
+&y_k\geq y_{k+1}, &&k=1,2,\ldots,K_{\max}-1,\\
+&m_{ks},y_k\in\{0,1\},\quad x_{ki}\in \mathbf{Z}_{\ge 0}.
+\end{aligned}
+\]
+
+第二阶段模型为
+\[
+\min \quad C_1=\sum_{k\in K}C_k
+\]
+\[
+\begin{aligned}
+\mathrm{s.t.}\quad
+&\sum_{k\in K}\sum_{s\in S}L_s^S m_{ks}=F^*,\\
+&\sum_{k\in K}x_{ki}=d_i, &&\forall i\in I,\\
+&\sum_{s\in S}m_{ks}=y_k, &&\forall k\in K,\\
+&\sum_{i\in I}l_i x_{ki}\leq \sum_{s\in S}L_s^S m_{ks}, &&\forall k\in K,\\
+&x_{ki}\leq M y_k, &&\forall k\in K,\ i\in I,\\
+&y_k\geq y_{k+1}, &&k=1,2,\ldots,K_{\max}-1,\\
+&x_{ki}\geq u_{ki}, &&\forall k\in K,\ i\in I,\\
+&x_{ki}\leq M u_{ki}, &&\forall k\in K,\ i\in I,\\
+&C_k\geq \sum_{i\in I}u_{ki}-1, &&\forall k\in K,\\
+&C_k\geq 0, &&\forall k\in K,\\
+&m_{ks},y_k,u_{ki}\in\{0,1\},\quad x_{ki}\in \mathbf{Z}_{\ge 0},\quad C_k\in \mathbf{Z}_{\ge 0}.
+\end{aligned}
+\]
+
+
+\subsubsection{模型求解}
+
+问题一的模型为整数线性规划，采用Gurobi求解器分两阶段求解。第一阶段以最小化母材总长度为目标，直接求解得到最优总长度；第二阶段在保持该总长度不变的前提下，以最小化不同工件间的切换次数为目标进一步优化。
+
+\subsubsection{结果分析}
+
+求解得到第一阶段最优母材总长度为
+\[
+F^*=99000\ \mathrm{mm}.
+\]
+在保持该总长度不变的前提下，第二阶段求得最小总切换次数为
+\[
+C_1=8.
+\]
+
+表~\ref{tab:lengths} 列出了 10 种工件的轴向占用长度。表~\ref{tab:cutting} 给出了最终排样方案，共使用 10 根母材；表~\ref{tab:summary_overall} 汇总了总母材长度、总轴向占用长度、总体利用率和总切换次数等关键指标。
 \begin{table}[htbp]
 \centering
 \caption{工件轴向占用长度}
 \label{tab:lengths}
 \begin{tabular}{cc}
 \toprule
-工件编号 & 轴向占用长度 (mm) \\
+工件编号 & 轴向占用长度/mm \\
 \midrule
 G1 & 191.547 \\
 G2 & 148.826 \\
@@ -298,22 +430,22 @@ G10 & 200.000 \\
 
 \begin{table}[htbp]
 \centering
-\caption{下料方案（母材排样）}
+\caption{下料方案}
 \label{tab:cutting}
-\begin{tabular}{clcccc}
+\begin{tabular}{ccp{5.2cm}ccc}
 \toprule
-母材编号 & 母材长度(mm) & 工件块序列 & 占用总长度(mm) & 剩余长度(mm) & 利用率 \\
+母材编号 & 母材长度/mm & 工件组合 & 占用总长度/mm & 剩余长度/mm & 利用率 \\
 \midrule
-M1 & 9000  & G1×45, G9×2   & 8981.681 & 18.319  & 0.9980 \\
-M2 & 12000 & G2×24, G4×44  & 11999.892& 0.108   & 0.9999 \\
-M3 & 9000  & G1×5, G3×24, G9×19 & 8994.490 & 5.510   & 0.9994 \\
-M4 & 10000 & G10×50        & 10000.000& 0.000   & 1.0000 \\
-M5 & 10000 & G8×25         & 9998.100 & 1.900   & 0.9998 \\
-M6 & 9000  & G5×50, G9×29  & 8999.957 & 0.043   & 0.9999 \\
-M7 & 10000 & G7×40         & 10000.000& 0.000   & 1.0000 \\
-M8 & 10000 & G8×25         & 9998.100 & 1.900   & 0.9998 \\
-M9 & 10000 & G6×50, G7×10  & 10000.000& 0.000   & 1.0000 \\
-M10& 10000 & G2×26, G3×26, G4×6 & 9998.980 & 1.020   & 0.9999 \\
+M1  & 9000  & G1$\times$45, G9$\times$2        & 8981.681  & 18.319 & 0.9980 \\
+M2  & 12000 & G2$\times$24, G4$\times$44       & 11999.892 & 0.108  & 0.9999 \\
+M3  & 9000  & G1$\times$5, G3$\times$24, G9$\times$19 & 8994.490 & 5.510  & 0.9994 \\
+M4  & 10000 & G10$\times$50                    & 10000.000 & 0.000  & 1.0000 \\
+M5  & 10000 & G8$\times$25                     & 9998.100  & 1.900  & 0.9998 \\
+M6  & 9000  & G5$\times$50, G9$\times$29       & 8999.957  & 0.043  & 0.9999 \\
+M7  & 10000 & G7$\times$40                     & 10000.000 & 0.000  & 1.0000 \\
+M8  & 10000 & G8$\times$25                     & 9998.100  & 1.900  & 0.9998 \\
+M9  & 10000 & G6$\times$50, G7$\times$10       & 10000.000 & 0.000  & 1.0000 \\
+M10 & 10000 & G2$\times$26, G3$\times$26, G4$\times$6 & 9998.980 & 1.020  & 0.9999 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -321,34 +453,1396 @@ M10& 10000 & G2×26, G3×26, G4×6 & 9998.980 & 1.020   & 0.9999 \\
 \begin{table}[htbp]
 \centering
 \caption{整体指标汇总}
-\label{tab:summary}
-\begin{tabular}{lcccc}
+\label{tab:summary_overall}
+\begin{tabular}{cccc}
 \toprule
-总母材长度(mm) & 总轴向占用长度(mm) & 总体利用率 & 工件总切换次数 \\
+总母材长度/mm & 总轴向占用长度/mm & 总体利用率 & 工件总切换次数 \\
 \midrule
 99000 & 98971.2 & 0.9997 & 8 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\medskip
-\noindent\textbf{此处可插入图片说明：}
+由表~\ref{tab:cutting} 可知，最终方案中多数母材的剩余长度接近 $0$，其中 M4、M7 和 M9 的利用率达到 $100\%$，说明第一阶段模型能够有效压缩母材浪费。同时，最终方案仅产生 $8$ 次工件切换，说明在保持总长度最优的前提下，加工连续性也很高。
+
+为增强结果展示的直观性，建议在表~\ref{tab:cutting} 后加入母材排样甘特图。该图以母材编号为纵轴，以母材长度方向为横轴，用不同色块表示不同工件类型，并在色块交界处标注切换位置。该图能够直观展示各母材的工件排列、剩余长度和切换次数。
+
+此外，可加入各母材剩余长度柱状图，用于展示各根母材剩余长度的分布情况，从而更直观地支撑总体利用率达到 $99.97\%$ 的结论。还可加入母材规格使用统计图，展示不同标准长度母材的使用数量，说明多规格母材组合对提升材料利用率的作用。
+
+
+
+\subsection{问题二模型建立与求解}
+
+问题二在问题一所得下料方案的基础上进一步考虑相邻工件端部之间的共切效应。与问题一仅根据工件轴向占用长度进行下料不同，问题二需要根据工件两端的几何轮廓计算相邻工件的最大可重叠长度，并在每根母材内部重新确定工件排列顺序及工件朝向，从而在不改变问题一母材选用方案和工件分配方案的前提下，最大化总共切收益。
+
+由问题一可知，每根母材的启用状态、母材规格以及工件分配数量已由式 \eqref{eq:p1_demand}--\eqref{eq:p1_domain} 确定。记问题一求得的最优工件分配结果为 $x_{ki}^*$，实际启用母材集合为
+\[
+K^*=\{k\in K\mid y_k^*=1\}.
+\]
+因此，问题二不再重复建立需求约束、母材选择约束和容量约束，而是在问题一最优分配方案的基础上，对每根母材内部的工件顺序与朝向进行独立优化。
+
+\subsubsection{数据处理与共切收益计算}
+
+\paragraph{端部点云预处理}
+
+以圆管轴线方向为 $x$ 轴，对每类工件的点云进行预处理，以获得端部轮廓的缩进函数。设第 $i$ 类工件的原始点云为
+\begin{equation}
+P_i=\left\{p_{i,n}=(x_{i,n},y_{i,n},z_{i,n})\mid n=1,2,\ldots,N_i\right\}.
+\label{eq:p2_pointcloud}
+\end{equation}
+
+对点云去重后，按 $x$ 坐标将点云划分为左端和右端。设不同的 $x$ 坐标升序排列为
+\begin{equation}
+x_{(1)}<x_{(2)}<\cdots<x_{(s)}.
+\label{eq:p2_xsort}
+\end{equation}
+
+取相邻 $x$ 坐标最大间隔所在位置作为左右端分界点：
+\begin{equation}
+q=\arg\max_{r=1,\ldots,s-1}\left(x_{(r+1)}-x_{(r)}\right),\qquad
+\tau_i=\frac{x_{(q)}+x_{(q+1)}}{2}.
+\label{eq:p2_split}
+\end{equation}
+
+于是，第 $i$ 类工件的左右端点云分别为
+\begin{equation}
+P_{i,L}=\{p\in P_i\mid x(p)\leq \tau_i\},\qquad
+P_{i,R}=\{p\in P_i\mid x(p)>\tau_i\}.
+\label{eq:p2_lr_cloud}
+\end{equation}
+
+为统一圆周方向，在 $YZ$ 截面上拟合圆心
+\begin{equation}
+C_i=(y_{c,i},z_{c,i}).
+\label{eq:p2_center}
+\end{equation}
+
+端部点 $p=(x,y,z)$ 的圆周角定义为
+\begin{equation}
+\varphi(p)=\operatorname{atan2}\left(z-z_{c,i},\,y-y_{c,i}\right)\bmod 360^\circ.
+\label{eq:p2_phi}
+\end{equation}
+
+对左端，取最外侧参考截面
+\[
+x_{i,L}^0=\min_{p\in P_{i,L}}x(p),
+\]
+则左端点的轴向缩进距离为
+\begin{equation}
+d(p)=x(p)-x_{i,L}^0,\qquad p\in P_{i,L}.
+\label{eq:p2_d_left}
+\end{equation}
+
+对右端，取最外侧参考截面
+\[
+x_{i,R}^0=\max_{p\in P_{i,R}}x(p),
+\]
+则右端点的轴向缩进距离为
+\begin{equation}
+d(p)=x_{i,R}^0-x(p),\qquad p\in P_{i,R}.
+\label{eq:p2_d_right}
+\end{equation}
+
+因此，任一端部点均可转化为角度--缩进距离形式 $(\varphi,d)$，其中 $d\geq0$。对于同一角度或极近角度的多个点，保留较小缩进距离，以避免高估端部可重叠长度：
+\begin{equation}
+d_{i,a}(\varphi)=\min\{d(p)\mid p\in P_{i,a},\ \varphi(p)=\varphi\},\qquad a\in\{L,R\}.
+\label{eq:p2_d_phi}
+\end{equation}
+
+将圆周角归一化到 $[0,360^\circ)$，并采用周期插值将端部离散点统一到角度网格
+\begin{equation}
+\Phi=\{0,\Delta\varphi,2\Delta\varphi,\ldots,360^\circ-\Delta\varphi\}.
+\label{eq:p2_phi_grid}
+\end{equation}
+
+由此得到每类工件左右端的端部缩进函数
+\begin{equation}
+d_{i,L}(\varphi_m),\quad d_{i,R}(\varphi_m),\qquad \varphi_m\in\Phi.
+\label{eq:p2_end_function}
+\end{equation}
+
+式 \eqref{eq:p2_end_function} 表示第 $i$ 类工件左右端在不同圆周角处相对于最外侧参考圆的轴向缩进距离。
+
+为增强该部分的直观性，建议在此处加入“点云端部分界与圆周角示意图”。该图可展示原始点云、左右端分界面、拟合圆心以及圆周角 $\varphi$ 的定义方式，从而说明端部缩进函数的几何来源。
+
+\paragraph{共切收益计算}
+
+设第 $i$ 类工件的端部为 $a$，第 $j$ 类工件的端部为 $b$，其中 $a,b\in\{L,R\}$。相邻加工时，允许工件 $j$ 绕公共 $x$ 轴相对工件 $i$ 旋转。设旋转角集合为
+\begin{equation}
+\Theta=\{0,\Delta\theta,2\Delta\theta,\ldots,360^\circ-\Delta\theta\}.
+\label{eq:p2_theta_grid}
+\end{equation}
+
+当旋转角为 $\theta$ 时，工件 $j$ 的端部轮廓在角度 $\varphi_m$ 处对应为 $d_{j,b}(\varphi_m-\theta)$。若两工件产生轴向重叠长度 $\delta$，为保证所有圆周角位置均不发生几何穿插，应满足
+\begin{equation}
+\delta\leq d_{i,a}(\varphi_m)+d_{j,b}(\varphi_m-\theta),
+\quad \forall \varphi_m\in\Phi.
+\label{eq:p2_overlap_constraint}
+\end{equation}
+
+因此，在固定旋转角 $\theta$ 下，端部组合 $ab$ 的最大可行重叠长度为
+\begin{equation}
+\delta_{ij}^{ab}(\theta)=
+\min_{\varphi_m\in\Phi}
+\left[d_{i,a}(\varphi_m)+d_{j,b}(\varphi_m-\theta)\right].
+\label{eq:p2_delta_theta}
+\end{equation}
+
+由于旋转角可以自由选择，端部组合 $ab$ 下的最大共切收益为
+\begin{equation}
+\Delta_{ij}^{ab}=
+\max_{\theta\in\Theta}
+\min_{\varphi_m\in\Phi}
+\left[d_{i,a}(\varphi_m)+d_{j,b}(\varphi_m-\theta)\right].
+\label{eq:p2_delta_ab}
+\end{equation}
+
+式 \eqref{eq:p2_delta_ab} 的含义是：对每个旋转角，先在所有圆周角位置中找出最小可重叠深度；再在所有旋转角中选择该最小重叠深度最大的方案，作为两端部的最大共切收益。
+
+四种端部组合对应四个共切收益矩阵：
+\begin{equation}
+\Delta^{LL},\quad \Delta^{LR},\quad \Delta^{RL},\quad \Delta^{RR}.
+\label{eq:p2_delta_matrices}
+\end{equation}
+
+若后续排序模型只需要两个工件相邻时的最大收益，则定义综合邻接收益矩阵
+\begin{equation}
+W_{ij}=\max\left\{
+\Delta_{ij}^{LL},\Delta_{ij}^{LR},\Delta_{ij}^{RL},\Delta_{ij}^{RR}
+\right\}.
+\label{eq:p2_W}
+\end{equation}
+
+同时记录对应的最优端部组合
+\begin{equation}
+A_{ij}=\arg\max_{ab\in\{LL,LR,RL,RR\}}\Delta_{ij}^{ab}.
+\label{eq:p2_A}
+\end{equation}
+
+若 $A_{ij}=a^*b^*$，则对应的最优旋转角为
+\begin{equation}
+\theta_{ij}^*=
+\arg\max_{\theta\in\Theta}
+\min_{\varphi_m\in\Phi}
+\left[d_{i,a^*}(\varphi_m)+d_{j,b^*}(\varphi_m-\theta)\right].
+\label{eq:p2_theta_star}
+\end{equation}
+
+两工件在端部组合 $ab$ 下的最小拼接轴向占用长度为
+\begin{equation}
+L_{ij}^{ab}=l_i+l_j-\Delta_{ij}^{ab}.
+\label{eq:p2_pair_length}
+\end{equation}
+
+建议在此处加入“端部轮廓旋转匹配示意图”与“共切收益矩阵热力图”。前者用于解释式 \eqref{eq:p2_delta_ab} 中 $\max$--$\min$ 结构的几何含义；后者用于展示不同工件对之间共切收益的差异，为后续排序优化提供直观依据。
+
+\subsubsection{模型建立}
+
+\paragraph{决策变量}
+
+问题二的核心决策是在每根母材内部确定工件的排列顺序和工件朝向。由问题一求解结果可知，第 $k$ 根母材上第 $i$ 类工件数量为 $x_{ki}^*$。
+
+设第 $k$ 根母材上的工件总件数为
+\begin{equation}
+n_k=\sum_{i\in I}x_{ki}^*,\qquad k\in K^*.
+\label{eq:p2_nk}
+\end{equation}
+
+定义排列决策变量
+\[
+\pi_k(t)\in I,\qquad t=1,2,\ldots,n_k,\quad k\in K^*,
+\]
+其中 $\pi_k(t)$ 表示第 $k$ 根母材上第 $t$ 个加工位置安排的工件类型。
+
+定义朝向决策变量
+\[
+o_k(t)\in\{0,1\},\qquad t=1,2,\ldots,n_k,\quad k\in K^*,
+\]
+其中 $o_k(t)=0$ 表示该位置工件按正向放置，即左端为 $L$、右端为 $R$；$o_k(t)=1$ 表示该位置工件按反向放置，即左端为 $R$、右端为 $L$。
+
+\paragraph{目标函数}
+
+对于第 $k$ 根母材，相邻位置 $t$ 与 $t+1$ 的共切收益由两工件类型及其朝向共同决定。定义
+\[
+g(i,o,j,p)
+\]
+为类型 $i$ 的工件以朝向 $o$ 放置，类型 $j$ 的工件以朝向 $p$ 放置，且二者相邻时的共切收益。
+
+根据朝向定义，若 $o=0$，则前一工件的右端为 $R$；若 $o=1$，则前一工件的右端为 $L$。若 $p=0$，则后一工件的左端为 $L$；若 $p=1$，则后一工件的左端为 $R$。因此，相邻端部组合可由朝向唯一确定。记该端部组合为 $ab$，则
+\begin{equation}
+g(i,o,j,p)=\Delta_{ij}^{ab}.
+\label{eq:p2_g}
+\end{equation}
+
+第 $k$ 根母材的总共切收益为
+\begin{equation}
+B_k=
+\sum_{t=1}^{n_k-1}
+g\left(\pi_k(t),o_k(t),\pi_k(t+1),o_k(t+1)\right).
+\label{eq:p2_Bk}
+\end{equation}
+
+所有母材的总共切收益为
+\begin{equation}
+B=\sum_{k\in K^*}B_k.
+\label{eq:p2_total_B}
+\end{equation}
+
+问题二的第一优化目标为
+\begin{equation}
+\max B.
+\label{eq:p2_obj_B}
+\end{equation}
+
+为在共切收益相同的情况下提高加工连续性，进一步考虑工件类型切换次数。定义相邻工件的切换增量为
+\begin{equation}
+h(i,j)=
+\begin{cases}
+0, & i=j,\\
+1, & i\neq j.
+\end{cases}
+\label{eq:p2_h}
+\end{equation}
+
+第 $k$ 根母材上的切换次数为
+\begin{equation}
+C_k=
+\sum_{t=1}^{n_k-1}
+h\left(\pi_k(t),\pi_k(t+1)\right).
+\label{eq:p2_Ck}
+\end{equation}
+
+所有母材的总切换次数为
+\begin{equation}
+C=\sum_{k\in K^*}C_k.
+\label{eq:p2_total_C}
+\end{equation}
+
+因此，问题二采用字典序优化目标：
+\begin{equation}
+\max_{\mathrm{lex}}\ (B,-C),
+\label{eq:p2_lex_obj}
+\end{equation}
+即优先最大化总共切收益；当总共切收益相同时，选择总切换次数更小的方案。
+
+\paragraph{约束条件}
+
+由于每根母材上的工件组成已由问题一确定，因此问题二需要保证重排后的工件数量与问题一最优分配结果一致：
+\begin{equation}
+\sum_{t=1}^{n_k}\mathbf{1}\{\pi_k(t)=i\}=x_{ki}^*,
+\qquad \forall k\in K^*,\ i\in I.
+\label{eq:p2_count_constraint}
+\end{equation}
+
+每个加工位置必须且只能安排一个工件类型，并选择一个朝向：
+\begin{equation}
+\pi_k(t)\in I,\quad o_k(t)\in\{0,1\},
+\qquad \forall k\in K^*,\ t=1,2,\ldots,n_k.
+\label{eq:p2_position_domain}
+\end{equation}
+
+问题二没有改变问题一中每根母材的工件集合，因此每根母材的原始轴向总占用长度仍满足问题一容量约束，即问题一式 \eqref{eq:p1_capacity}。考虑共切收益后，第 $k$ 根母材的拼接后轴向占用长度为
+\begin{equation}
+\widetilde{L}_k=
+\sum_{t=1}^{n_k}l_{\pi_k(t)}-B_k.
+\label{eq:p2_tilde_length}
+\end{equation}
+
+由于 $B_k\geq0$，且问题一中原始总长度已满足母材容量限制，因此有
+\[
+\widetilde{L}_k\leq \sum_{t=1}^{n_k}l_{\pi_k(t)}
+=\sum_{i\in I}l_i x_{ki}^*
+\leq \sum_{s\in S}L_s^S m_{ks}^*,
+\]
+
+
+\subsubsection{模型汇总}
+
+为便于后续求解，现将问题二的排序与朝向优化模型统一整理如下。
+
+\[
+\max_{\mathrm{lex}}\quad
+\left(
+\sum_{k\in K^*}\sum_{t=1}^{n_k-1}
+g\left(\pi_k(t),o_k(t),\pi_k(t+1),o_k(t+1)\right),
+-
+\sum_{k\in K^*}\sum_{t=1}^{n_k-1}
+h\left(\pi_k(t),\pi_k(t+1)\right)
+\right)
+\]
+
+\[
+\begin{aligned}
+\mathrm{s.t.}\quad
+&\sum_{t=1}^{n_k}\mathbf{1}\{\pi_k(t)=i\}=x_{ki}^*,
+&&\forall k\in K^*,\ i\in I,\\
+&\pi_k(t)\in I,
+&&\forall k\in K^*,\ t=1,2,\ldots,n_k,\\
+&o_k(t)\in\{0,1\},
+&&\forall k\in K^*,\ t=1,2,\ldots,n_k,\\
+&n_k=\sum_{i\in I}x_{ki}^*,
+&&\forall k\in K^*.
+\end{aligned}
+\]
+
+\subsubsection{模型求解}
+
+由于问题二中各母材之间不存在共切耦合，故可对每根母材分别求解排序与朝向优化问题。对于第 $k$ 根母材，采用动态规划求解含朝向选择的最大权哈密尔顿路径问题。
+
+定义状态向量
+\[
+\mathbf{c}=(c_1,c_2,\ldots,c_{|I|}),
+\]
+其中 $c_i$ 表示当前已使用第 $i$ 类工件的数量，满足
+\[
+0\leq c_i\leq x_{ki}^*.
+\]
+
+定义动态规划状态
+\[
+DP_k[\mathbf{c}][i][o]=(B,C),
+\]
+其中 $i$ 表示当前路径最后一个工件的类型，$o\in\{0,1\}$ 表示该工件的朝向，$B$ 表示当前状态下的最大共切收益，$C$ 表示达到该收益时的最小切换次数。
+
+状态转移时，考虑在当前路径末尾添加一个类型为 $j$、朝向为 $p$ 的新工件。设 $\mathbf{e}_j$ 为第 $j$ 个分量为 $1$、其余分量为 $0$ 的单位向量，则候选转移为
+\begin{equation}
+(B',C')=\left(B+g(i,o,j,p),\ C+h(i,j)\right).
+\label{eq:p2_candidate}
+\end{equation}
+
+动态规划转移方程为
+\begin{equation}
+DP_k[\mathbf{c}+\mathbf{e}_j][j][p]
+=
+\operatorname{best}_{\mathrm{lex}}
+\left\{
+DP_k[\mathbf{c}+\mathbf{e}_j][j][p],\
+DP_k[\mathbf{c}][i][o]+\left(g(i,o,j,p),h(i,j)\right)
+\right\},
+\label{eq:p2_dp_transfer}
+\end{equation}
+其中 $\operatorname{best}_{\mathrm{lex}}$ 表示优先选择共切收益 $B$ 较大的状态；若 $B$ 相同，则选择切换次数 $C$ 较小的状态。
+
+初始状态为任意单个工件作为路径起点。对于每一个满足 $x_{ki}^*>0$ 的工件类型 $i$ 以及朝向 $o\in\{0,1\}$，设置
+\begin{equation}
+DP_k[\mathbf{e}_i][i][o]=(0,0).
+\label{eq:p2_dp_init}
+\end{equation}
+
+当所有工件均被使用后，令
+\[
+\mathbf{x}_k^*=(x_{k1}^*,x_{k2}^*,\ldots,x_{k|I|}^*),
+\]
+则第 $k$ 根母材的最优结果为
+\begin{equation}
+(B_k^*,C_k^*)=
+\operatorname{best}_{\mathrm{lex}}
+\left\{
+DP_k[\mathbf{x}_k^*][i][o]\mid i\in I,\ o\in\{0,1\}
+\right\}.
+\label{eq:p2_dp_final}
+\end{equation}
+
+最终汇总所有母材，得到
+\begin{equation}
+B^*=\sum_{k\in K^*}B_k^*,\qquad
+C^*=\sum_{k\in K^*}C_k^*.
+\label{eq:p2_total_result}
+\end{equation}
+
+具体求解步骤如下：
+
+\begin{enumerate}
+    \item 读取问题一得到的最优下料方案，包括每根母材的工件组成 $x_{ki}^*$、母材规格 $m_{ks}^*$ 和启用状态 $y_k^*$；
+    \item 根据端部点云数据计算端部缩进函数 $d_{i,L}(\varphi)$ 与 $d_{i,R}(\varphi)$；
+    \item 根据式 \eqref{eq:p2_delta_ab} 计算四类端部组合下的共切收益矩阵 $\Delta^{LL}$、$\Delta^{LR}$、$\Delta^{RL}$、$\Delta^{RR}$；
+    \item 根据朝向映射规则构造 $g(i,o,j,p)$ 查找表；
+    \item 对每根母材分别运行动态规划，得到该母材的最优工件顺序、朝向、共切收益和切换次数；
+    \item 汇总所有启用母材的结果，得到问题二的总共切收益 $B^*$ 和总切换次数 $C^*$。
+\end{enumerate}
+
+上述求解过程的优势在于：问题二并未重新改变问题一的母材分配结果，而是在每根母材内部进行局部排序优化，从而避免了全局重新建模带来的大规模组合爆炸。同时，由于每根母材中实际包含的工件种类较少，动态规划方法能够在可接受时间内得到每根母材的最优排列与朝向。
+
+为增强求解过程的可解释性，建议在此处加入“问题二动态规划流程图”，展示从问题一排样结果输入、共切矩阵构造、单母材 DP 求解到输出最优排序方案的完整流程。
+
+\subsubsection{结果分析}
+
+基于问题一得到的 10 根母材方案，经动态规划优化后，各母材的工件排列顺序、共切收益及拼接后轴向占用长度如表~\ref{tab:res2_cutting} 所示。整体指标汇总见表~\ref{tab:res2_summary}。
+
+\begin{table}[htbp]
+    \centering
+    \caption{问题二下料方案}
+    \label{tab:res2_cutting}
+    \begin{tabular}{ccp{2.7cm}ccc}
+        \toprule
+        母材编号 & 母材长度/mm & 工件组合 & 共切收益/mm & 拼接后轴向占用/mm & 拼接后占用率 \\
+        \midrule
+        M1  & 9000  & G1$\times$45, G9$\times$2                 & 517.351  & 8464.330  & 0.9405 \\
+        M2  & 12000 & G4$\times$1, G2$\times$24, G4$\times$43   & 1145.906 & 10853.986 & 0.9045 \\
+        M3  & 9000  & G1$\times$5, G3$\times$24, G9$\times$19   & 657.696  & 8336.794  & 0.9263 \\
+        M4  & 10000 & G10$\times$50                             & 0.000    & 10000.000 & 1.0000 \\
+        M5  & 10000 & G8$\times$25                              & 238.980  & 9759.120  & 0.9759 \\
+        M6  & 9000  & G5$\times$50, G9$\times$29                & 330.226  & 8669.731  & 0.9633 \\
+        M7  & 10000 & G7$\times$40                              & 0.000    & 10000.000 & 1.0000 \\
+        M8  & 10000 & G8$\times$25                              & 238.980  & 9759.120  & 0.9759 \\
+        M9  & 10000 & G6$\times$50, G7$\times$10                & 0.000    & 10000.000 & 1.0000 \\
+        M10 & 10000 & G3$\times$1, G2$\times$26, G3$\times$25, G4$\times$6 & 987.515 & 9011.465 & 0.9011 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \caption{问题二整体指标汇总}
+    \label{tab:res2_summary}
+    \begin{tabular}{ccccc}
+        \toprule
+        总母材长度/mm & 总共切收益/mm & 拼接后总轴向占用/mm & 拼接后轴向占用率 & 工件总切换次数 \\
+        \midrule
+        99000 & 4116.654 & 94854.546 & 0.9581 & 10 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+由表~\ref{tab:res2_cutting} 和表~\ref{tab:res2_summary} 可知，在不改变问题一母材选用方案与工件分配方案的前提下，问题二通过优化每根母材内部的工件排列顺序与朝向，获得总共切收益 $B^*=4116.654\ \mathrm{mm}$，使拼接后总轴向占用长度由问题一的 $98971.2\ \mathrm{mm}$ 降低至 $94854.546\ \mathrm{mm}$。这表明端部共切能够有效压缩工件拼接后的轴向占用长度，为后续进一步降低母材消耗或提高余料利用率提供了优化空间。
+
+从单根母材结果看，M2、M3 和 M10 的共切收益较高，说明包含多种工件且端部轮廓互补性较强的母材更容易通过调整顺序和朝向获得较大共切收益；而 M4、M7 和 M9 的共切收益为 $0$，主要原因是其工件类型较单一或端部轮廓之间不存在明显可重叠空间。
+
+为增强结果表达，建议在表\ref{tab:res2_cutting} 后加入如下图形：
 
 \begin{itemize}
-    \item \textbf{图片1类型}：母材排样甘特图（或排样方案可视化图）。  
-    \textbf{制作途径}：根据表~\ref{tab:cutting} 的数据，使用 Python 的 `matplotlib` 库绘制，横坐标为母材长度方向（0～$L_s$），纵坐标为母材编号，不同工件用不同颜色填充，并标注切换位置。  
-    \textbf{图片描述}：展示 10 根母材上的工件排布顺序，可直观看出切换次数（仅 8 次）以及各母材的利用率接近 100\%。
-
-    \item \textbf{图片2类型}：切换次数收敛曲线（目标函数 $C_1$ 随迭代或约束添加的变化）。  
-    \textbf{制作途径}：从 Gurobi 求解日志中提取每次找到更好整数解时的切换次数，绘制折线图。  
-    \textbf{图片描述}：表明二阶段模型在总长度已固定的前提下，通过添加切换惩罚或直接求解混合整数规划，能快速将切换次数降至 8，验证了模型的有效性。
+    \item \textbf{最优排列甘特图}：选择 M2 或 M10 作为典型母材，绘制工件排列顺序、朝向箭头和相邻共切区间；
+    \item \textbf{各母材共切收益柱状图}：展示 10 根母材对总共切收益的贡献差异；
+    \item \textbf{问题一与问题二轴向占用长度对比图}：对比考虑共切前后的总轴向占用长度，突出问题二模型的优化效果；
+    \item \textbf{共切收益矩阵热力图}：展示不同工件类型之间的最大共切收益 $W_{ij}$，解释为什么部分母材收益较高。
 \end{itemize}
 
-\medskip
-\noindent\textbf{灵敏度分析：}  
-固定第一阶段最优总长度 $F^*=99000$ mm，我们尝试将母材可选类型中的 11000 mm 和 12000 mm 剔除，仅用 9000 mm 和 10000 mm 重新求解。此时总长度上升到 102000 mm，切换次数增至 15。这说明长母材（12000 mm）对容纳 G2、G4 等工件的组合至关重要，且合理选用不同长度可同时降低总长度和切换次数。该模型对母材类型集合敏感，实际生产中应保留多种标准规格。
-\subsection{模型二}	
-\subsubsection{模型一结果与灵敏度分析}
+
+\subsection{问题三模型建立与求解}
+
+问题三在问题一的基础上进一步引入共切效应。与问题一仅考虑工件独立轴向长度不同，问题三中当两个工件在同一根母材上相邻放置时，可利用端部轮廓互补性减少实际轴向占用长度。该共切收益不仅与相邻工件类型有关，还与两工件的放置朝向有关。因此，问题三需要在同一模型中同时确定母材规格选择、工件排布位置、工件朝向以及相邻工件之间的共切关系。
+
+与问题二不同，问题三不再固定问题一得到的每根母材工件集合，而是在满足全部工件需求的前提下重新进行整体排样优化。因此，问题三可看作考虑共切收益的一维下料混合整数规划模型，并采用字典序优化思想：首先最小化母材总长度；在总长度最优的前提下最大化总共切收益；最后在前两项目标均最优的条件下最小化工件切换次数。
+
+\subsubsection{模型建立}
+
+\paragraph{决策变量}
+
+定义母材规格选择变量
+\begin{equation}
+m_{ks}=
+\begin{cases}
+1, & \text{第 }k\text{ 根候选母材选择第 }s\text{ 种标准长度},\\
+0, & \text{否则},
+\end{cases}
+\quad k\in K,\ s\in S.
+\label{eq:p3_m}
+\end{equation}
+
+定义位置排布变量
+\begin{equation}
+q_{krio}=
+\begin{cases}
+1, & \text{第 }k\text{ 根母材第 }r\text{ 个位置安排第 }i\text{ 类工件且朝向为 }o,\\
+0, & \text{否则},
+\end{cases}
+\quad k\in K,\ r\in R,\ i\in I,\ o\in O.
+\label{eq:p3_q}
+\end{equation}
+其中，$o=0$ 表示正向放置，左端为 $L$、右端为 $R$；$o=1$ 表示反向放置，左端为 $R$、右端为 $L$。
+
+\paragraph{辅助变量}
+
+为表示候选母材是否被启用，引入辅助变量
+\begin{equation}
+y_k=
+\begin{cases}
+1, & \text{第 }k\text{ 根候选母材被使用},\\
+0, & \text{否则},
+\end{cases}
+\quad k\in K.
+\label{eq:p3_y}
+\end{equation}
+
+为表示第 $k$ 根母材第 $r$ 个加工位置是否被占用，引入辅助变量
+\begin{equation}
+b_{kr}=
+\begin{cases}
+1, & \text{第 }k\text{ 根母材第 }r\text{ 个位置被占用},\\
+0, & \text{否则},
+\end{cases}
+\quad k\in K,\ r\in R.
+\label{eq:p3_b}
+\end{equation}
+
+为线性化相邻位置之间的共切收益，引入辅助变量
+\begin{equation}
+z_{kriojp}=
+\begin{cases}
+1, & \text{第 }k\text{ 根母材第 }r\text{ 个位置为 }(i,o)\text{，第 }r+1\text{ 个位置为 }(j,p),\\
+0, & \text{否则},
+\end{cases}
+\label{eq:p3_z}
+\end{equation}
+其中 $k\in K$，$r=1,2,\ldots,|R|-1$，$i,j\in I$，$o,p\in O$。
+
+\paragraph{目标函数}
+
+问题三采用三阶段字典序优化。第一阶段最小化所用母材总长度：
+\begin{equation}
+F_1^{(3)}=\sum_{k\in K}\sum_{s\in S}L_s^S m_{ks}.
+\label{eq:p3_F1}
+\end{equation}
+
+第二阶段在 $F_1^{(3)}$ 最优的前提下最大化总共切收益：
+\begin{equation}
+F_2^{(3)}=
+\sum_{k\in K}
+\sum_{r=1}^{|R|-1}
+\sum_{i\in I}\sum_{j\in I}
+\sum_{o\in O}\sum_{p\in O}
+g(i,o,j,p)z_{kriojp}.
+\label{eq:p3_F2}
+\end{equation}
+
+第三阶段在母材总长度和共切收益均最优的前提下最小化工件切换次数：
+\begin{equation}
+F_3^{(3)}=
+\sum_{k\in K}
+\sum_{r=1}^{|R|-1}
+\sum_{i\in I}\sum_{j\in I}
+\sum_{o\in O}\sum_{p\in O}
+h(i,j)z_{kriojp}.
+\label{eq:p3_F3}
+\end{equation}
+
+因此，问题三的总体目标可写为
+\begin{equation}
+\min_{\mathrm{lex}}\left(F_1^{(3)},\ -F_2^{(3)},\ F_3^{(3)}\right).
+\label{eq:p3_lex_obj}
+\end{equation}
+
+\paragraph{约束条件}
+
+每根候选母材至多选择一种标准长度，若该母材被启用，则必须且只能选择一种规格：
+\begin{equation}
+\sum_{s\in S}m_{ks}=y_k,\quad \forall k\in K.
+\label{eq:p3_select}
+\end{equation}
+
+为减少对称解，规定母材按编号顺序连续启用：
+\begin{equation}
+y_k\geq y_{k+1},\quad k=1,2,\ldots,K_{\max}-1.
+\label{eq:p3_order}
+\end{equation}
+
+每个加工位置至多安排一个工件，且由 $b_{kr}$ 表示该位置是否被占用：
+\begin{equation}
+\sum_{i\in I}\sum_{o\in O}q_{krio}=b_{kr},
+\quad \forall k\in K,\ r\in R.
+\label{eq:p3_position}
+\end{equation}
+
+若母材未启用，则其上不能安排任何工件：
+\begin{equation}
+b_{kr}\leq y_k,\quad \forall k\in K,\ r\in R.
+\label{eq:p3_unused}
+\end{equation}
+
+启用的母材必须从第一个位置开始排放：
+\begin{equation}
+b_{k1}=y_k,\quad \forall k\in K.
+\label{eq:p3_start}
+\end{equation}
+
+为避免同一根母材中出现中间空位，设置加工位置连续性约束：
+\begin{equation}
+b_{kr}\geq b_{k,r+1},
+\quad \forall k\in K,\ r=1,2,\ldots,|R|-1.
+\label{eq:p3_continuity}
+\end{equation}
+
+每类工件的加工数量必须满足需求：
+\begin{equation}
+\sum_{k\in K}\sum_{r\in R}\sum_{o\in O}q_{krio}=d_i,
+\quad \forall i\in I.
+\label{eq:p3_demand}
+\end{equation}
+
+相邻关系变量 $z_{kriojp}$ 与相邻位置排布变量之间满足如下线性化约束：
+\begin{equation}
+z_{kriojp}\leq q_{krio},
+\quad \forall k\in K,\ r=1,\ldots,|R|-1,\ i,j\in I,\ o,p\in O,
+\label{eq:p3_z1}
+\end{equation}
+\begin{equation}
+z_{kriojp}\leq q_{k,r+1,jp},
+\quad \forall k\in K,\ r=1,\ldots,|R|-1,\ i,j\in I,\ o,p\in O,
+\label{eq:p3_z2}
+\end{equation}
+\begin{equation}
+z_{kriojp}\geq q_{krio}+q_{k,r+1,jp}-1,
+\quad \forall k\in K,\ r=1,\ldots,|R|-1,\ i,j\in I,\ o,p\in O.
+\label{eq:p3_z3}
+\end{equation}
+
+母材容量约束为问题三的核心约束。考虑共切后，第 $k$ 根母材的实际轴向占用长度等于工件独立长度之和减去相邻工件共切收益，该值不得超过所选母材长度：
+\begin{equation}
+\sum_{r\in R}\sum_{i\in I}\sum_{o\in O}l_iq_{krio}
+-
+\sum_{r=1}^{|R|-1}
+\sum_{i\in I}\sum_{j\in I}
+\sum_{o\in O}\sum_{p\in O}
+g(i,o,j,p)z_{kriojp}
+\leq
+\sum_{s\in S}L_s^S m_{ks},
+\quad \forall k\in K.
+\label{eq:p3_capacity}
+\end{equation}
+
+为避免局部共切收益累加造成实际轴向占用长度为负的非物理解，增加共切收益上界约束：
+\begin{equation}
+\sum_{r=1}^{|R|-1}
+\sum_{i\in I}\sum_{j\in I}
+\sum_{o\in O}\sum_{p\in O}
+g(i,o,j,p)z_{kriojp}
+\leq
+\sum_{r\in R}\sum_{i\in I}\sum_{o\in O}l_iq_{krio},
+\quad \forall k\in K.
+\label{eq:p3_nonnegative}
+\end{equation}
+
+变量取值约束为
+\begin{equation}
+m_{ks},y_k,q_{krio},b_{kr},z_{kriojp}\in\{0,1\}.
+\label{eq:p3_domain}
+\end{equation}
+
+\subsubsection{模型汇总}
+
+为便于后续求解，现将问题三模型完整整理如下。
+
+\[
+\min_{\mathrm{lex}}\quad
+\left(
+\sum_{k\in K}\sum_{s\in S}L_s^S m_{ks},
+-
+\sum_{k\in K}\sum_{r=1}^{|R|-1}\sum_{i,j\in I}\sum_{o,p\in O}
+g(i,o,j,p)z_{kriojp},
+\sum_{k\in K}\sum_{r=1}^{|R|-1}\sum_{i,j\in I}\sum_{o,p\in O}
+h(i,j)z_{kriojp}
+\right)
+\]
+
+\[
+\begin{aligned}
+\mathrm{s.t.}\quad
+&\sum_{s\in S}m_{ks}=y_k,
+&&\forall k\in K,\\
+&y_k\geq y_{k+1},
+&&k=1,2,\ldots,K_{\max}-1,\\
+&\sum_{i\in I}\sum_{o\in O}q_{krio}=b_{kr},
+&&\forall k\in K,\ r\in R,\\
+&b_{kr}\leq y_k,
+&&\forall k\in K,\ r\in R,\\
+&b_{k1}=y_k,
+&&\forall k\in K,\\
+&b_{kr}\geq b_{k,r+1},
+&&\forall k\in K,\ r=1,2,\ldots,|R|-1,\\
+&\sum_{k\in K}\sum_{r\in R}\sum_{o\in O}q_{krio}=d_i,
+&&\forall i\in I,\\
+&z_{kriojp}\leq q_{krio},
+&&\forall k\in K,\ r=1,\ldots,|R|-1,\ i,j\in I,\ o,p\in O,\\
+&z_{kriojp}\leq q_{k,r+1,jp},
+&&\forall k\in K,\ r=1,\ldots,|R|-1,\ i,j\in I,\ o,p\in O,\\
+&z_{kriojp}\geq q_{krio}+q_{k,r+1,jp}-1,
+&&\forall k\in K,\ r=1,\ldots,|R|-1,\ i,j\in I,\ o,p\in O,\\
+&\sum_{r\in R}\sum_{i\in I}\sum_{o\in O}l_iq_{krio}
+-
+\sum_{r=1}^{|R|-1}\sum_{i,j\in I}\sum_{o,p\in O}
+g(i,o,j,p)z_{kriojp}
+\leq
+\sum_{s\in S}L_s^S m_{ks},
+&&\forall k\in K,\\
+&\sum_{r=1}^{|R|-1}\sum_{i,j\in I}\sum_{o,p\in O}
+g(i,o,j,p)z_{kriojp}
+\leq
+\sum_{r\in R}\sum_{i\in I}\sum_{o\in O}l_iq_{krio},
+&&\forall k\in K,\\
+&m_{ks},y_k,q_{krio},b_{kr},z_{kriojp}\in\{0,1\}.
+\end{aligned}
+\]
+
+\subsubsection{模型求解}
+
+本文基于混合整数线性规划（MILP）建立问题三的联合下料优化模型，并采用 Gurobi 求解器进行三阶段字典序求解。具体步骤如下：
+
+\begin{enumerate}
+    \item \textbf{输入数据}：工件轴向长度 $l_i$（由问题一计算得到），各类工件需求量 $d_i=50$，标准母材长度集合 $\mathcal{S}=\{9000,10000,11000,12000\}$（单位：mm），以及问题二计算得到的共切收益函数 $g(i,o,j,p)$，表示工件 $i$ 以朝向 $o$ 与工件 $j$ 以朝向 $p$ 相邻时的共切收益。
+    
+    \item \textbf{第一阶段：最小化母材总长度} :构建基础模型，包含决策变量 $m_{ks}$（母材选型）、$q_{krio}$（位置排布与朝向）、$z_{kriojp}$（相邻关系）以及容量约束等。以母材总长度
+    \[
+    F_1^{(3)} = \sum_{k=1}^{K}\sum_{s\in\mathcal{S}} L_s m_{ks}
+    \]
+    最小化为目标进行求解，得到最优值 $F_1^{(3)*}$。
+
+    \item \textbf{第二阶段：最大化共切收益}  
+    在第一阶段模型中加入刚性约束 $F_1^{(3)} = F_1^{(3)*}$，并将目标切换为总共切收益
+    \[
+    F_2^{(3)} = \sum_{k,p,i,j,o,p} g(i,o,j,p)\, z_{kriojp}
+    \]
+    最大化，求解得到最优值 $F_2^{(3)*}$。为防止数值误差导致不可行，实际求解时采用
+    \[
+    F_1^{(3)} \le F_1^{(3)*} + \varepsilon,\quad \varepsilon=10^{-6}
+    \]
+    代替严格等式；同样，对 $F_2^{(3)*}$ 的固定亦使用容差 $\varepsilon$。
+
+    \item \textbf{第三阶段：最小化切换次数}  
+    在保留前两阶段最优约束（$F_1^{(3)}\le F_1^{(3)*}+\varepsilon$，$F_2^{(3)}\ge F_2^{(3)*}-\varepsilon$）的基础上，以总切换次数
+    \[
+    F_3^{(3)} = \sum_{k,p,i,j,o,p} h(i,j)\, z_{kriojp}
+    \]
+    最小化为目标，其中 $h(i,j)=0$ 若 $i=j$，否则 $h(i,j)=1$。求解得到最终排样方案。
+
+    \item \textbf{结果解析}：根据第三阶段最优解，提取每根母材的工件序列、朝向、相邻拼接方式及收益，计算实际占用长度、剩余长度和母材利用率，并统计总切换次数。
+\end{enumerate}
+
+为增强求解过程的可解释性，建议在本节加入“三阶段字典序优化流程图”，展示从第一阶段最小化母材总长度，到第二阶段最大化共切收益，再到第三阶段最小化切换次数的求解逻辑。
+
+
+\subsubsection{结果分析}
+
+根据问题三混合整数规划模型的求解结果，可以得到总母材长度、总共切收益、实际轴向占用长度、总体母材利用率和总切换次数等指标。求解结果汇总见表~\ref{tab:q3_summary}，部分母材下料方案见表~\ref{tab:q3_cutting}。
+
+\begin{table}[htbp]
+\centering
+\caption{问题三汇总指标}
+\label{tab:q3_summary}
+\begin{tabular}{lr}
+\toprule
+指标 & 数值 \\
+\midrule
+总母材长度/mm & 204000 \\
+工件原始总长度/mm & 98971.20 \\
+总共切收益/mm & 2103.87 \\
+总实际占用长度/mm & 96867.33 \\
+总体母材利用率 & 0.4748 \\
+总切换次数 & 394 \\
+启用母材根数 & 17 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+由表~\ref{tab:q3_summary} 可知，问题三在同时考虑母材选择、工件位置排布、工件朝向以及相邻共切收益的条件下，共启用 $17$ 根母材，总母材长度为 $204000\ \mathrm{mm}$。所有工件的原始轴向长度总和为 $98971.20\ \mathrm{mm}$，通过优化相邻工件的排列顺序与朝向，模型获得总共切收益 $2103.87\ \mathrm{mm}$，使总实际轴向占用长度降低至 $96867.33\ \mathrm{mm}$。这说明端部共切效应能够有效压缩工件在母材上的实际排布长度。
+
+\begin{table}[h]
+\centering
+\caption{问题三下料方案示例}
+\label{tab:q3_cutting}
+\begin{tabular}{cp{3cm}cccc}
+\toprule
+母材编号 & 工件顺序与朝向 & 工件原始长度和/mm & 共切收益/mm & 实际占用/mm & 切换次数 \\
+\midrule
+M1 & G9(反), G7(正), G8(反), G3(正), G7(正) 
+& 1272.504 & 0.000 & 1272.504 & 4 \\
+M2 & G3(反), G4(正), G3(反), G4(正), G4(反), $\cdots$ 
+& 12000.211 & 482.095 & 11518.116 & 50 \\
+M3 & G4(反), G3(正), G9(反), G2(正), G2(反), $\cdots$ 
+& 13139.176 & 1139.840 & 11999.336 & 42 \\
+M8 & G2(反), G9(正), G5(反), G8(反), G8(反), $\cdots$
+& 7522.460 & 111.596 & 7410.864 & 34 \\
+M10 & G8(正), G8(反), G10(反), G10(反), G5(反), $\cdots$
+& 11336.629 & 106.784 & 11229.845 & 46 \\
+\bottomrule
+\end{tabular}
+\par\medskip\footnotesize 注：表中仅展示部分代表性母材，完整排样方案见附录。符号“正”表示工件左端为 $L$、右端为 $R$；“反”表示工件左端为 $R$、右端为 $L$。
+\end{table}
+
+由表~\ref{tab:q3_cutting} 可知，不同母材上的共切收益差异较大。其中，M3 的共切收益达到 $1139.840\ \mathrm{mm}$，实际占用长度为 $11999.336\ \mathrm{mm}$，母材利用率接近 $1$，说明该母材上的工件组合在端部轮廓上具有较强的互补性，模型能够通过调整顺序与朝向充分利用共切收益。相比之下，M1 上仅安排少量工件，且相邻工件之间未产生明显共切收益，因此实际占用长度与原始长度相同。
+
+从整体结果看，问题三得到的总共切收益为 $2103.87\ \mathrm{mm}$，相较于不考虑共切时的原始总轴向长度 $98971.20\ \mathrm{mm}$，实际轴向占用长度减少了 $2103.87\ \mathrm{mm}$。该结果表明，若在下料模型中同时考虑工件朝向与相邻共切收益，可以进一步压缩工件的实际排布长度。与问题二相比，问题三不再固定问题一得到的每根母材工件组成，而是将母材选择、工件分配、工件顺序和朝向统一纳入优化模型，因此能够在更大的可行域内搜索具有较高共切收益的排样方案。
+
+同时，问题三的总切换次数为 $394$ 次，说明在追求共切收益和排样紧凑性的过程中，不同类型工件之间的相邻关系较多。该现象表明，共切收益优化与加工连续性之间存在一定权衡：若希望进一步降低切换次数，可在第三阶段强化切换次数目标，或在模型中增加同类工件聚合约束，以提高实际加工效率。
+
+需要说明的是，问题三中的总体母材利用率为 $0.4748$，该指标由总实际轴向占用长度与总母材长度之比得到。由于本模型同时考虑共切收益、工件朝向和相邻关系线性化，模型规模显著增大，求解结果受候选母材数量、最大加工位置数和求解时间限制影响。后续可通过增加启发式初始解、加强母材启用上界约束、压缩候选位置集合等方式进一步提升求解效率和方案质量。
+
+为增强结果展示的直观性，建议加入如下图形：
+
+\begin{itemize}
+    \item \textbf{排样甘特图}：展示各根母材上的工件顺序、朝向和相邻共切收益；
+    \item \textbf{各母材共切收益贡献柱状图}：比较不同母材对总共切收益的贡献，突出 M3、M2 等高收益母材；
+    \item \textbf{实际占用长度与母材长度对比图}：展示每根母材实际占用长度、剩余长度及利用率；
+    \item \textbf{三阶段目标变化图}：展示三阶段字典序优化过程中母材总长度、共切收益和切换次数的变化。
+\end{itemize}
+
+
+\subsection{问题四模型建立与求解}
+
+问题四要求将全部生产任务划分为三个批次进行加工，各批次需求相互独立，同时允许后续批次调用前一批次结束后产生的可用余料。与问题三相比，问题四不仅需要考虑共切收益和工件切换次数，还需要动态维护余料库存。因此，问题四不能简单地在单一混合整数规划模型中同时决定三批次的全部下料方案，否则会忽略余料产生与调用之间的时间因果关系。
+
+为避免上述因果漏洞，本文采用滚动优化策略。即按 $B1\rightarrow B2\rightarrow B3$ 的顺序逐批求解：第 $t$ 批只能调用该批开始前已经存在的余料集合 $\mathcal R_t$；第 $t$ 批加工结束后，根据材料剩余长度生成新的余料集合，并更新得到下一批库存 $\mathcal R_{t+1}$。该方法保证了余料调用严格依赖于前一批的加工结果，符合实际生产流程。
+
+\subsubsection{模型建立}
+
+\paragraph{决策变量}
+
+定义新母材规格选择变量
+\begin{equation}
+m_{tks}=
+\begin{cases}
+1, & \text{第 }t\text{ 批第 }k\text{ 根新母材选择第 }s\text{ 种规格},\\
+0, & \text{否则},
+\end{cases}
+\quad t=1,2,3,\ k\in K_t,\ s\in S.
+\label{eq:p4_m}
+\end{equation}
+
+定义位置排布变量
+\begin{equation}
+q_{tprio}=
+\begin{cases}
+1, & \text{第 }t\text{ 批材料 }p\text{ 的第 }r\text{ 个位置安排第 }i\text{ 类工件且朝向为 }o,\\
+0, & \text{否则},
+\end{cases}
+\label{eq:p4_q}
+\end{equation}
+其中 $t=1,2,3$，$p\in P_t$，$r\in R$，$i\in I$，$o\in O$。该变量是问题四的核心排布变量，决定当前批次中每个工件被安排在哪根材料、哪个位置以及以何种朝向加工。
+
+\paragraph{辅助变量}
+
+定义新母材启用变量
+\begin{equation}
+y_{tk}=
+\begin{cases}
+1, & \text{第 }t\text{ 批第 }k\text{ 根新母材被启用},\\
+0, & \text{否则},
+\end{cases}
+\quad t=1,2,3,\ k\in K_t.
+\label{eq:p4_y}
+\end{equation}
+
+定义余料调用变量
+\begin{equation}
+a_{t\rho}=
+\begin{cases}
+1, & \text{第 }t\text{ 批调用库存余料 }\rho,\\
+0, & \text{否则},
+\end{cases}
+\quad \rho\in \mathcal R_t.
+\label{eq:p4_a}
+\end{equation}
+
+为统一表示新母材和库存余料是否被使用，定义材料启用变量
+\begin{equation}
+Y_{tp}=
+\begin{cases}
+1, & \text{第 }t\text{ 批材料 }p\text{ 被使用},\\
+0, & \text{否则},
+\end{cases}
+\quad p\in P_t.
+\label{eq:p4_Y}
+\end{equation}
+
+其中，对于新母材 $p=k\in K_t$，有 $Y_{tk}=y_{tk}$；对于余料 $p=\rho\in\mathcal R_t$，有 $Y_{t\rho}=a_{t\rho}$。
+
+定义位置启用变量
+\begin{equation}
+b_{tpr}=
+\begin{cases}
+1, & \text{第 }t\text{ 批材料 }p\text{ 的第 }r\text{ 个位置被占用},\\
+0, & \text{否则},
+\end{cases}
+\quad p\in P_t,\ r\in R.
+\label{eq:p4_b}
+\end{equation}
+
+为线性化相邻位置之间的共切收益，引入相邻关系辅助变量
+\begin{equation}
+z_{tprioj\omega}=
+\begin{cases}
+1, & \text{第 }t\text{ 批材料 }p\text{ 上第 }r\text{ 个位置为 }(i,o)\text{，第 }r+1\text{ 个位置为 }(j,\omega),\\
+0, & \text{否则}.
+\end{cases}
+\label{eq:p4_z}
+\end{equation}
+其中后一件工件的朝向记为 $\omega$，以避免与材料编号 $p$ 混淆。
+
+\paragraph{目标函数}
+
+对第 $t$ 批，采用四阶段字典序优化。
+
+第一阶段最小化第 $t$ 批新标准母材总长度：
+\begin{equation}
+F_{1t}=\sum_{k\in K_t}\sum_{s\in S}L_s^S m_{tks}.
+\label{eq:p4_F1}
+\end{equation}
+
+第二阶段在 $F_{1t}$ 最优的前提下，优先调用库存余料。本文以最小化未使用余料长度为目标：
+\begin{equation}
+F_{2t}=\sum_{\rho\in\mathcal R_t}A_\rho(1-a_{t\rho}).
+\label{eq:p4_F2}
+\end{equation}
+若第 $t$ 批开始时无库存余料，则跳过该阶段。
+
+第三阶段在前两项目标最优的条件下最大化总共切收益：
+\begin{equation}
+F_{3t}=
+\sum_{p\in P_t}
+\sum_{r=1}^{|R|-1}
+\sum_{i\in I}\sum_{j\in I}
+\sum_{o\in O}\sum_{\omega\in O}
+g(i,o,j,\omega)z_{tprioj\omega}.
+\label{eq:p4_F3}
+\end{equation}
+
+第四阶段在前三项目标均最优的条件下最小化工件切换次数：
+\begin{equation}
+F_{4t}=
+\sum_{p\in P_t}
+\sum_{r=1}^{|R|-1}
+\sum_{i\in I}\sum_{j\in I}
+\sum_{o\in O}\sum_{\omega\in O}
+h(i,j)z_{tprioj\omega}.
+\label{eq:p4_F4}
+\end{equation}
+
+因此，第 $t$ 批的目标函数可统一表示为
+\begin{equation}
+\min_{\mathrm{lex}}\left(F_{1t},\ F_{2t},\ -F_{3t},\ F_{4t}\right).
+\label{eq:p4_lex_obj}
+\end{equation}
+
+\paragraph{约束条件}
+
+第 $t$ 批新母材规格选择约束为
+\begin{equation}
+\sum_{s\in S}m_{tks}=y_{tk},
+\quad \forall k\in K_t.
+\label{eq:p4_select}
+\end{equation}
+
+为减少对称解，新母材按编号顺序启用：
+\begin{equation}
+y_{tk}\geq y_{t,k+1},
+\quad k=1,2,\ldots,|K_t|-1.
+\label{eq:p4_order}
+\end{equation}
+
+材料启用统一关系为
+\begin{equation}
+Y_{tk}=y_{tk},\quad \forall k\in K_t,
+\label{eq:p4_Y_new}
+\end{equation}
+\begin{equation}
+Y_{t\rho}=a_{t\rho},\quad \forall \rho\in\mathcal R_t.
+\label{eq:p4_Y_remain}
+\end{equation}
+
+每个加工位置至多安排一个工件：
+\begin{equation}
+\sum_{i\in I}\sum_{o\in O}q_{tprio}=b_{tpr},
+\quad \forall p\in P_t,\ r\in R.
+\label{eq:p4_position}
+\end{equation}
+
+未启用材料不能安排工件：
+\begin{equation}
+b_{tpr}\leq Y_{tp},
+\quad \forall p\in P_t,\ r\in R.
+\label{eq:p4_unused}
+\end{equation}
+
+启用材料必须从第一个位置开始排放：
+\begin{equation}
+b_{tp1}=Y_{tp},
+\quad \forall p\in P_t.
+\label{eq:p4_start}
+\end{equation}
+
+为避免同一材料上出现中间空位，设置加工位置连续性约束：
+\begin{equation}
+b_{tpr}\geq b_{tp,r+1},
+\quad \forall p\in P_t,\ r=1,2,\ldots,|R|-1.
+\label{eq:p4_continuity}
+\end{equation}
+
+第 $t$ 批各类工件需求必须单独满足：
+\begin{equation}
+\sum_{p\in P_t}\sum_{r\in R}\sum_{o\in O}q_{tprio}=d_{ti},
+\quad \forall i\in I.
+\label{eq:p4_demand}
+\end{equation}
+
+相邻关系线性化约束为
+\begin{equation}
+z_{tprioj\omega}\leq q_{tprio},
+\quad \forall p\in P_t,\ r=1,\ldots,|R|-1,\ i,j\in I,\ o,\omega\in O,
+\label{eq:p4_z1}
+\end{equation}
+\begin{equation}
+z_{tprioj\omega}\leq q_{tp,r+1,j\omega},
+\quad \forall p\in P_t,\ r=1,\ldots,|R|-1,\ i,j\in I,\ o,\omega\in O,
+\label{eq:p4_z2}
+\end{equation}
+\begin{equation}
+z_{tprioj\omega}\geq q_{tprio}+q_{tp,r+1,j\omega}-1,
+\quad \forall p\in P_t,\ r=1,\ldots,|R|-1,\ i,j\in I,\ o,\omega\in O.
+\label{eq:p4_z3}
+\end{equation}
+
+对于第 $t$ 批新母材，其容量约束为
+\begin{equation}
+\sum_{r\in R}\sum_{i\in I}\sum_{o\in O}l_iq_{tkrio}
+-
+\sum_{r=1}^{|R|-1}
+\sum_{i\in I}\sum_{j\in I}
+\sum_{o\in O}\sum_{\omega\in O}
+g(i,o,j,\omega)z_{tkrioj\omega}
+\leq
+\sum_{s\in S}L_s^S m_{tks},
+\quad \forall k\in K_t.
+\label{eq:p4_capacity_new}
+\end{equation}
+
+对于第 $t$ 批调用的库存余料，其容量约束为
+\begin{equation}
+\sum_{r\in R}\sum_{i\in I}\sum_{o\in O}l_iq_{t\rho rio}
+-
+\sum_{r=1}^{|R|-1}
+\sum_{i\in I}\sum_{j\in I}
+\sum_{o\in O}\sum_{\omega\in O}
+g(i,o,j,\omega)z_{t\rho rioj\omega}
+\leq
+A_\rho a_{t\rho},
+\quad \forall \rho\in\mathcal R_t.
+\label{eq:p4_capacity_remain}
+\end{equation}
+
+沿用问题三式 \eqref{eq:p3_nonnegative} 的物理含义，对每根材料增加实际占用长度非负约束：
+\begin{equation}
+\sum_{r=1}^{|R|-1}
+\sum_{i\in I}\sum_{j\in I}
+\sum_{o\in O}\sum_{\omega\in O}
+g(i,o,j,\omega)z_{tprioj\omega}
+\leq
+\sum_{r\in R}\sum_{i\in I}\sum_{o\in O}l_iq_{tprio},
+\quad \forall p\in P_t.
+\label{eq:p4_nonnegative}
+\end{equation}
+
+变量取值约束为
+\begin{equation}
+m_{tks},y_{tk},a_{t\rho},Y_{tp},b_{tpr},q_{tprio},z_{tprioj\omega}\in\{0,1\}.
+\label{eq:p4_domain}
+\end{equation}
+
+
+\subsubsection{模型汇总}
+
+为便于后续求解，现将第 $t$ 批滚动优化模型整理如下。上述公式已在模型建立部分编号说明，本节仅完整展示目标函数与约束条件，不再重复编号。
+
+\[
+\min_{\mathrm{lex}}\quad
+\left(F_{1t},F_{2t},-F_{3t},F_{4t}\right)
+\]
+
+其中，
+\[
+F_{1t}=\sum_{k\in K_t}\sum_{s\in S}L_s^S m_{tks}
+\]
+\[
+F_{2t}=\sum_{\rho\in\mathcal R_t}A_\rho(1-a_{t\rho})
+\]
+\[
+F_{3t}=
+\sum_{p\in P_t}\sum_{r=1}^{|R|-1}\sum_{i,j\in I}\sum_{o,\omega\in O}
+g(i,o,j,\omega)z_{tprioj\omega}
+\]
+\[
+F_{4t}=
+\sum_{p\in P_t}\sum_{r=1}^{|R|-1}\sum_{i,j\in I}\sum_{o,\omega\in O}
+h(i,j)z_{tprioj\omega}
+\]
+
+\[
+\begin{aligned}
+\mathrm{s.t.}\quad
+&\sum_{s\in S}m_{tks}=y_{tk},
+&&\forall k\in K_t,\\
+&y_{tk}\geq y_{t,k+1},
+&&k=1,2,\ldots,|K_t|-1,\\
+&Y_{tk}=y_{tk},
+&&\forall k\in K_t,\\
+&Y_{t\rho}=a_{t\rho},
+&&\forall \rho\in\mathcal R_t,\\
+&\sum_{i\in I}\sum_{o\in O}q_{tprio}=b_{tpr},
+&&\forall p\in P_t,\ r\in R,\\
+&b_{tpr}\leq Y_{tp},
+&&\forall p\in P_t,\ r\in R,\\
+&b_{tp1}=Y_{tp},
+&&\forall p\in P_t,\\
+&b_{tpr}\geq b_{tp,r+1},
+&&\forall p\in P_t,\ r=1,2,\ldots,|R|-1,\\
+&\sum_{p\in P_t}\sum_{r\in R}\sum_{o\in O}q_{tprio}=d_{ti},
+&&\forall i\in I,\\
+&z_{tprioj\omega}\leq q_{tprio},
+&&\forall p\in P_t,\ r=1,\ldots,|R|-1,\ i,j\in I,\ o,\omega\in O,\\
+&z_{tprioj\omega}\leq q_{tp,r+1,j\omega},
+&&\forall p\in P_t,\ r=1,\ldots,|R|-1,\ i,j\in I,\ o,\omega\in O,\\
+&z_{tprioj\omega}\geq q_{tprio}+q_{tp,r+1,j\omega}-1,
+&&\forall p\in P_t,\ r=1,\ldots,|R|-1,\ i,j\in I,\ o,\omega\in O,\\
+&\sum_{r\in R}\sum_{i\in I}\sum_{o\in O}l_iq_{tkrio}
+-
+\sum_{r=1}^{|R|-1}\sum_{i,j\in I}\sum_{o,\omega\in O}
+g(i,o,j,\omega)z_{tkrioj\omega}
+\leq
+\sum_{s\in S}L_s^S m_{tks},
+&&\forall k\in K_t,\\
+&\sum_{r\in R}\sum_{i\in I}\sum_{o\in O}l_iq_{t\rho rio}
+-
+\sum_{r=1}^{|R|-1}\sum_{i,j\in I}\sum_{o,\omega\in O}
+g(i,o,j,\omega)z_{t\rho rioj\omega}
+\leq
+A_\rho a_{t\rho},
+&&\forall \rho\in\mathcal R_t,\\
+&\sum_{r=1}^{|R|-1}\sum_{i,j\in I}\sum_{o,\omega\in O}
+g(i,o,j,\omega)z_{tprioj\omega}
+\leq
+\sum_{r\in R}\sum_{i\in I}\sum_{o\in O}l_iq_{tprio},
+&&\forall p\in P_t,\\
+&m_{tks},y_{tk},a_{t\rho},Y_{tp},b_{tpr},q_{tprio},z_{tprioj\omega}\in\{0,1\}.
+\end{aligned}
+\]
+
+
+\subsubsection{模型求解}
+本文采用顺序滚动优化策略，按批次 $B1 \to B2 \to B3$ 依次求解。对每个批次，根据该批开始前的余料库存构造可用材料集合（包含新母材和库存余料），然后调用 Gurobi 求解器进行四阶段字典序优化。第 $t$ 批的具体求解步骤如下：
+
+\begin{enumerate}
+    \item \textbf{输入数据}：第 $t$ 批各类工件的需求量、当前库存余料集合及其长度、工件轴向长度，以及问题二计算得到的共切收益函数。
+    
+    \item \textbf{第一阶段：最小化新母材总长度}  
+    构建包含母材选型、余料调用、工件排布与朝向、相邻关系、容量约束等在内的混合整数线性规划模型，以新标准母材总长度最小为目标求解，得到最优值 $F_{1t}^*$。
+    
+    \item \textbf{第二阶段：最小化未使用余料长度}  
+    在第一阶段模型中固定新母材总长度为 $F_{1t}^*$，将目标切换为未使用余料总长度最小（即 $\sum_{\rho\in\mathcal{R}_t} A_\rho(1-a_{t\rho})$），求解得到最优值 $F_{2t}^*$。若当前批次无库存余料，则跳过此阶段。
+    
+    \item \textbf{第三阶段：最大化共切收益}  
+    在前两阶段最优值固定的基础上，将目标改为总共切收益最大，求解得到最优值 $F_{3t}^*$。为避免数值误差导致不可行，实际固定时采用容差 $\varepsilon=10^{-6}$（即 $F_{1t}\le F_{1t}^*+\varepsilon$，$F_{2t}\le F_{2t}^*+\varepsilon$，$F_{3t}\ge F_{3t}^*-\varepsilon$）。
+    
+    \item \textbf{第四阶段：最小化切换次数}  
+    在前三阶段最优值固定的前提下，以总切换次数最小为目标求解，得到该批次的最终排样方案。
+    
+    \item \textbf{结果更新与库存传递}  
+    根据第四阶段最优解，提取每根材料（新母材和调用的余料）上的工件序列、朝向、相邻拼接方式及收益，计算实际占用长度、剩余长度和母材利用率。将剩余长度 $\ge 200$ mm 的材料作为新余料加入库存，已使用的余料从库存中移除，从而得到下一批次的余料集合 $\mathcal{R}_{t+1}$。
+\end{enumerate}
+
+\paragraph{余料库存更新规则}
+
+第 $t$ 批求解结束后，对每个已启用材料 $p\in P_t$ 计算其实际占用长度：
+\begin{equation}
+U_{tp}=
+\sum_{r\in R}\sum_{i\in I}\sum_{o\in O}l_iq_{tprio}
+-
+\sum_{r=1}^{|R|-1}\sum_{i,j\in I}\sum_{o,\omega\in O}
+g(i,o,j,\omega)z_{tprioj\omega}.
+\label{eq:p4_U}
+\end{equation}
+
+材料可用长度为
+\begin{equation}
+A_{tp}=
+\begin{cases}
+\sum_{s\in S}L_s^S m_{tks}, & p=k\in K_t,\\
+A_\rho, & p=\rho\in\mathcal R_t.
+\end{cases}
+\label{eq:p4_Ap}
+\end{equation}
+
+材料剩余长度为
+\begin{equation}
+E_{tp}=A_{tp}-U_{tp}.
+\label{eq:p4_E}
+\end{equation}
+
+若 $E_{tp}\geq 200\ \mathrm{mm}$，则该剩余段作为新余料进入下一批库存；若 $E_{tp}<200\ \mathrm{mm}$，则视为废料。
+
+设第 $t$ 批被调用的原有余料集合为
+\begin{equation}
+U_t^{R}=\{\rho\in\mathcal R_t\mid a_{t\rho}=1\}.
+\label{eq:p4_used_remain}
+\end{equation}
+
+本批未使用的原有余料继续保留：
+\begin{equation}
+\mathcal R_t^{\mathrm{remain}}=\mathcal R_t-U_t^{R}.
+\label{eq:p4_remain_old}
+\end{equation}
+
+本批新产生的可用余料集合为
+\begin{equation}
+N_t=\{(t,p)\mid Y_{tp}=1,\ E_{tp}\geq 200\}.
+\label{eq:p4_new_remain}
+\end{equation}
+
+因此，下一批开始前的余料库存更新为
+\begin{equation}
+\mathcal R_{t+1}=\mathcal R_t^{\mathrm{remain}}\cup N_t
+=(\mathcal R_t-U_t^{R})\cup N_t.
+\label{eq:p4_inventory_update}
+\end{equation}
+
+该更新规则保证了第 $t+1$ 批只能调用第 $t$ 批结束后已经确定存在的余料，从而避免在同一模型中提前使用未来余料的因果错误。
+
+为增强求解过程展示，建议在本节加入“三批次滚动优化流程图”，依次展示输入第 $t$ 批需求、调用当前库存余料、求解四阶段模型、计算剩余长度、更新 $\mathcal R_{t+1}$ 的过程。
+
+\subsubsection{结果分析}
+
+利用上述滚动优化规则，按 $B1\rightarrow B2\rightarrow B3$ 的顺序依次求解三批次加工任务。根据最终求解结果，三批次共使用新母材总长度 $516000\ \mathrm{mm}$，获得总共切收益 $2251.171\ \mathrm{mm}$，拼接后总轴向占用长度为 $254660.139\ \mathrm{mm}$，总体利用率为 $0.4935$，工件总切换次数为 $1076$。最终库存中保留 $32$ 根余料，总长度为 $260385.423\ \mathrm{mm}$。
+
+\begin{table}[htbp]
+\centering
+\caption{问题四汇总指标}
+\label{tab:q4_summary}
+\begin{tabular}{lr}
+\toprule
+指标 & 数值 \\
+\midrule
+总母材长度/mm & 516000 \\
+总共切收益/mm & 2251.171 \\
+拼接后总轴向占用长度/mm & 254660.139 \\
+总体利用率 & 0.4935 \\
+工件总切换次数 & 1076 \\
+最终库存余料总长度/mm & 260385.423 \\
+最终库存余料数量 & 32 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+由表~\ref{tab:q4_summary} 可知，三批次滚动优化后仍保留较大规模的期末余料库存。该结果说明，若仅从当前三批次任务角度评价，材料的即时利用率并不高；但从连续生产角度看，期末库存余料仍具有后续可利用价值，不能简单等同于废料。因此，问题四中的总体利用率应结合期末库存余料一起解释。
+
+进一步地，当前模型第一阶段优先最小化新母材总长度，第二阶段再考虑余料调用，第三阶段优化共切收益，第四阶段优化切换次数。该字典序结构保证了各批次目标具有明确优先级，但也可能导致局部批次中产生较多可用余料，并在后续批次中未能完全消化。因此，若实际生产更关注期末库存压缩，可在第二阶段加强余料消耗目标，或在目标函数中增加期末余料惩罚项。
+
+\begin{table}[htbp]
+\centering
+\caption{问题四下料方案示例}
+\label{tab:q4_cutting}
+\begin{tabular}{cclcp{2.5cm}ccc}
+\toprule
+批次 & 材料编号 & 来源 & 材料长度/mm & 工件块序列简写 & 共切收益/mm & 轴向占用/mm & 状态 \\
+\midrule
+B1 & M1 & 新母材 & 12000 & G1$\times$1(正), G6$\times$1(反), G1$\times$2(反), G7$\times$1(反), $\cdots$ & 10.605 & 8434.517 & 入库 \\
+B1 & M2 & 新母材 & 12000 & G9$\times$1(反), G5$\times$1(正), G7$\times$1(正), G3$\times$1(反), $\cdots$ & 20.865 & 7573.269 & 入库 \\
+B1 & M3 & 新母材 & 12000 & G4$\times$1(正), G8$\times$1(反) & 0.137 & 591.334 & 入库 \\
+B1 & M4 & 新母材 & 12000 & G8$\times$1(反), G5$\times$1(正), G2$\times$1(反), G8$\times$2(反), $\cdots$ & 88.433 & 11708.288 & 入库 \\
+B1 & M5 & 新母材 & 12000 & G1$\times$1(正) & 0.000 & 191.547 & 入库 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+表~\ref{tab:q4_cutting} 展示了部分材料的排样结果。可以看出，部分新母材在当前批次中仅使用了较短轴向长度，剩余部分进入库存。这说明滚动优化模型能够正确记录和传递余料，但也反映出当前批次需求与可选母材规格之间存在一定匹配不足，导致较多剩余材料被保留到后续批次。
+
+\begin{table}[htbp]
+\centering
+\caption{母材利用率示例}
+\label{tab:q4_util}
+\begin{tabular}{clcccr}
+\toprule
+母材编号 & 首次批次 & 最终批次 & 初始长度/mm & 最终状态 & 最终利用率 \\
+\midrule
+M1 & B1 & B3 & 12000 & 入库 & 0.7820 \\
+M2 & B1 & B3 & 12000 & 入库 & 0.9296 \\
+M3 & B1 & B2 & 12000 & 入库 & 0.0810 \\
+M4 & B1 & B2 & 12000 & 废料 & 0.9908 \\
+M5 & B1 & B2 & 12000 & 入库 & 0.0493 \\
+M6 & B1 & B2 & 12000 & 入库 & 0.5863 \\
+M7 & B1 & B2 & 12000 & 入库 & 0.1518 \\
+M8 & B1 & B2 & 12000 & 入库 & 0.7507 \\
+M9 & B1 & B2 & 12000 & 入库 & 0.1683 \\
+\bottomrule
+\end{tabular}
+\par\medskip\footnotesize 注：完整母材生命周期与利用率数据可放入附录。
+\end{table}
+
+由表~\ref{tab:q4_util} 可知，不同母材的最终利用率差异较大。例如，M4 的最终利用率达到 $0.9908$，说明其在滚动生产过程中得到了较充分利用；而 M3、M5、M7 等母材的最终利用率较低，说明其剩余段在后续批次中未能有效匹配需求。这进一步说明，在多批次滚动生产中，余料库存的结构性匹配程度会显著影响总体利用率。
+
+为增强结果展示，建议在本节加入如下图形：
+
+\begin{itemize}
+    \item \textbf{三批次余料库存变化堆积图}：展示每批结束后的余料根数与总长度变化；
+    \item \textbf{余料生命周期桑基图}：展示新母材、余料调用、废料和期末库存之间的流转关系；
+    \item \textbf{各批次新母材投入与余料调用对比图}：说明不同批次中余料调用程度；
+    \item \textbf{母材最终利用率分布图}：展示各母材最终利用率差异，识别低利用率母材来源；
+    \item \textbf{四阶段目标变化图}：展示单批次内新母材总长度、未使用余料长度、共切收益和切换次数的分阶段优化过程。
+\end{itemize}
+
+
+\section{灵敏度分析} 
+
+
+
+\subsection{问题二灵敏度分析}
+
+问题二模型的关键在于根据工件端部点云计算共切收益矩阵，并在此基础上优化每根母材内部的工件排列顺序与朝向。共切收益的计算依赖两个角度离散参数：端部轮廓角度网格步长 $\Delta\varphi$ 和旋转搜索步长 $\Delta\theta$。其中，$\Delta\varphi$ 决定端部缩进函数的离散精度，$\Delta\theta$ 决定相邻工件相对旋转角的搜索精度。
+
+理论上，角度步长越小，端部轮廓描述越精细，共切收益计算越准确；但同时，角度网格数量和旋转搜索次数也会增加，导致计算时间上升。因此，需要分析共切收益矩阵对 $\Delta\varphi$ 和 $\Delta\theta$ 的敏感性，从而在计算精度和求解效率之间取得平衡。
+
+本文以最细参数组合
+\[
+(\Delta\varphi,\Delta\theta)=(0.125^\circ,0.125^\circ)
+\]
+作为基准，对其他参数组合下得到的综合邻接收益矩阵 $W$ 进行比较。设基准矩阵为 $W^{0}$，待比较参数组合下的矩阵为 $W^{a}$，则最大差值与平均差值分别定义为
+\[
+D_{\max}=\max_{i,j\in I}\left|W_{ij}^{a}-W_{ij}^{0}\right|,
+\]
+\[
+D_{\mathrm{avg}}=\frac{1}{|I|^2}\sum_{i\in I}\sum_{j\in I}\left|W_{ij}^{a}-W_{ij}^{0}\right|.
+\]
+同时，统计最优端部组合 $A_{ij}$ 相对于基准参数组合发生变化的工件对数量，用于判断离散参数变化是否影响后续排序模型中的端部匹配选择。
+
+不同参数组合下的敏感性结果如表~\ref{tab:p2_sensitivity} 所示。
+
+\begin{table}[htbp]
+\centering
+\caption{问题二共切收益矩阵对离散参数的敏感性}
+\label{tab:p2_sensitivity}
+\begin{tabular}{ccccc}
+\toprule
+$\Delta\varphi$ & $\Delta\theta$ & $W$ 最大差值/mm & $W$ 平均差值/mm & 最优端部组合变化数 \\
+\midrule
+$0.125^\circ$ & $0.125^\circ$ & 0.000 & 0.000000 & 0 \\
+$0.125^\circ$ & $0.25^\circ$  & 0.018 & 0.001440 & 0 \\
+$0.125^\circ$ & $0.5^\circ$   & 0.020 & 0.003040 & 0 \\
+$0.125^\circ$ & $1^\circ$     & 0.132 & 0.008880 & 0 \\
+$0.25^\circ$  & $0.25^\circ$  & 0.018 & 0.003320 & 6 \\
+$0.25^\circ$  & $0.5^\circ$   & 0.018 & 0.002280 & 6 \\
+$0.25^\circ$  & $1^\circ$     & 0.132 & 0.008120 & 6 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+由表~\ref{tab:p2_sensitivity} 可知，当固定 $\Delta\varphi=0.125^\circ$ 时，将旋转搜索步长 $\Delta\theta$ 从 $0.125^\circ$ 放宽到 $0.25^\circ$，$W$ 的最大差值仅为 $0.018\ \mathrm{mm}$，平均差值为 $0.001440\ \mathrm{mm}$，且最优端部组合变化数为 $0$。当 $\Delta\theta$ 进一步放宽到 $0.5^\circ$ 时，最大差值仍仅为 $0.020\ \mathrm{mm}$，平均差值为 $0.003040\ \mathrm{mm}$，说明在 $\Delta\theta\leq0.5^\circ$ 范围内，共切收益矩阵对旋转搜索步长不敏感。
+
+当 $\Delta\theta$ 增大到 $1^\circ$ 时，最大差值上升至 $0.132\ \mathrm{mm}$，平均差值为 $0.008880\ \mathrm{mm}$。虽然平均误差仍较小，但最大误差明显增加，说明过粗的旋转角搜索会遗漏部分较优端部匹配角度，从而影响共切收益的精确计算。
+
+进一步比较 $\Delta\varphi=0.125^\circ$ 与 $\Delta\varphi=0.25^\circ$ 的结果可以发现，当端部轮廓网格步长由 $0.125^\circ$ 放宽至 $0.25^\circ$ 时，收益矩阵的数值误差仍较小，但最优端部组合出现了 $6$ 对变化。这表明端部轮廓离散精度不仅影响共切收益数值，还可能影响最优端部组合的选择。由于后续排序模型需要依赖最优端部组合和对应旋转角，若端部组合发生变化，可能进一步影响最终排列方案。
+
+综合来看，$\Delta\varphi$ 对端部组合选择的影响比 $\Delta\theta$ 更明显，而 $\Delta\theta$ 主要影响旋转匹配过程中的收益精度。因此，在参数设置时应优先保证端部轮廓网格精度，即选择较小的 $\Delta\varphi$；在此基础上再根据计算效率选择合适的 $\Delta\theta$。
+
+结合表~\ref{tab:p2_sensitivity} 的结果，本文最终采用
+\[
+\Delta\varphi=0.125^\circ,\qquad \Delta\theta=0.125^\circ
+\]
+作为问题二共切收益矩阵的计算参数。该参数组合具有最高离散精度，且与相邻较粗参数组合相比误差较小，说明所得共切收益矩阵具有较好的稳定性和可靠性。
+
+为进一步增强分析的可视化效果，建议在本节加入“离散参数敏感性折线图”。该图可将 $\Delta\theta$ 作为横轴，分别绘制 $W$ 最大差值和平均差值随 $\Delta\theta$ 变化的曲线，并用不同线型区分 $\Delta\varphi=0.125^\circ$ 与 $\Delta\varphi=0.25^\circ$ 两种情况。通过该图可以直观看出：当 $\Delta\theta\leq0.5^\circ$ 时，收益矩阵变化较小；当 $\Delta\theta=1^\circ$ 时，最大差值明显增大。
+
+
+
+
+
+
 
 
 %Reference
