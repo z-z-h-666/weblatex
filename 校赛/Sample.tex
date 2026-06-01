@@ -227,7 +227,54 @@ cleaned\_圆管9  & 256  & 0.004474   & 0.000837   & 是 \\
 
 \subsection{轴向占用长度计算}
 
-本文初探时曾尝试用传统主成分分析（PCA）提取第一主成分作为器件轴向，但由于端面扫描时截面采样点存在局部空间偏置，PCA 得到的方差最大方向往往偏离真实几何轴线，导致轴向长度估计偏差。为此，本文采用空间圆柱拟合方法：先通过 RANSAC 与非线性最小二乘优化求解圆柱轴线参数（轴线由点 $P_0$ 和方向 $\vec{n}$ 确定，半径 $R$，目标函数 $\min\sum\bigl(\|(P_i-P_0)\times\vec{n}\|^2-R^2\bigr)^2$），再将所有测点投影至该轴线得到一维坐标集 $T=\{t_i=(P_i-O)\cdot\vec{n}\}$，最后利用分位数计算轴向长度 $L=Q_{0.995}(T)-Q_{0.005}(T)$。该方法避免了直接使用最远两点，且对边缘微小噪点不敏感；本实验数据已确认无噪声，但分位数处理作为通用稳健策略予以保留。
+为确定各类异形圆管的轴向占用长度，本文首先采用主成分分析（PCA）对工件点云的轴向方向进行先验检验。设第 $k$ 类工件的三维点云为
+\[
+P_k=\{(x_i,y_i,z_i)\mid i=1,2,\cdots,N_k\},
+\]
+对点云中心化后构造协方差矩阵，并取最大特征值对应的单位特征向量作为 PCA 估计轴向方向，记为
+\[
+\boldsymbol n_k=(u_{x,k},u_{y,k},u_{z,k})^{\mathrm T}.
+\]
+若 $\boldsymbol n_k$ 与 $x$ 轴正方向夹角较小，则说明该工件的主要延展方向与题目所给坐标系中的 $x$ 轴方向基本一致。
+
+根据附件点云数据计算结果，各工件由 PCA 得到的轴向单位向量均与 $x$ 轴高度接近。为直观展示该结论，表 \ref{tab:pca_axis_check} 给出了各类工件的 PCA 轴向方向、与 $x$ 轴夹角以及按 $x$ 轴直接计算得到的轴向长度。
+
+\begin{table}[htbp]
+\centering
+\caption{PCA 轴向方向与 $x$ 轴方向对比}
+\label{tab:pca_axis_check}
+\begin{tabular}{c|c|c|c|c}
+\hline
+工件编号 & PCA 轴向单位向量 $(u_x,u_y,u_z)$ & 与 $x$ 轴夹角/$(^\circ)$ & 按 $x$ 轴长度/mm & PCA 与 $x$ 轴长度差/mm \\
+\hline
+G1  & $(0.999978,\ 0.000000,\ 0.006665)$ & 0.3819 & 191.547 & 0.262 \\
+G2  & $(0.999881,\ -0.008360,\ 0.012975)$ & 0.8844 & 148.826 & 0.414 \\
+G3  & $(0.999989,\ 0.000000,\ 0.004594)$ & 0.2632 & 191.547 & 0.182 \\
+G4  & $(0.999989,\ -0.000036,\ 0.004602)$ & 0.2637 & 191.547 & 0.137 \\
+G5  & $(1.000000,\ 0.000000,\ 0.000000)$ & 0.0000 & 75.000  & 0.000 \\
+G6  & $(1.000000,\ 0.000000,\ 0.000000)$ & 0.0000 & 150.000 & 0.000 \\
+G7  & $(1.000000,\ 0.000000,\ 0.000000)$ & 0.0000 & 250.000 & 0.000 \\
+G8  & $(1.000000,\ 0.000000,\ -0.000000)$ & 0.0000 & 399.924 & 0.000 \\
+G9  & $(0.999993,\ 0.003804,\ -0.000084)$ & 0.2180 & 181.033 & 0.073 \\
+G10 & $(0.999686,\ -0.021763,\ -0.012406)$ & 1.4355 & 200.000 & 0.934 \\
+\hline
+\end{tabular}
+\end{table}
+
+由表 \ref{tab:pca_axis_check} 可知，10 类工件的 PCA 轴向方向均接近 $x$ 轴，其中最大夹角仅为 $1.4355^\circ$，平均夹角约为 $0.3447^\circ$；PCA 投影长度与直接按 $x$ 轴计算长度的最大差值为 $0.934\ \mathrm{mm}$，相对误差不超过 $0.47\%$。这说明从整体趋势上看，点云的主要延展方向与 $x$ 轴基本一致，题目数据坐标系已经较好地反映了圆管的实际轴向方向。
+
+但需要指出的是，PCA 本质上反映的是点云数据方差最大的统计方向，并不一定等同于工件的真实几何轴线。对于本题中的异形圆管，端部切割形状不规则，点云在端面附近的采样分布可能存在局部空间偏置。当某一端面存在较多非对称采样点时，PCA 得到的第一主成分会受到局部点云分布影响，从而产生轻微偏转。也就是说，PCA 更适合作为轴向方向的先验检验方法，而不宜直接作为最终几何轴线来计算轴向占用长度。
+
+因此，结合题目所给数据的坐标特征以及 PCA 初步检验结果，本文假设所有异形圆管的轴向方向均为 $x$ 轴方向，即
+\[
+\boldsymbol e_x=(1,0,0)^{\mathrm T}.
+\]
+在该假设下，第 $k$ 类工件的轴向占用长度定义为点云在 $x$ 轴方向上的最大跨度：
+\[
+L_k=\max_{i} x_i-\min_{i} x_i.
+\]
+由于本文对原始点云进行了重复点处理和孤立点审查，结果显示各类工件的孤立噪声点数均为 0，因此直接采用 $x$ 坐标跨度计算轴向占用长度。该处理既与题目坐标系保持一致，又避免了 PCA 因端面局部采样偏置而引入的轴向估计扰动。
+
 \section{模型建立与求解}
 
 \subsection{问题一模型建立与求解}
@@ -490,156 +537,290 @@ K^*=\{k\in K\mid y_k^*=1\}.
 
 \paragraph{端部点云预处理}
 
-以圆管轴线方向为 $x$ 轴，对每类工件的点云进行预处理，以获得端部轮廓的缩进函数。设第 $i$ 类工件的原始点云为
+以圆管轴线方向为 $x$ 轴，对每类工件的端部点云进行预处理，将三维端部轮廓转化为圆周角与轴向缩进距离之间的函数关系。设第 $i$ 类工件的原始点云为
 \begin{equation}
 P_i=\left\{p_{i,n}=(x_{i,n},y_{i,n},z_{i,n})\mid n=1,2,\ldots,N_i\right\}.
 \label{eq:p2_pointcloud}
 \end{equation}
 
-对点云去重后，按 $x$ 坐标将点云划分为左端和右端。设不同的 $x$ 坐标升序排列为
+对点云去重后，按 $x$ 坐标将点云划分为左端和右端。设去重后不同的 $x$ 坐标升序排列为
 \begin{equation}
 x_{(1)}<x_{(2)}<\cdots<x_{(s)}.
 \label{eq:p2_xsort}
 \end{equation}
 
-取相邻 $x$ 坐标最大间隔所在位置作为左右端分界点：
+由于左右端部点云之间在轴向上存在明显间隔，取相邻 $x$ 坐标最大间隔所在位置作为左右端分界点：
 \begin{equation}
-q=\arg\max_{r=1,\ldots,s-1}\left(x_{(r+1)}-x_{(r)}\right),\qquad
+q=\arg\max_{r=1,\ldots,s-1}
+\left(x_{(r+1)}-x_{(r)}\right),
+\qquad
 \tau_i=\frac{x_{(q)}+x_{(q+1)}}{2}.
 \label{eq:p2_split}
 \end{equation}
 
-于是，第 $i$ 类工件的左右端点云分别为
+于是，第 $i$ 类工件的左右端部点云分别为
 \begin{equation}
-P_{i,L}=\{p\in P_i\mid x(p)\leq \tau_i\},\qquad
-P_{i,R}=\{p\in P_i\mid x(p)>\tau_i\}.
+P_{i,L}=\{p\in P_i\mid x(p)\leq \tau_i\},
+\qquad
+P_{i,R}=\{p\in P_i\mid x(p)> \tau_i\}.
 \label{eq:p2_lr_cloud}
 \end{equation}
 
-为统一圆周方向，在 $YZ$ 截面上拟合圆心
+为统一圆周方向，在 $YZ$ 截面内拟合圆心，记为
 \begin{equation}
 C_i=(y_{c,i},z_{c,i}).
 \label{eq:p2_center}
 \end{equation}
 
-端部点 $p=(x,y,z)$ 的圆周角定义为
+对于端部点 $p=(x,y,z)$，其圆周角定义为
 \begin{equation}
-\varphi(p)=\operatorname{atan2}\left(z-z_{c,i},\,y-y_{c,i}\right)\bmod 360^\circ.
+\varphi(p)=
+\operatorname{atan2}\left(z-z_{c,i},\,y-y_{c,i}\right)\bmod 360^\circ .
 \label{eq:p2_phi}
 \end{equation}
 
-对左端，取最外侧参考截面
+分别取左右端点云在 $x$ 方向上的最外侧截面作为参考截面：
+\begin{equation}
+x_{i,L}^{0}=\min_{p\in P_{i,L}}x(p),
+\qquad
+x_{i,R}^{0}=\max_{p\in P_{i,R}}x(p).
+\label{eq:p2_end_reference}
+\end{equation}
+
+于是端部点 $p$ 的轴向缩进距离可统一表示为
+\begin{equation}
+d_{i,a}(p)=
+\begin{cases}
+x(p)-x_{i,L}^{0}, & a=L,\\[4pt]
+x_{i,R}^{0}-x(p), & a=R,
+\end{cases}
+\qquad a\in\{L,R\}.
+\label{eq:p2_indent_distance}
+\end{equation}
+
+该定义使左右端部的缩进方向保持一致，即 $d_{i,a}(p)\geq0$，且 $d_{i,a}(p)$ 越小表示该点越靠近端部外侧轮廓，$d_{i,a}(p)$ 越大表示该点沿轴向向工件内部缩进越深。因此，任一端部点均可转化为角度--缩进距离形式
 \[
-x_{i,L}^0=\min_{p\in P_{i,L}}x(p),
+(\varphi(p),d_{i,a}(p)).
 \]
-则左端点的轴向缩进距离为
+
+对于同一圆周角或相邻极近角度处存在多个端部点的情况，取其中较小的缩进距离作为该角度处的端部外轮廓值，以避免高估端部可重叠长度。记处理后的离散端部轮廓为
 \begin{equation}
-d(p)=x(p)-x_{i,L}^0,\qquad p\in P_{i,L}.
-\label{eq:p2_d_left}
+\tilde d_{i,a}(\varphi_r)
+=
+\min\left\{
+d_{i,a}(p)\mid p\in P_{i,a},\ \varphi(p)\approx \varphi_r
+\right\},
+\qquad a\in\{L,R\}.
+\label{eq:p2_discrete_profile}
 \end{equation}
 
-对右端，取最外侧参考截面
-\[
-x_{i,R}^0=\max_{p\in P_{i,R}}x(p),
-\]
-则右端点的轴向缩进距离为
-\begin{equation}
-d(p)=x_{i,R}^0-x(p),\qquad p\in P_{i,R}.
-\label{eq:p2_d_right}
-\end{equation}
-
-因此，任一端部点均可转化为角度--缩进距离形式 $(\varphi,d)$，其中 $d\geq0$。对于同一角度或极近角度的多个点，保留较小缩进距离，以避免高估端部可重叠长度：
-\begin{equation}
-d_{i,a}(\varphi)=\min\{d(p)\mid p\in P_{i,a},\ \varphi(p)=\varphi\},\qquad a\in\{L,R\}.
-\label{eq:p2_d_phi}
-\end{equation}
-
-将圆周角归一化到 $[0,360^\circ)$，并采用周期插值将端部离散点统一到角度网格
+为便于不同工件端部之间逐角度匹配，将圆周角统一到固定角度网格
 \begin{equation}
 \Phi=\{0,\Delta\varphi,2\Delta\varphi,\ldots,360^\circ-\Delta\varphi\}.
 \label{eq:p2_phi_grid}
 \end{equation}
 
-由此得到每类工件左右端的端部缩进函数
+本文取 $\Delta\varphi=0.125^\circ$。考虑到端部轮廓在圆周方向上具有周期性，采用周期延拓下的 PCHIP 方法对离散轮廓进行插值。具体地，将离散角度--缩进距离数据在圆周方向上作周期延拓，并利用分段三次 Hermite 保形插值构造连续缩进函数：
 \begin{equation}
-d_{i,L}(\varphi_m),\quad d_{i,R}(\varphi_m),\qquad \varphi_m\in\Phi.
+d_{i,a}(\varphi_m)
+=
+\operatorname{PCHIP}
+\left(\varphi_r,\tilde d_{i,a}(\varphi_r)\right)(\varphi_m),
+\qquad
+\varphi_m\in\Phi,\quad a\in\{L,R\}.
+\label{eq:p2_pchip}
+\end{equation}
+
+其中周期性条件为
+\begin{equation}
+d_{i,a}(\varphi+360^\circ)=d_{i,a}(\varphi).
+\label{eq:p2_periodic}
+\end{equation}
+
+PCHIP 插值能够较好保持端部轮廓的局部变化趋势，避免普通三次样条在相邻采样点之间产生过冲或非物理振荡。由此得到每类工件左右端的端部缩进函数：
+\begin{equation}
+d_{i,L}(\varphi_m),\quad d_{i,R}(\varphi_m),
+\qquad \varphi_m\in\Phi.
 \label{eq:p2_end_function}
 \end{equation}
 
-式 \eqref{eq:p2_end_function} 表示第 $i$ 类工件左右端在不同圆周角处相对于最外侧参考圆的轴向缩进距离。
+式 \eqref{eq:p2_end_function} 表示第 $i$ 类工件左右端在不同圆周角处相对于最外侧参考截面的轴向缩进距离，是后续计算共切收益的基础。
 
-为增强该部分的直观性，建议在此处加入“点云端部分界与圆周角示意图”。该图可展示原始点云、左右端分界面、拟合圆心以及圆周角 $\varphi$ 的定义方式，从而说明端部缩进函数的几何来源。
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{fig_end_preprocess.png}
+\caption{端部点云划分与缩进距离构造示意图}
+\label{fig:p2_end_preprocess}
+\end{figure}
 
 \paragraph{共切收益计算}
 
-设第 $i$ 类工件的端部为 $a$，第 $j$ 类工件的端部为 $b$，其中 $a,b\in\{L,R\}$。相邻加工时，允许工件 $j$ 绕公共 $x$ 轴相对工件 $i$ 旋转。设旋转角集合为
+设第 $i$ 类工件的端部 $a$ 与第 $j$ 类工件的端部 $b$ 相邻拼接，其中
+\[
+a,b\in\{L,R\}.
+\]
+相邻加工时，工件 $j$ 可绕公共 $x$ 轴相对于工件 $i$ 旋转。设旋转角搜索集合为
 \begin{equation}
 \Theta=\{0,\Delta\theta,2\Delta\theta,\ldots,360^\circ-\Delta\theta\}.
 \label{eq:p2_theta_grid}
 \end{equation}
 
-当旋转角为 $\theta$ 时，工件 $j$ 的端部轮廓在角度 $\varphi_m$ 处对应为 $d_{j,b}(\varphi_m-\theta)$。若两工件产生轴向重叠长度 $\delta$，为保证所有圆周角位置均不发生几何穿插，应满足
+本文取 $\Delta\theta=0.125^\circ$。当旋转角为 $\theta$ 时，工件 $j$ 的端部 $b$ 在圆周角 $\varphi_m$ 处对应的缩进距离为
+\[
+d_{j,b}(\varphi_m-\theta).
+\]
+
+为简化记号，定义两端部在旋转角 $\theta$ 下的逐角度可重叠深度为
 \begin{equation}
-\delta\leq d_{i,a}(\varphi_m)+d_{j,b}(\varphi_m-\theta),
-\quad \forall \varphi_m\in\Phi.
+s_{ij}^{ab}(\varphi_m;\theta)
+=
+d_{i,a}(\varphi_m)+d_{j,b}(\varphi_m-\theta),
+\qquad \varphi_m\in\Phi.
+\label{eq:p2_sum_profile}
+\end{equation}
+
+若两工件产生整体轴向重叠长度 $\delta$，为保证所有圆周角位置均不发生几何穿插，应满足
+\begin{equation}
+\delta\leq s_{ij}^{ab}(\varphi_m;\theta),
+\qquad \forall \varphi_m\in\Phi.
 \label{eq:p2_overlap_constraint}
 \end{equation}
 
-因此，在固定旋转角 $\theta$ 下，端部组合 $ab$ 的最大可行重叠长度为
+因此，在固定旋转角 $\theta$ 下，端部组合 $ab$ 的最大可行重叠长度由所有圆周角位置中的最小允许重叠深度决定：
+\begin{equation}
+\delta_{ij}^{ab}(\theta)
+=
+\min_{\varphi_m\in\Phi}
+s_{ij}^{ab}(\varphi_m;\theta).
+\label{eq:p2_delta_theta_1}
+\end{equation}
+
+将式 \eqref{eq:p2_sum_profile} 代入式 \eqref{eq:p2_delta_theta_1}，可得
 \begin{equation}
 \delta_{ij}^{ab}(\theta)=
 \min_{\varphi_m\in\Phi}
-\left[d_{i,a}(\varphi_m)+d_{j,b}(\varphi_m-\theta)\right].
+\left[
+d_{i,a}(\varphi_m)+d_{j,b}(\varphi_m-\theta)
+\right].
 \label{eq:p2_delta_theta}
 \end{equation}
 
-由于旋转角可以自由选择，端部组合 $ab$ 下的最大共切收益为
+进一步地，由于旋转角可以在集合 $\Theta$ 中选择，目标端部组合 $ab$ 下的共切收益为：
 \begin{equation}
-\Delta_{ij}^{ab}=
+\Delta_{ij}^{ab}
+=
+\max_{\theta\in\Theta}
+\delta_{ij}^{ab}(\theta).
+\label{eq:p2_delta_ab_1}
+\end{equation}
+
+即
+\begin{equation}
+\Delta_{ij}^{ab}
+=
 \max_{\theta\in\Theta}
 \min_{\varphi_m\in\Phi}
-\left[d_{i,a}(\varphi_m)+d_{j,b}(\varphi_m-\theta)\right].
+\left[
+d_{i,a}(\varphi_m)+d_{j,b}(\varphi_m-\theta)
+\right],
+\qquad a,b\in\{L,R\}.
 \label{eq:p2_delta_ab}
 \end{equation}
 
-式 \eqref{eq:p2_delta_ab} 的含义是：对每个旋转角，先在所有圆周角位置中找出最小可重叠深度；再在所有旋转角中选择该最小重叠深度最大的方案，作为两端部的最大共切收益。
+式 \eqref{eq:p2_delta_ab} 体现了共切收益计算中的“先保守、再优化”思想：对于给定旋转角，最不利圆周角位置决定该角度下的最大可行重叠长度；再在所有旋转角中选择最大可行重叠长度最大的方案，作为该端部组合下的共切收益。
 
-四种端部组合对应四个共切收益矩阵：
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{fig_g1_g2_LL_matching.png}
+\caption{G1 与 G2 的 LL 组合共切收益计算示意图}
+\label{fig:p2_g1_g2_LL}
+\end{figure}
+
+以 G1 与 G2 的 LL 端部组合为例，当最优旋转角为
+\[
+\theta^{*}=180^\circ
+\]
+时，两端部缩进函数之和为
+\[
+s_{\theta}(\varphi)
+=
+d_{1,L}(\varphi)+d_{2,L}(\varphi-\theta).
+\]
+该旋转角下的最大可行重叠长度为
 \begin{equation}
-\Delta^{LL},\quad \Delta^{LR},\quad \Delta^{RL},\quad \Delta^{RR}.
+\delta_{12}^{LL}(180^\circ)
+=
+\min_{\varphi\in\Phi}s_{\theta}(\varphi)
+=
+22.517\ \mathrm{mm}.
+\label{eq:p2_example_delta}
+\end{equation}
+
+经过旋转角搜索后，该值即为 G1 与 G2 在 LL 端部组合下的最大共切收益：
+\begin{equation}
+\Delta_{12}^{LL}=22.517\ \mathrm{mm}.
+\label{eq:p2_example_benefit}
+\end{equation}
+
+\paragraph{共切收益矩阵构造}
+
+按照上述方法，对任意工件对 $(i,j)$ 以及四种端部组合 LL、LR、RL、RR 分别计算共切收益，可得到四个端部组合对应的共切收益矩阵：
+\begin{equation}
+\Delta^{LL},\quad
+\Delta^{LR},\quad
+\Delta^{RL},\quad
+\Delta^{RR}.
 \label{eq:p2_delta_matrices}
 \end{equation}
 
-若后续排序模型只需要两个工件相邻时的最大收益，则定义综合邻接收益矩阵
+其中，矩阵元素 $\Delta_{ij}^{ab}$ 表示第 $i$ 类工件端部 $a$ 与第 $j$ 类工件端部 $b$ 相邻拼接时的最大省料长度。为服务后续母材内部排序优化，对每一对相邻工件，取四种端部组合中的最大值作为综合邻接收益：
 \begin{equation}
-W_{ij}=\max\left\{
-\Delta_{ij}^{LL},\Delta_{ij}^{LR},\Delta_{ij}^{RL},\Delta_{ij}^{RR}
-\right\}.
+W_{ij}
+=
+\max_{a,b\in\{L,R\}}
+\Delta_{ij}^{ab}.
 \label{eq:p2_W}
 \end{equation}
 
-同时记录对应的最优端部组合
+同时记录达到最大收益时的最优端部组合：
 \begin{equation}
-A_{ij}=\arg\max_{ab\in\{LL,LR,RL,RR\}}\Delta_{ij}^{ab}.
+A_{ij}
+=
+\arg\max_{a,b\in\{L,R\}}
+\Delta_{ij}^{ab},
 \label{eq:p2_A}
 \end{equation}
-
-若 $A_{ij}=a^*b^*$，则对应的最优旋转角为
+以及对应的最优旋转角：
 \begin{equation}
-\theta_{ij}^*=
+\theta_{ij}^{*}
+=
 \arg\max_{\theta\in\Theta}
 \min_{\varphi_m\in\Phi}
-\left[d_{i,a^*}(\varphi_m)+d_{j,b^*}(\varphi_m-\theta)\right].
+\left[
+d_{i,a^*}(\varphi_m)+d_{j,b^*}(\varphi_m-\theta)
+\right],
 \label{eq:p2_theta_star}
 \end{equation}
+其中 $A_{ij}=a^*b^*$。
 
 两工件在端部组合 $ab$ 下的最小拼接轴向占用长度为
 \begin{equation}
-L_{ij}^{ab}=l_i+l_j-\Delta_{ij}^{ab}.
+L_{ij}^{ab}
+=
+l_i+l_j-\Delta_{ij}^{ab}.
 \label{eq:p2_pair_length}
 \end{equation}
 
-建议在此处加入“端部轮廓旋转匹配示意图”与“共切收益矩阵热力图”。前者用于解释式 \eqref{eq:p2_delta_ab} 中 $\max$--$\min$ 结构的几何含义；后者用于展示不同工件对之间共切收益的差异，为后续排序优化提供直观依据。
+因此，问题二中每根母材内部的工件重排序可转化为以 $W_{ij}$ 为相邻边权的路径优化问题。排序完成后，再根据 $A_{ij}$ 和 $\theta_{ij}^{*}$ 输出相邻工件的具体拼接方式与旋转角。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\textwidth]{fig_benefit_heatmap.png}
+\caption{综合最大共切收益矩阵热力图}
+\label{fig:p2_benefit_heatmap}
+\end{figure}
+
+由综合最大共切收益矩阵可以看出，不同工件对之间的共切收益差异明显。G1、G2、G3、G4 之间端部匹配效果较好，最大共切收益可达到 $22.517\ \mathrm{mm}$；G8 与自身拼接时也具有较高共切收益，达到 $19.915\ \mathrm{mm}$。而 G5、G6、G7 与多数工件之间的共切收益接近 0，说明这些工件端部轮廓之间缺少明显的互补重叠空间。后续排序优化中，应优先构造高收益工件对的相邻关系，以提高总共切收益；在总共切收益相近的情况下，再进一步考虑减少工件类型切换次数。
 
 \subsubsection{模型建立}
 
