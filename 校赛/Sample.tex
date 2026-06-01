@@ -1,8 +1,21 @@
 \documentclass[UTF8]{ctexart}
-\usepackage{shumo}%可以点开查看宏包和定义内容，同时可以自行另外加宏包和定义
+% shumo.sty 包含完整文档导致加载错误，改为按需加载宏包
+% \usepackage{shumo}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{titlesec}
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{amssymb}
+\usepackage{amsmath}
+% 定义在原 shumo 模板中使用但这里未定义的命令，避免未定义错误
+\providecommand{\sihao}{}
+\providecommand{\xiaosihao}{}
+\providecommand{\heiti}{\textbf}
+\providecommand{\songti}{\textrm}
 % 图片搜索路径
 \graphicspath{{./}{./校赛/}}
 \geometry{left=2.50cm,right=2.5cm,top=2.50cm,bottom=2.5cm}%页面布局集训标准，可自行适当修改
@@ -72,7 +85,7 @@
 与普通一维下料问题相比，异形圆管工件下料还存在端部共切和加工切换等实际因素。相邻工件若能选择合适的端部拼接方式，可减少中间多余切割区域，提高材料利用率；同时，同类工件连续加工有利于降低排产和现场操作复杂度。因此，如何在满足生产需求的前提下，综合考虑母材选取、工件排序、端部拼接和余料利用，制定高效的下料方案，具有重要的实际意义。
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.62\textwidth]{校赛/1.png}
+	\IfFileExists{1.png}{\includegraphics[width=0.62\textwidth]{1.png}}{\fbox{Missing figure}}
 	\caption{工件切割示意图}
 	\label{fig:单图}
 \end{figure}
@@ -190,7 +203,7 @@ $F^*$ & 问题一第一阶段最优母材总长度 & mm \\
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{校赛/圆管1_comparison.png}
+	\IfFileExists{圆管1_comparison.png}{\includegraphics[width=0.8\textwidth]{圆管1_comparison.png}}{\fbox{Missing figure}}
 	\caption{圆管1点云与STP文件对比图}
 	\label{fig:pipe1_comparison}
 \end{figure}
@@ -648,7 +661,7 @@ d_{i,L}(\varphi_m),\quad d_{i,R}(\varphi_m),
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.90\textwidth]{fig_end_preprocess.png}
+\IfFileExists{fig_end_preprocess.png}{\includegraphics[width=0.90\textwidth]{fig_end_preprocess.png}}{\fbox{Missing figure}}
 \caption{端部点云划分与缩进距离构造示意图}
 \label{fig:p2_end_preprocess}
 \end{figure}
@@ -731,7 +744,7 @@ d_{i,a}(\varphi_m)+d_{j,b}(\varphi_m-\theta)
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.92\textwidth]{fig_g1_g2_LL_matching.png}
+\IfFileExists{fig_g1_g2_LL_matching.png}{\includegraphics[width=0.92\textwidth]{fig_g1_g2_LL_matching.png}}{\fbox{Missing figure}}
 \caption{G1 与 G2 的 LL 组合共切收益计算示意图}
 \label{fig:p2_g1_g2_LL}
 \end{figure}
@@ -815,7 +828,7 @@ l_i+l_j-\Delta_{ij}^{ab}.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.82\textwidth]{fig_benefit_heatmap.png}
+\IfFileExists{fig_benefit_heatmap.png}{\includegraphics[width=0.82\textwidth]{fig_benefit_heatmap.png}}{\fbox{Missing figure}}
 \caption{综合最大共切收益矩阵热力图}
 \label{fig:p2_benefit_heatmap}
 \end{figure}
@@ -1877,6 +1890,7 @@ F_4^{(4)}=\sum_{q\in Q}C_qx_q
 \label{eq:p4_F4_def}
 \end{equation}
 
+\begin{equation}
 \begin{aligned}
 \mathrm{s.t.}\quad
 &\sum_{q\in Q_t}a_{iq}x_q=d_{ti},
@@ -1899,11 +1913,12 @@ F_4^{(4)}=\sum_{q\in Q}C_qx_q
 &x_q\in\mathbb{Z}_{\geq 0},
 &&\forall q\in Q.
 \end{aligned}
+\end{equation}
 
 对于每个被选中的 pattern，根据其序列
-[
+\[
 q=\left(t(q),L_q,\operatorname{par}(q);\ (i_1,o_1),(i_2,o_2),\ldots,(i_{T_q},o_{T_q})\right)
-]
+\]
 即可还原对应批次中的材料来源、工件加工顺序、放置朝向、相邻拼接方式、单根材料利用率以及产生的余料长度。
 
 \subsubsection{模型求解}

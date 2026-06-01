@@ -1,0 +1,256 @@
+\relax 
+\@writefile{toc}{\contentsline {section}{\numberline {1}问题重述}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}问题背景}{2}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces 工件切割示意图}}{2}{}\protected@file@percent }
+\newlabel{fig:单图}{{1}{2}{问题背景}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}问题提出}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}问题分析}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}问题1的分析}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}问题2的分析}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}问题3的分析}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}问题4的分析}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}模型假设与符号说明}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}模型假设}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}符号说明}{3}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces 主要符号说明}}{4}{}\protected@file@percent }
+\newlabel{tab:symbols}{{1}{4}{符号说明}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}数据预处理}{5}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}重复值检测与去重}{5}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces 点云去重统计表}}{5}{}\protected@file@percent }
+\newlabel{tab:dedup}{{2}{5}{重复值检测与去重}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}异常值检测及处理}{5}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces 圆管1点云与STP文件对比图}}{5}{}\protected@file@percent }
+\newlabel{fig:pipe1_comparison}{{2}{5}{异常值检测及处理}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces 去重与异常值检测汇总表}}{6}{}\protected@file@percent }
+\newlabel{tab:summary_points}{{3}{6}{异常值检测及处理}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}轴向占用长度计算}{6}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces PCA 轴向方向与 $x$ 轴方向对比}}{7}{}\protected@file@percent }
+\newlabel{tab:pca_axis_check}{{4}{7}{轴向占用长度计算}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}模型建立与求解}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}问题一模型建立与求解}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}模型建立}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{决策变量}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{辅助变量}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{目标函数}{8}{}\protected@file@percent }
+\newlabel{eq:p1_obj1}{{2}{8}{目标函数}{}{}}
+\newlabel{eq:p1_obj2}{{3}{8}{目标函数}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{约束条件}{8}{}\protected@file@percent }
+\newlabel{eq:p1_demand}{{4}{8}{约束条件}{}{}}
+\newlabel{eq:p1_select}{{5}{8}{约束条件}{}{}}
+\newlabel{eq:p1_capacity}{{6}{8}{约束条件}{}{}}
+\newlabel{eq:p1_use}{{7}{9}{约束条件}{}{}}
+\newlabel{eq:p1_order}{{8}{9}{约束条件}{}{}}
+\newlabel{eq:p1_u_lower}{{9}{9}{约束条件}{}{}}
+\newlabel{eq:p1_u_upper}{{10}{9}{约束条件}{}{}}
+\newlabel{eq:p1_switch1}{{11}{9}{约束条件}{}{}}
+\newlabel{eq:p1_switch2}{{12}{9}{约束条件}{}{}}
+\newlabel{eq:p1_domain}{{13}{9}{约束条件}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.2}模型汇总}{9}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.3}模型求解}{10}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.4}结果分析}{10}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces 工件轴向占用长度}}{11}{}\protected@file@percent }
+\newlabel{tab:lengths}{{5}{11}{结果分析}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces 下料方案}}{11}{}\protected@file@percent }
+\newlabel{tab:cutting}{{6}{11}{结果分析}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces 整体指标汇总}}{11}{}\protected@file@percent }
+\newlabel{tab:summary_overall}{{7}{11}{结果分析}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}问题二模型建立与求解}{12}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.1}数据处理与共切收益计算}{12}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{端部点云预处理}{12}{}\protected@file@percent }
+\newlabel{eq:p2_pointcloud}{{18}{12}{端部点云预处理}{}{}}
+\newlabel{eq:p2_xsort}{{19}{12}{端部点云预处理}{}{}}
+\newlabel{eq:p2_split}{{20}{12}{端部点云预处理}{}{}}
+\newlabel{eq:p2_lr_cloud}{{21}{12}{端部点云预处理}{}{}}
+\newlabel{eq:p2_center}{{22}{12}{端部点云预处理}{}{}}
+\newlabel{eq:p2_phi}{{23}{12}{端部点云预处理}{}{}}
+\newlabel{eq:p2_end_reference}{{24}{12}{端部点云预处理}{}{}}
+\newlabel{eq:p2_indent_distance}{{25}{13}{端部点云预处理}{}{}}
+\newlabel{eq:p2_discrete_profile}{{26}{13}{端部点云预处理}{}{}}
+\newlabel{eq:p2_phi_grid}{{27}{13}{端部点云预处理}{}{}}
+\newlabel{eq:p2_pchip}{{28}{13}{端部点云预处理}{}{}}
+\newlabel{eq:p2_periodic}{{29}{13}{端部点云预处理}{}{}}
+\newlabel{eq:p2_end_function}{{30}{13}{端部点云预处理}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 端部点云划分与缩进距离构造示意图}}{13}{}\protected@file@percent }
+\newlabel{fig:p2_end_preprocess}{{3}{13}{端部点云预处理}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{共切收益计算}{13}{}\protected@file@percent }
+\newlabel{eq:p2_theta_grid}{{31}{13}{共切收益计算}{}{}}
+\newlabel{eq:p2_sum_profile}{{32}{14}{共切收益计算}{}{}}
+\newlabel{eq:p2_overlap_constraint}{{33}{14}{共切收益计算}{}{}}
+\newlabel{eq:p2_delta_theta_1}{{34}{14}{共切收益计算}{}{}}
+\newlabel{eq:p2_delta_theta}{{35}{14}{共切收益计算}{}{}}
+\newlabel{eq:p2_delta_ab_1}{{36}{14}{共切收益计算}{}{}}
+\newlabel{eq:p2_delta_ab}{{37}{14}{共切收益计算}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces G1 与 G2 的 LL 组合共切收益计算示意图}}{14}{}\protected@file@percent }
+\newlabel{fig:p2_g1_g2_LL}{{4}{14}{共切收益计算}{}{}}
+\newlabel{eq:p2_example_delta}{{38}{14}{共切收益计算}{}{}}
+\newlabel{eq:p2_example_benefit}{{39}{14}{共切收益计算}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{共切收益矩阵构造}{15}{}\protected@file@percent }
+\newlabel{eq:p2_delta_matrices}{{40}{15}{共切收益矩阵构造}{}{}}
+\newlabel{eq:p2_W}{{41}{15}{共切收益矩阵构造}{}{}}
+\newlabel{eq:p2_A}{{42}{15}{共切收益矩阵构造}{}{}}
+\newlabel{eq:p2_theta_star}{{43}{15}{共切收益矩阵构造}{}{}}
+\newlabel{eq:p2_pair_length}{{44}{15}{共切收益矩阵构造}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces 综合最大共切收益矩阵热力图}}{15}{}\protected@file@percent }
+\newlabel{fig:p2_benefit_heatmap}{{5}{15}{共切收益矩阵构造}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.2}模型建立}{15}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{决策变量}{15}{}\protected@file@percent }
+\newlabel{eq:p2_nk}{{45}{15}{决策变量}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{目标函数}{16}{}\protected@file@percent }
+\newlabel{eq:p2_g}{{46}{16}{目标函数}{}{}}
+\newlabel{eq:p2_Bk}{{47}{16}{目标函数}{}{}}
+\newlabel{eq:p2_total_B}{{48}{16}{目标函数}{}{}}
+\newlabel{eq:p2_obj_B}{{49}{16}{目标函数}{}{}}
+\newlabel{eq:p2_h}{{50}{16}{目标函数}{}{}}
+\newlabel{eq:p2_Ck}{{51}{16}{目标函数}{}{}}
+\newlabel{eq:p2_total_C}{{52}{16}{目标函数}{}{}}
+\newlabel{eq:p2_lex_obj}{{53}{16}{目标函数}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{约束条件}{17}{}\protected@file@percent }
+\newlabel{eq:p2_count_constraint}{{54}{17}{约束条件}{}{}}
+\newlabel{eq:p2_position_domain}{{55}{17}{约束条件}{}{}}
+\newlabel{eq:p2_tilde_length}{{56}{17}{约束条件}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.3}模型汇总}{17}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.4}模型求解}{17}{}\protected@file@percent }
+\newlabel{eq:p2_candidate}{{59}{18}{模型求解}{}{}}
+\newlabel{eq:p2_dp_transfer}{{60}{18}{模型求解}{}{}}
+\newlabel{eq:p2_dp_init}{{61}{18}{模型求解}{}{}}
+\newlabel{eq:p2_dp_final}{{62}{18}{模型求解}{}{}}
+\newlabel{eq:p2_total_result}{{63}{18}{模型求解}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.5}结果分析}{19}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces 问题二下料方案}}{19}{}\protected@file@percent }
+\newlabel{tab:res2_cutting}{{8}{19}{结果分析}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces 问题二整体指标汇总}}{19}{}\protected@file@percent }
+\newlabel{tab:res2_summary}{{9}{19}{结果分析}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}问题三模型建立与求解}{20}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.1}模型建立}{20}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{决策变量}{20}{}\protected@file@percent }
+\newlabel{eq:p3_pattern}{{64}{20}{决策变量}{}{}}
+\newlabel{eq:p3_xq_def}{{65}{20}{决策变量}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{辅助变量}{20}{}\protected@file@percent }
+\newlabel{eq:p3_aiq}{{66}{20}{辅助变量}{}{}}
+\newlabel{eq:alpha}{{67}{20}{辅助变量}{}{}}
+\newlabel{eq:beta}{{68}{21}{辅助变量}{}{}}
+\newlabel{eq:p3_g}{{69}{21}{辅助变量}{}{}}
+\newlabel{eq:p3_h}{{70}{21}{辅助变量}{}{}}
+\newlabel{eq:p3_Rq}{{71}{21}{辅助变量}{}{}}
+\newlabel{eq:p3_Bq}{{72}{21}{辅助变量}{}{}}
+\newlabel{eq:p3_Uq}{{73}{21}{辅助变量}{}{}}
+\newlabel{eq:p3_Cq}{{74}{21}{辅助变量}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{目标函数}{21}{}\protected@file@percent }
+\newlabel{eq:p3_F1}{{75}{21}{目标函数}{}{}}
+\newlabel{eq:p3_F2}{{76}{21}{目标函数}{}{}}
+\newlabel{eq:p3_F3}{{77}{21}{目标函数}{}{}}
+\newlabel{eq:p3_lex}{{78}{21}{目标函数}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{约束条件}{22}{}\protected@file@percent }
+\newlabel{eq:p3_demand}{{79}{22}{约束条件}{}{}}
+\newlabel{eq:p3_capacity}{{80}{22}{约束条件}{}{}}
+\newlabel{eq:p3_overlap}{{81}{22}{约束条件}{}{}}
+\newlabel{eq:p3_domain}{{82}{22}{约束条件}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{网络流状态转移}{22}{}\protected@file@percent }
+\newlabel{eq:p3_state}{{83}{22}{网络流状态转移}{}{}}
+\newlabel{eq:p3_nprime}{{84}{22}{网络流状态转移}{}{}}
+\newlabel{eq:p3_Uprime}{{85}{22}{网络流状态转移}{}{}}
+\newlabel{eq:p3_Bprime}{{86}{22}{网络流状态转移}{}{}}
+\newlabel{eq:p3_Cprime}{{87}{22}{网络流状态转移}{}{}}
+\newlabel{eq:p3_eta}{{88}{22}{网络流状态转移}{}{}}
+\newlabel{eq:p3_Uprime_capacity}{{89}{22}{网络流状态转移}{}{}}
+\newlabel{eq:p3_nprime_d}{{90}{22}{网络流状态转移}{}{}}
+\newlabel{eq:p3_eta_limit}{{91}{23}{网络流状态转移}{}{}}
+\newlabel{eq:p3_init_state}{{92}{23}{网络流状态转移}{}{}}
+\newlabel{eq:p3_dom_cond}{{93}{23}{网络流状态转移}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{列生成求解}{23}{}\protected@file@percent }
+\newlabel{eq:p3_master_demand}{{94}{23}{列生成求解}{}{}}
+\newlabel{eq:p3_master_phase1}{{95}{23}{列生成求解}{}{}}
+\newlabel{eq:rc1}{{96}{23}{列生成求解}{}{}}
+\newlabel{eq:p3_master_phase2}{{97}{23}{列生成求解}{}{}}
+\newlabel{eq:p3_F1constraint}{{98}{23}{列生成求解}{}{}}
+\newlabel{eq:rc2}{{99}{23}{列生成求解}{}{}}
+\newlabel{eq:p3_master_phase3}{{100}{23}{列生成求解}{}{}}
+\newlabel{eq:p3_F2constraint}{{101}{24}{列生成求解}{}{}}
+\newlabel{eq:rc3}{{102}{24}{列生成求解}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.2}模型汇总}{24}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.3}模型求解}{24}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.4}结果分析}{25}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces 问题三汇总指标}}{25}{}\protected@file@percent }
+\newlabel{tab:q3_summary}{{10}{25}{结果分析}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces 问题三下料方案示例}}{26}{}\protected@file@percent }
+\newlabel{tab:q3_cutting}{{11}{26}{结果分析}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}问题四模型建立与求解}{27}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.4.1}模型建立}{27}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{决策变量}{27}{}\protected@file@percent }
+\newlabel{eq}{{113}{27}{决策变量}{}{}}
+\newlabel{eq}{{114}{27}{决策变量}{}{}}
+\newlabel{eq}{{115}{27}{决策变量}{}{}}
+\newlabel{eq}{{116}{28}{决策变量}{}{}}
+\newlabel{eq}{{117}{28}{决策变量}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{辅助变量}{28}{}\protected@file@percent }
+\newlabel{eq:p4_aiq}{{118}{28}{辅助变量}{}{}}
+\newlabel{eq:p4_alpha}{{119}{28}{辅助变量}{}{}}
+\newlabel{eq:p4_beta}{{120}{28}{辅助变量}{}{}}
+\newlabel{eq:p4_g}{{121}{28}{辅助变量}{}{}}
+\newlabel{eq:p4_h}{{122}{28}{辅助变量}{}{}}
+\newlabel{eq:p4_Rq}{{123}{28}{辅助变量}{}{}}
+\newlabel{eq:p4_Bq}{{124}{28}{辅助变量}{}{}}
+\newlabel{eq:p4_Uq}{{125}{29}{辅助变量}{}{}}
+\newlabel{eq:p4_Cq}{{126}{29}{辅助变量}{}{}}
+\newlabel{eq:p4_Wq}{{127}{29}{辅助变量}{}{}}
+\newlabel{eq:p4_gamma}{{128}{29}{辅助变量}{}{}}
+\newlabel{eq:p4_Cset}{{129}{29}{辅助变量}{}{}}
+\newlabel{eq:p4_timeorder}{{130}{29}{辅助变量}{}{}}
+\newlabel{eq:p4_LqWp}{{131}{29}{辅助变量}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{目标函数}{29}{}\protected@file@percent }
+\newlabel{eq:p4_F1}{{132}{29}{目标函数}{}{}}
+\newlabel{eq:p4_F2}{{133}{29}{目标函数}{}{}}
+\newlabel{eq:p4_F3}{{134}{29}{目标函数}{}{}}
+\newlabel{eq:p4_F4}{{135}{29}{目标函数}{}{}}
+\newlabel{eq}{{136}{29}{目标函数}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{约束条件}{30}{}\protected@file@percent }
+\newlabel{eq}{{137}{30}{约束条件}{}{}}
+\newlabel{eq}{{138}{30}{约束条件}{}{}}
+\newlabel{eq}{{139}{30}{约束条件}{}{}}
+\newlabel{eq}{{140}{30}{约束条件}{}{}}
+\newlabel{eq}{{141}{30}{约束条件}{}{}}
+\newlabel{eq}{{142}{30}{约束条件}{}{}}
+\newlabel{eq}{{143}{30}{约束条件}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{网络流状态转移}{30}{}\protected@file@percent }
+\newlabel{eq}{{144}{30}{网络流状态转移}{}{}}
+\newlabel{eq:p4_nprime}{{145}{31}{网络流状态转移}{}{}}
+\newlabel{eq:p4_Uprime}{{146}{31}{网络流状态转移}{}{}}
+\newlabel{eq:p4_Bprime}{{147}{31}{网络流状态转移}{}{}}
+\newlabel{eq:p4_Cprime}{{148}{31}{网络流状态转移}{}{}}
+\newlabel{eq:p4_eta}{{149}{31}{网络流状态转移}{}{}}
+\newlabel{eq:p4_UleLq}{{150}{31}{网络流状态转移}{}{}}
+\newlabel{eq:p4_countlimit}{{151}{31}{网络流状态转移}{}{}}
+\newlabel{eq}{{152}{31}{网络流状态转移}{}{}}
+\newlabel{eq}{{153}{31}{网络流状态转移}{}{}}
+\newlabel{eq}{{154}{31}{网络流状态转移}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{候选 pattern 生成}{31}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.4.2}模型汇总}{32}{}\protected@file@percent }
+\newlabel{eq:p4_lexobj}{{155}{32}{模型汇总}{}{}}
+\newlabel{eq:p4_F1_def}{{156}{32}{模型汇总}{}{}}
+\newlabel{eq:p4_F2_def}{{157}{32}{模型汇总}{}{}}
+\newlabel{eq:p4_F3_def}{{158}{32}{模型汇总}{}{}}
+\newlabel{eq:p4_F4_def}{{159}{32}{模型汇总}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.4.3}模型求解}{32}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{余料库存更新规则}{33}{}\protected@file@percent }
+\newlabel{eq:p4_U}{{161}{33}{余料库存更新规则}{}{}}
+\newlabel{eq:p4_Ap}{{162}{33}{余料库存更新规则}{}{}}
+\newlabel{eq:p4_E}{{163}{33}{余料库存更新规则}{}{}}
+\newlabel{eq:p4_used_remain}{{164}{33}{余料库存更新规则}{}{}}
+\newlabel{eq:p4_remain_old}{{165}{33}{余料库存更新规则}{}{}}
+\newlabel{eq:p4_new_remain}{{166}{33}{余料库存更新规则}{}{}}
+\newlabel{eq:p4_inventory_update}{{167}{33}{余料库存更新规则}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.4.4}结果分析}{34}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces 问题四汇总指标}}{34}{}\protected@file@percent }
+\newlabel{tab:q4_summary}{{12}{34}{结果分析}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces 问题四下料方案示例}}{35}{}\protected@file@percent }
+\newlabel{tab:q4_cutting}{{13}{35}{结果分析}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces 母材利用率示例}}{35}{}\protected@file@percent }
+\newlabel{tab:q4_util}{{14}{35}{结果分析}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}灵敏度分析}{36}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}问题二灵敏度分析}{36}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {15}{\ignorespaces 问题二共切收益矩阵对离散参数的敏感性}}{36}{}\protected@file@percent }
+\newlabel{tab:p2_sensitivity}{{15}{36}{问题二灵敏度分析}{}{}}
+\bibcite{1}{1}
+\bibcite{2}{2}
+\bibcite{3}{3}
+\gdef \@abspage@last{39}
