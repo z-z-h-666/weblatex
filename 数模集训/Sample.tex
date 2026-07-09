@@ -116,6 +116,12 @@ $M(t)$  & 飞机马赫数& -- \\
 $F(t)$ & 发动机推力 & N \\
 $D(t)$  & 飞机气动阻力& N \\
 $\dot m_f(t)$  & 燃油消耗率& kg/s \\
+$C_L(t)$ & 升力系数& -- \\
+$\rho(h(t))$ & 高度 $h(t)$ 处的大气密度& kg/m³ \\
+$a(h)$& 高度 $h$ 处的声速& m/s \\
+$W(h)$& 高度 $h$ 处的水场风速& m/s \\
+$q(x)$ & 单位航程燃油消耗率& kg/m \\
+$J$ & 总燃油消耗量& kg \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -167,12 +173,11 @@ $\dot m_f(t)$  & 燃油消耗率& kg/s \\
     \label{eq:wind_model}
 \end{equation}
 
-\section{模型建立与求解}
-\subsection{问题一模型建立与求解}
-\subsubsection{模型建立}
-\paragraph{升力模型}
+\section{问题一模型建立与求解}
+\subsection{模型建立}
+\subsubsection{升力模型}
 
-对于巡航阶段的固定翼飞机，其升力可由动压、机翼面积和升力系数共同表示为
+对于巡航阶段的固定翼飞机，其升力可由动压、机翼面积和升力系数共同表示为\cite{5}
 \begin{equation}
     L(t)=\frac{1}{2}\rho(h(t))V^2(t)S C_L(t),
     \label{eq:lift}
@@ -190,9 +195,9 @@ $S$ 表示机翼面积，$C_L(t)$ 表示升力系数。
     C_L(t)=\frac{2m(t)g}{\rho(h(t))V^2(t)S}.
     \label{eq:CL}
 \end{equation}
-\paragraph{阻力模型}
+\subsubsection{阻力模型}
 
-飞机巡航过程中的总阻力可表示为
+飞机巡航过程中的总阻力可表示为\cite{6}
 \begin{equation}
     D(t)=\frac{1}{2}\rho(h(t))V^2(t)S C_D(t),
     \label{eq:drag}
@@ -218,9 +223,9 @@ $S$ 表示机翼面积，$C_L(t)$ 表示升力系数。
     \label{eq:D0_Di}
 \end{equation}
 零升阻力主要与机体外形、飞行速度和大气密度有关；升致阻力则来源于飞机产生升力的过程，
-其大小与升力系数的平方成正比。
+其大小与升力系数的平方成正比。\cite{7}
 
-\paragraph{推力需求模型}
+\subsubsection{推力需求模型}
 在飞机航迹方向上，根据牛顿第二定律，可得到
 \begin{equation}
     m(t)\dot V(t)
@@ -241,7 +246,7 @@ $S$ 表示机翼面积，$C_L(t)$ 表示升力系数。
     +\frac{m(t)g}{V(t)}\dot h(t).
     \label{eq:thrust}
 \end{equation}
-\paragraph{燃油消耗与质量变化模型}
+\subsubsection{燃油消耗与质量变化模型}
 飞机巡航过程中，发动机推力输出会持续消耗燃油。根据推力燃油消耗率模型，
 单位时间燃油消耗率可表示为
 \begin{equation}
@@ -273,18 +278,18 @@ $\beta$ 表示速度偏离惩罚系数。
     \label{eq:mass_ode}
 \end{equation}
 
-\paragraph{水平运动方程}
+\subsubsection{水平运动方程}
 
 风场只改变飞机相对于地面的水平速度，不改变飞机相对于空气的空速。
 在小角度巡航近似下，飞机水平地速可表示为空速与高度相关风速的叠加，
-因此水平运动方程为
+因此水平运动方程为\cite{8}
 \begin{equation}
     \dot x(t)=V(t)+W(h(t)),
     \label{eq:x_ode}
 \end{equation}
 其中，$W(h(t))$ 表示高度 $h(t)$ 处的水平风速。
 
-\paragraph{综合状态方程组}
+\subsubsection{综合状态方程组}
 
 综上，飞机巡航过程可描述为由飞行距离和飞机质量构成的状态方程组：
 \begin{equation}
@@ -418,10 +423,6 @@ $\beta$ 表示速度偏离惩罚系数。
     \label{eq:constant_speed_fuel}
 \end{equation}
 
-将式 (32) 代入式 (34)
-和式 (35)，即可构成关于 $m(t)$ 的一阶微分方程。
-数值求解该方程后，再由式 (30) 得到等速巡航爬升策略下的高度剖面。
-
 \paragraph{等马赫数巡航爬升策略}
 
 等马赫数巡航爬升策略指飞机在巡航爬升过程中保持马赫数不变，即：
@@ -468,11 +469,6 @@ $\beta$ 表示速度偏离惩罚系数。
     \frac{T(h(t))}{T(h_0)}.
     \label{eq:constant_mach_relative}
 \end{equation}
-
-式 (40)即为等马赫数巡航爬升策略下高度与质量之间的隐式关系。
-由于温度 $T(h)$ 也是高度的函数，因此该式一般难以直接显式解出 $h(t)$，
-可在数值计算中通过一维方程求根获得高度剖面。
-
 为了得到爬升率表达式，对式 (40) 两边取对数：
 \begin{equation}
     \ln\frac{m(t)}{m_0}
@@ -590,7 +586,7 @@ $\beta$ 表示速度偏离惩罚系数。
 $h(t)$ 与 $m(t)$ 的耦合微分方程组。数值求解该方程组后，可获得等马赫数策略下的高度剖面、
 速度剖面和质量剖面。
 
-\paragraph{两种策略的统一表达}
+\subsubsection{两种策略的统一表达}
 
 从升力平衡关系出发，可以得到两种策略下高度演化规律的统一形式。由
 \begin{equation}
@@ -656,7 +652,7 @@ $h(t)$ 与 $m(t)$ 的耦合微分方程组。数值求解该方程组后，可�
 因此，两种巡航爬升策略的差异本质上来自速度约束方式不同：等速策略中空速保持不变，
 高度变化主要由大气密度衰减平衡质量减小；等马赫数策略中空速随声速变化而变化，
 高度演化同时受到大气密度和温度变化的共同影响。
-\subsubsection{模型求解}
+\subsection{模型求解}
 基于式（30）—式（35）的等速巡航爬升模型，以及式（40）—式（49）的等马赫数巡航爬升模型，本文采用数值积分方法求解两种策略下的飞行剖面。计算以飞机质量由$m_0=72450\text{ kg}$下降至 $m_f=62000\text{ kg}$为停止条件，并记录高度、质量、爬升率、飞行时间、航程和燃油消耗量。
 
 首先由式（23）计算初始参考升力系数，得
@@ -671,15 +667,46 @@ $$M_0=0.7957.$$
 由于式（40）给出的是高度与质量之间的隐式关系，本文在每一个质量节点上采用一维方程求根法求解高度，再由式（36）、式（48）和式（49）依次计算空速、推力需求和燃油消耗率。
 通过上述求解过程，可以分别得到两种策略下的高度剖面$h(t)$、质量剖面 $m(t)$、爬升率剖面 $\dot h(t)$ 和航程剖面 $x(t)$。
 
-\subsubsection{结果分析}
+\subsection{结果分析}
+根据数值求解结果，两种巡航爬升策略的主要指标如下表所示。
+\begin{table}[htbp]
+\centering
+\caption{巡航爬升策略对比}
+\label{tab:climb}
+\begin{tabular}{cccccc}
+\toprule
+策略 & 最终高度/m & 总飞行时间/min & 总燃油消耗/kg & 平均爬升率/(m/s) \\
+\midrule
+等速爬升 & 10637.1 & 12.7076 & 10450 & 1.49132 \\
+等马赫数爬升 & 10437.8 & 13.5265 &  10450 & 1.15553 \\
+\bottomrule
+\end{tabular}
+\end{table}
 \begin{figure}[H]
 	\centering
-	\IfFileExists{2.png}{\includegraphics[width=1.1\textwidth]{2.png}}{\fbox{Missing figure}}
-	\caption{飞机飞行状态示意图}
-	\label{fig:pipe1_comparison}
+	\IfFileExists{2.eps}{\includegraphics[width=1.1\textwidth]{2.eps}}{\fbox{Missing figure}}
+	\caption{飞行状态参数随时间变化对比示意图}
+	\label{fig:flight_state}
 \end{figure}
-\subsection{问题二模型建立与求解}
-\subsubsection{模型建立}
+由图(a)质量剖面可以看出，两种策略均从初始质量 $72450\text{ kg}$ 单调下降至终止质量 $62000\text{ kg}$。由于本问以终止质量作为积分停止条件，因此两种策略的总燃油消耗量均为
+$$m_0-m_f=72450-62000=10450\text{ kg}.$$
+
+由图(b)高度剖面可知，两种策略均随燃油消耗逐渐爬升，符合飞机减重后维持升力平衡的物理规律。等速巡航爬升策略的最终高度为 $10637.1\text{ m}$，高于等马赫数巡航爬升策略的 $10437.8\text{ m}$。结合式（30）可知，等速策略中空速保持不变，质量降低后主要通过升高高度、降低空气密度来维持升力平衡；而等马赫数策略由式（40）可知，高度变化同时受到大气密度和温度变化影响，因此最终高度较低。
+
+由图 (c)爬升率剖面可知，等速策略的平均爬升率为 $1.49132\text{ m/s}$，等马赫数策略的平均爬升率为 $1.15553\text{ m/s}$。在本文采用的参数和标准大气模型下，等速策略爬升率更大。该结果可以由两种策略的爬升率表达式解释。等速策略下有式（54）
+$$\dot h_c(t)=H_\rho\frac{\dot m_f(t)}{m(t)}.$$
+等马赫数策略下有式（56）
+$$\dot h_M(t) = \frac{\dot m_f(t)}{m(t)} \left[ \frac{1}{H_\rho} + \frac{L_T}{T(h(t))} \right]^{-1}.$$
+由于
+$$\frac{1}{H_\rho}+\frac{L_T}{T(h(t))}>\frac{1}{H_\rho},$$
+
+因此在单位质量燃油消耗率相近时，等马赫数策略对应的爬升率系数小于等速策略。由此可见，在本文模型下，不能简单认为等马赫数巡航爬升策略一定具有更大的爬升率，实际结论取决于标准大气模型、声速变化规律和速度约束方式。
+
+由飞行时间可知，等速策略总飞行时间为 $12.7076\text{ min}$，等马赫数策略总飞行时间为 $13.5265\text{ min}$。等马赫数策略耗时更长，主要原因是其空速随声速降低而下降，平均空速低于等速策略。
+
+综上，等速策略具有更高最终高度、更短飞行时间和更大平均爬升率；等马赫数策略飞行时间较长，最终航程略大。两种策略差异的本质来源是速度约束不同：等速策略主要通过密度变化平衡质量下降，等马赫数策略同时受到密度变化和声速变化影响。
+\section{问题二模型建立与求解}
+\subsection{模型建立}
 \subsubsection{巡航全过程燃油消耗积分模型}
 
 在问题一所建立的巡航动力学模型基础上，问题二进一步研究巡航全过程的燃油消耗量。
@@ -806,12 +833,72 @@ $D_{\Delta}(t)$ 和推力需求 $F_{\Delta}(t)$。因此，温度偏差修正后
 通过比较 $J_{\Delta}$ 与标准大气条件下的 $J$，即可分析温度偏差对巡航油耗计算结果的影响。
 当 $\left|\Delta T(h)\right|/T_{\mathrm{std}}(h)$ 较小，且其引起的油耗变化远小于工程允许误差时，
 可安全忽略温度偏差；反之，则应采用修正后的大气参数重新计算油耗。
-\paragraph{决策变量}
-\paragraph{目标函数}
-\paragraph{约束条件}
-\subsubsection{模型汇总}
-\subsubsection{模型求解}
-\subsubsection{结果分析}
+\subsection{模型求解}
+基于路径积分模型，本文选取问题一中的等速巡航爬升轨迹作为标准大气下的基准轨迹。该轨迹包含$h(t)$、$V(t)$、$m(t)$、$\dot m_f(t)$ 和 $x(t)$等变量。将时间域结果转换为路径坐标后，逐点计算单位航程燃油消耗率 $q(x)$，并采用梯形积分法计算巡航全过程总油耗。
+具体求解步骤如下。
+
+首先，读取问题一得到的等速巡航剖面。对每一个离散节点 $i$，已知飞机高度 $h_i$、空速 $V_i$、质量 $m_i$、燃油消耗率 $\dot m_{f,i}$ 和累计航程 $x_i$。由水平运动方程计算地速：
+$$U_i=V_i+W(h_i).$$
+
+随后，根据式（61）中的单位航程油耗率定义，计算
+$$q_i=\frac{\dot m_{f,i}}{U_i}.$$
+
+最后，采用梯形积分得到标准大气条件下的累计燃油消耗量：
+$$J(x_j)\approx \sum_{i=0}^{j-1}\frac{q_i+q_{i+1}}{2}(x_{i+1}-x_i).$$
+当 $x_j=X_f$ 时，即得到该巡航策略在标准大气条件下的全过程总油耗 $J$。
+
+在大气参数处理上，等速策略主要体现密度 $\rho(h)$ 和风场 $W(h)$对路径油耗的影响；等马赫数策略中速度满足 $V=M a(h)$，因此进一步体现了声速随高度变化对飞行状态和路径油耗计算的影响。两种轨迹共同用于验证大气参数高度分布对油耗积分结果的影响。
+\begin{figure}[H]
+	\centering
+	\IfFileExists{3.eps}{\includegraphics[width=1\textwidth]{3.eps}}{\fbox{Missing figure}}
+	\caption{温度、密度和声速与航程关系图}
+	\label{fig:atmosphere}
+\end{figure}
+
+由图3可知，随着巡航爬升过程推进，大气密度、温度和声速均沿航程连续下降。等速策略最终高度更高，因此对应的大气密度、温度和声速下降幅度更大；等马赫数策略高度增长较缓，三类大气参数变化幅度相对较小。该结果说明飞机并非在单一大气状态下飞行，而是在随高度连续变化的参数场中完成路径积分。
+
+针对实际大气温度偏差，本文采用一阶扰动近似进行修正。并分别设置恒定温度偏差 $\Delta T=5K$，和线性温差 $\Delta T(h)=5+0.0005(h-h_0)$。在每个路径节点上，利用式（64）和式（65）更新声速和密度，再重新计算阻力、推力、燃油消耗率和单位航程油耗率，最终得到修正后的总燃油消耗量 $J_\Delta$。
+\subsection{结果分析}
+两种巡航策略在标准大气及温度偏差修正条件下的总油耗结果如下表所示。
+\begin{table}[htbp]
+\centering
+\caption{不同巡航策略与大气条件下的油耗对比}
+\label{tab:fuel_comparison}
+\begin{tabular}{ccccccc}
+\toprule
+策略 & 情形 & 总油耗/kg & 油耗变化/kg &  平均单位航程油耗/(kg/m) \\
+\midrule
+等速爬升 & 标准大气 & 10450 & 0 &  0.052039 \\
+等速爬升 & 恒定5K温差 & 10439.5 & -10.4968 &  0.051987 \\
+等速爬升 & 线性温差 & 10439.1 & -10.9384 &  0.051985 \\
+等马赫数爬升 & 标准大气 & 10450 & 0 &  0.049414 \\
+等马赫数爬升 & 恒定5K温差 & 10439.3 & -10.7486 &  0.049363 \\
+等马赫数爬升 & 线性温差 & 10438.9 & -11.1239 &  0.049362 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+由表可知，标准大气条件下，两种策略沿路径积分得到的总油耗均为 $10450.0\text{ kg}$，与由初始质量和终止质量计算得到的燃油消耗量一致。这说明路径积分模型与问题一中的质量变化模型相互吻合，能够正确描述巡航全过程的燃油消耗。为进一步分析油耗在飞行路径上的分布规律，图4给出了标准大气条件下两种策略的单位航程油耗率曲线。
+
+\begin{figure}[H]
+	\centering
+	\IfFileExists{4.eps}{\includegraphics[width=0.7\textwidth]{4.eps}}{\fbox{Missing figure}}
+	\caption{标准大气条件下单位航程油耗率沿路径分布}
+	\label{fig:nx}
+\end{figure}
+从单位航程油耗率看，等速策略的平均单位航程油耗为$0.052039\text{ kg/m}$，高于等马赫数策略的 $0.049414\text{ kg/m}$。这是因为等马赫数策略飞行时间更长、累计航程更大，在相同总燃油消耗下，其平均单位航程油耗更低。进一步从图4可知，单位航程油耗率并非常数，而是随质量下降、高度变化、阻力变化和地速变化连续改变，体现了高度分布参数场对路径油耗的累积作用。
+
+\begin{figure}[H]
+	\centering
+	\IfFileExists{5.eps}{\includegraphics[width=1\textwidth]{5.eps}}{\fbox{Missing figure}}
+	\caption{温度偏差修正前后单位航程油耗率对比}
+	\label{fig:nx1}
+\end{figure}
+为观察温度偏差对路径油耗分布的影响，图5分别给出了等速策略和等马赫数策略下温度修正前后的单位航程油耗率曲线。等速策略中，恒定 $5K$ 温差使总油耗减少 $10.4968\text{ kg}$，线性温差使总油耗减少 $10.9384\text{ kg}$，相对变化约为 $-0.10\%$。等马赫数策略中，恒定温差和线性温差对应的总油耗变化分别为$-10.7486\text{ kg}$ 和 $-11.1239\text{ kg}$，相对变化约为 $-0.10\%$。两种策略下的修正幅度接近，说明在当前温度偏差范围内，温度扰动对最终总油耗影响较弱。
+
+恒定温差和线性温差结果差异较小，主要原因是本题巡航高度变化范围有限。在线性温差模型中，等速策略对应的温差约从 $5K$ 增至 $5.57K$，等马赫数策略约从 $5K$ 增至 $5.47K$，相较恒定 $5K$ 只增加约 $0.5K$。在一阶扰动近似下，温度影响主要通过 $\Delta T/T_{std}$ 这一小量进入密度和声速修正，因此传递到阻力、推力和总油耗后的差异较小。
+
+从系统结构看，温度修正会改变密度和声速，其中密度变化进一步影响升力系数、阻力、推力和燃油率，声速变化影响马赫数计算以及等马赫状态解释。因此，温度偏差会增加模型的非线性耦合关系，但在当前设定下，其量级较小，最终油耗变化仅约$0.1\%$。因此，当 $\Delta T|/T_{std}$较小、飞行高度范围有限，且总油耗相对变化低于工程允许误差时，可在宏观策略比较中忽略温度偏差；若处于强温度异常环境、长航程累计计算或高精度油耗核算场景，则应保留温度修正项。
 \section{问题三模型建立与求解}
 \subsection{模型建立}
 \subsubsection{最优巡航控制模型}
@@ -985,7 +1072,7 @@ $D_{\Delta}(t)$ 和推力需求 $F_{\Delta}(t)$。因此，温度偏差修正后
 \end{equation}
 当高度、速度、升力系数或推力约束处于边界时，上述驻值条件需替换为包含不等式约束乘子的
 KKT 条件。
-
+\subsection{模型求解}
 \subsubsection{直接离散化求解模型}
 
 由于本问题的燃油消耗率、阻力模型和风场模型均具有明显非线性，采用间接法求解两点边值问题较为困难。
@@ -1189,33 +1276,6 @@ $J_{\mathrm{opt}}$，则固定航程条件下的燃油节省比例定义为
     \label{eq:q4_range_improvement}
 \end{equation}
 
-\subsubsection{速度偏离惩罚系数敏感性分析}
-
-速度偏离惩罚系数 $\beta$ 刻画了空速偏离最佳效率速度后燃油消耗增加的强度。
-为分析模型对该参数的敏感性，令
-\begin{equation}
-    \beta_{\alpha}=\alpha\beta_0,
-    \label{eq:q4_beta_alpha}
-\end{equation}
-其中，$\beta_0$ 为题目给定的标称值，$\alpha$ 为扰动系数，可取
-$\alpha\in\{0.8,0.9,1.0,1.1,1.2\}$。
-
-对于每一个 $\beta_{\alpha}$，重新求解最优巡航轨迹，得到对应的最优目标函数值
-$J^*(\beta_{\alpha})$、最优高度轨迹 $h^*(t;\beta_{\alpha})$ 和最优速度轨迹
-$V^*(t;\beta_{\alpha})$。定义目标函数对 $\beta$ 的相对敏感度为
-\begin{equation}
-    S_J
-    =
-    \frac{
-    J^*(\beta_0(1+\varepsilon))-J^*(\beta_0(1-\varepsilon))
-    }{
-    2\varepsilon J^*(\beta_0)
-    },
-    \label{eq:q4_sensitivity_J}
-\end{equation}
-其中，$\varepsilon$ 为小扰动比例。类似地，可定义最终高度、平均速度和总航程等指标的敏感度，
-从而识别模型中对速度惩罚系数变化最敏感的环节。
-
 \subsubsection{模型扩展一：温度偏差实时修正}
 
 在实际飞行中，飞机可通过气象预报或机载传感器获得实时温度偏差信息。
@@ -1288,85 +1348,45 @@ $V^*(t;\beta_{\alpha})$。定义目标函数对 $\beta$ 的相对敏感度为
 \subsubsection{结果分析}
 \section{灵敏度分析} 
 
+\subsubsection{速度偏离惩罚系数敏感性分析}
+
+速度偏离惩罚系数 $\beta$ 刻画了空速偏离最佳效率速度后燃油消耗增加的强度。
+为分析模型对该参数的敏感性，令
+\begin{equation}
+    \beta_{\alpha}=\alpha\beta_0,
+    \label{eq:q4_beta_alpha}
+\end{equation}
+其中，$\beta_0$ 为题目给定的标称值，$\alpha$ 为扰动系数，可取
+$\alpha\in\{0.8,0.9,1.0,1.1,1.2\}$。
+
+对于每一个 $\beta_{\alpha}$，重新求解最优巡航轨迹，得到对应的最优目标函数值
+$J^*(\beta_{\alpha})$、最优高度轨迹 $h^*(t;\beta_{\alpha})$ 和最优速度轨迹
+$V^*(t;\beta_{\alpha})$。定义目标函数对 $\beta$ 的相对敏感度为
+\begin{equation}
+    S_J
+    =
+    \frac{
+    J^*(\beta_0(1+\varepsilon))-J^*(\beta_0(1-\varepsilon))
+    }{
+    2\varepsilon J^*(\beta_0)
+    },
+    \label{eq:q4_sensitivity_J}
+\end{equation}
+其中，$\varepsilon$ 为小扰动比例。类似地，可定义最终高度、平均速度和总航程等指标的敏感度，
+从而识别模型中对速度惩罚系数变化最敏感的环节。
 
 
-\subsection{问题二灵敏度分析}
-
-问题二模型的关键在于根据工件端部点云计算共切收益矩阵，并在此基础上优化每根母材内部的工件排列顺序与朝向。共切收益的计算依赖两个角度离散参数：端部轮廓角度网格步长 $\Delta\varphi$ 和旋转搜索步长 $\Delta\theta$。其中，$\Delta\varphi$ 决定端部缩进函数的离散精度，$\Delta\theta$ 决定相邻工件相对旋转角的搜索精度。
-
-理论上，角度步长越小，端部轮廓描述越精细，共切收益计算越准确；但同时，角度网格数量和旋转搜索次数也会增加，导致计算时间上升。因此，需要分析共切收益矩阵对 $\Delta\varphi$ 和 $\Delta\theta$ 的敏感性，从而在计算精度和求解效率之间取得平衡。
-
-本文以最细参数组合
-\[
-(\Delta\varphi,\Delta\theta)=(0.125^\circ,0.125^\circ)
-\]
-作为基准，对其他参数组合下得到的综合邻接收益矩阵 $W$ 进行比较。设基准矩阵为 $W^{0}$，待比较参数组合下的矩阵为 $W^{a}$，则最大差值与平均差值分别定义为
-\[
-D_{\max}=\max_{i,j\in I}\left|W_{ij}^{a}-W_{ij}^{0}\right|,
-\]
-\[
-D_{\mathrm{avg}}=\frac{1}{|I|^2}\sum_{i\in I}\sum_{j\in I}\left|W_{ij}^{a}-W_{ij}^{0}\right|.
-\]
-同时，统计最优端部组合 $A_{ij}$ 相对于基准参数组合发生变化的工件对数量，用于判断离散参数变化是否影响后续排序模型中的端部匹配选择。
-
-不同参数组合下的敏感性结果如表~\ref{tab:p2_sensitivity} 所示。
-
-\begin{table}[htbp]
-\centering
-\caption{问题二共切收益矩阵对离散参数的敏感性}
-\label{tab:p2_sensitivity}
-\begin{tabular}{ccccc}
-\toprule
-$\Delta\varphi$ & $\Delta\theta$ & $W$ 最大差值/mm & $W$ 平均差值/mm & 最优端部组合变化数 \\
-\midrule
-$0.125^\circ$ & $0.125^\circ$ & 0.000 & 0.000000 & 0 \\
-$0.125^\circ$ & $0.25^\circ$  & 0.018 & 0.001440 & 0 \\
-$0.125^\circ$ & $0.5^\circ$   & 0.020 & 0.003040 & 0 \\
-$0.125^\circ$ & $1^\circ$     & 0.132 & 0.008880 & 0 \\
-$0.25^\circ$  & $0.25^\circ$  & 0.018 & 0.003320 & 6 \\
-$0.25^\circ$  & $0.5^\circ$   & 0.018 & 0.002280 & 6 \\
-$0.25^\circ$  & $1^\circ$     & 0.132 & 0.008120 & 6 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-由表~\ref{tab:p2_sensitivity} 可知，当固定 $\Delta\varphi=0.125^\circ$ 时，将旋转搜索步长 $\Delta\theta$ 从 $0.125^\circ$ 放宽到 $0.25^\circ$，$W$ 的最大差值仅为 $0.018\ \mathrm{mm}$，平均差值为 $0.001440\ \mathrm{mm}$，且最优端部组合变化数为 $0$。当 $\Delta\theta$ 进一步放宽到 $0.5^\circ$ 时，最大差值仍仅为 $0.020\ \mathrm{mm}$，平均差值为 $0.003040\ \mathrm{mm}$，说明在 $\Delta\theta\leq0.5^\circ$ 范围内，共切收益矩阵对旋转搜索步长不敏感。
-
-当 $\Delta\theta$ 增大到 $1^\circ$ 时，最大差值上升至 $0.132\ \mathrm{mm}$，平均差值为 $0.008880\ \mathrm{mm}$。虽然平均误差仍较小，但最大误差明显增加，说明过粗的旋转角搜索会遗漏部分较优端部匹配角度，从而影响共切收益的精确计算。
-不同于传统一维下料问题，异形圆管工件下料还存在端部共切与加工切换等复杂工程约束。若能精准捕捉相邻工件的端部拼接，可以有效消减中间冗余切割区，实现材料的充分利用；同时，同类工件的连续加工也能在一定程度降低排产难度与现场操作的复杂度。因此，如何在笃定生产需求的前提下，协同统筹母材选取、工件排序、端部拼接及余料回用，设计高效的下料方案，具有重要的工程实际意义。
-
-\begin{figure}[H]
-	\centering
-	\IfFileExists{5.png}{\includegraphics[width=0.8\textwidth]{5.png}}{\fbox{Missing figure}}
-	\caption{参数组合对比热力图}
-	\label{fig:单图}
-\end{figure}
-
-进一步比较 $\Delta\varphi=0.125^\circ$ 与 $\Delta\varphi=0.25^\circ$ 的结果可以发现，当端部轮廓网格步长由 $0.125^\circ$ 放宽至 $0.25^\circ$ 时，收益矩阵的数值误差仍较小，但最优端部组合出现了 $6$ 对变化。这表明端部轮廓离散精度不仅影响共切收益数值，还可能影响最优端部组合的选择。由于后续排序模型需要依赖最优端部组合和对应旋转角，若端部组合发生变化，可能进一步影响最终排列方案。
-
-综合来看，$\Delta\varphi$ 对端部组合选择的影响比 $\Delta\theta$ 更明显，而 $\Delta\theta$ 主要影响旋转匹配过程中的收益精度。因此，在参数设置时应优先保证端部轮廓网格精度，即选择较小的 $\Delta\varphi$；在此基础上再根据计算效率选择合适的 $\Delta\theta$。
-
-结合表~\ref{tab:p2_sensitivity} 的结果，本文最终采用
-\[
-\Delta\varphi=0.125^\circ,\qquad \Delta\theta=0.125^\circ
-\]
-作为问题二共切收益矩阵的计算参数。该参数组合具有最高离散精度，且与相邻较粗参数组合相比误差较小，说明所得共切收益矩阵具有较好的稳定性和可靠性。
-
-为进一步增强分析的可视化效果，建议在本节加入“离散参数敏感性折线图”。该图可将 $\Delta\theta$ 作为横轴，分别绘制 $W$ 最大差值和平均差值随 $\Delta\theta$ 变化的曲线，并用不同线型区分 $\Delta\varphi=0.125^\circ$ 与 $\Delta\varphi=0.25^\circ$ 两种情况。通过该图可以直观看出：当 $\Delta\theta\leq0.5^\circ$ 时，收益矩阵变化较小；当 $\Delta\theta=1^\circ$ 时，最大差值明显增大。
-
-
-
-
-
-
-
-
+\newpage
 %Reference
 \begin{thebibliography}{40}
 	\bibitem{1}Delgado Muñoz, L., \& Prats Menéndez, X. (2009). Fuel consumption assessment for speed variation concepts during the cruise phase. In Conference on Air Traffic Management Economics.
 	\bibitem{2}Atmosphere, U. S. (1976). US Government Printing Office: Washington. DC, USA, 1-241.
     \bibitem{3}王兵, 张博雯, \& 彭瑛. (2025). 基于历史航迹数据的民用航空器极曲线估算方法. 交通运输工程学报, 25(4), 328-339.
 	\bibitem{4}Valenzuela Romero, A., \& Rivas Rivas, D. (2014). Analysis of Wind-Shear Effects on Optimal Aircraft Cruise. International Conference on Research in Air Transportation (ICRAT).
+    \bibitem{5}Anderson Jr, J. D. (1991). Fundamentals of Aerodynamics, McGraw-Hill. New York.
+    \bibitem{6}陈兴荣. (1988). 飞机颠簸的气象因素分析. 中国民航学院学报(综合版), (3), 36-45.
+    \bibitem{7}吴慰祖. (1989). 飞机全尺寸阻力的预计. 飞行力学, (3), 11-27. https://doi.org/10.13645/j.cnki.f.d.1989.03.002
+    \bibitem{8}Tyrén, C. (1982). Magnetic anomalies as a reference for ground-speed and map-matching navigation. The Journal of navigation, 35(2), 242-254.
 \end{thebibliography}
 \newpage
 \newgeometry{left=1.50cm,right=0.5cm,top=3.00cm,bottom=3.0cm}	%修改附录代码的几何页面
