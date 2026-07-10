@@ -14,7 +14,7 @@
 \providecommand{\sihao}{}
 \providecommand{\xiaosihao}{}
 \providecommand{\heiti}{\textbf}
-\title{\textbf{基于多目标的异形圆管切割与余料优化研究}}% 请勿修改
+\title{\textbf{考虑风场影响的民用客机高度--速度联合巡航优化模型}}% 请勿修改
 \date{}%请勿添加自己的信息
 \author{}%请勿添加自己的信息
 %下面时正文
@@ -33,20 +33,19 @@
 %=================================================
 %下面开始出现各位需要修改的部分。
 \renewcommand{\abstractname}{\sihao 摘\quad 要} %更改摘要二字的样式
-\begin{abstract}\xiaosihao
-	\vspace{0.1cm}
-	飞机巡航过程受到飞行高度、空速、大气密度、温度、风场、飞机质量及发动机推力效率等多种因素共同影响。因此，仅凭经验策略难以获得全局最优巡航方案，需要建立高度与速度联合优化的数学模型，对巡航过程进行定量分析。题目要求围绕某型民用客机的巡航性能优化，完成建模、推导、数值计算与模型扩展等任务。\par
-	针对问题一，分析商品买卖机理，\textbf{建立基于双十一规则商家利益最大化判别模型}。本文以经济学价格理论为基础，分析得商家参与活动通过降低单次商品利润提高总销量而获得更高利润。\textbf{选取利润为指标}，基于商家参与活动规则，综合活动前后利润判别式，以营业额最大化为目标建立判别模型。通过具体数据如WIS水润面膜相对非双十一销售额翻了近110倍说明商家是理性的。\par
-	针对问题三，分析选取消费者与商家群体双赢指标，\textbf{建立消费者是否购买与商家是否提供高质量服务的演化博弈模型}。本文考虑商家与消费者对“赢”的定义不同，查阅文献\textbf{以商家能吸引消费者购买和消费者能得到高质量服务为双赢指标}。基于不同行为下商家与消费者收益变化，建立演化博弈模型。\textbf{模型求解结果为消费者趋向于购买和商家趋向于提供高质量服务的双赢局面}，并通过2009-2019年成交总额的指数型上涨说明结果准确性。\par
-	针对问题三，分析选取消费者与商家群体双赢指标，\textbf{建立消费者是否购买与商家是否提供高质量服务的演化博弈模型}。本文考虑商家与消费者对“赢”的定义不同，查阅文献\textbf{以商家能吸引消费者购买和消费者能得到高质量服务为双赢指标}。基于不同行为下商家与消费者收益变化，建立演化博弈模型。\textbf{模型求解结果为消费者趋向于购买和商家趋向于提供高质量服务的双赢局面}，并通过2009-2019年成交总额的指数型上涨说明结果准确性。\par
-	针对问题四，基于商家竞争规律，\textbf{建立商家是否提供高质量商品的演化博弈模型}。考虑到电子商务普遍有商品质量不高现象，\textbf{本文以双十一作用下商家间竞争能否提高商品质量为指标}。基于不同行为下同类商家收益变化建立模型。\textbf{模型求解结果为同类商家之间趋向用高质量商品进行竞争}，通过2013-2015年双十一过后的投诉率（$6.9$、$6.1$、$4.6\times10^{-7}$）不断下降说明结果准确性。\par
-	针对问题五：本文从商家和买家的角度考虑，在前面四问的基础上，以国家质检局抽检网络产品不合格率以及双十一个人网购数据为例对双十一购物期间某些不理性的行为进行说明，并提出\textbf{“理性消费”}的合理建议，即：\textbf{商家销售保持诚信}、\textbf{买家购物理性消费}、\textbf{买家积极反馈维权}。
-	\\
-	
-	%这里填写你自己的关键词
-	
-	\textbf{关键词}:\quad 双十一购物节，基于目标规划的判别模型，演化博弈模型
+\begin{abstract}
+随着航空燃油价格波动、碳排放约束增强以及航空公司运行成本压力上升，如何通过科学的巡航策略降低燃油消耗，已成为民用客机运行优化中的重要问题。针对某型民用客机巡航飞行的高度--速度联合优化问题，本文以\textbf{燃油消耗最小化}和\textbf{巡航策略优化}为核心目标，建立了从动力学建模、路径油耗积分、最优控制求解到综合数值分析的完整模型框架。
+
+针对问题一，本文依据气动力平衡、推力--阻力平衡和质量守恒关系，建立了以飞行距离和飞机质量为状态变量、以飞行高度和空速为控制变量的巡航动力学模型。模型中综合考虑了升力、阻力等之间的耦合关系，并在燃油消耗率中引入速度偏离最佳经济速度的惩罚项。进一步地，本文分别推导了\textbf{等速巡航爬升策略}和\textbf{等马赫数巡航爬升策略}下高度随质量和时间变化的演化规律。数值结果表明，在给定初始质量 $72450\ \mathrm{kg}$、终止质量 $62000\ \mathrm{kg}$ 的条件下，两种策略总燃油消耗均为 $10450\ \mathrm{kg}$；等速策略最终高度为 $10637.1\ \mathrm{m}$，总飞行时间为 $12.7076\ \mathrm{min}$；等马赫数策略最终高度为 $10437.8\ \mathrm{m}$，总飞行时间为 $13.5265\ \mathrm{min}$。
+
+针对问题二，本文在问题一动力学模型基础上，建立了总燃油消耗的\textbf{路径积分模型}。通过将时间域油耗率转化为单位航程油耗率，明确了大气密度、温度、声速和风场随高度变化对燃油消耗的作用路径。数值计算表明，标准大气条件下，等速策略平均单位航程油耗率为 $0.052039\ \mathrm{kg/m}$，等马赫数策略为 $0.049414\ \mathrm{kg/m}$。进一步考虑恒定 $5\ \mathrm{K}$ 温度偏差和线性温度偏差后，两种策略总油耗变化均约为 $0.1\%$，表明在温度偏差主要改变局部气动参数和声速，对总油耗影响较小。
+
+针对问题三，本文将高度和速度同时纳入状态变量，引入高度变化率和速度变化率作为控制变量，建立了以总燃油消耗最小为目标的\textbf{高度--速度联合最优控制模型}。模型同时考虑高度范围、速度范围等约束，并通过哈密顿函数给出了最优轨迹应满足的必要条件。由于模型具有较强非线性，本文采用时间域梯形配点法将连续最优控制问题转化为非线性规划问题，并利用 SLSQP 算法求解。结果显示，在固定航程条件下，无风最优轨迹总油耗为 $8947.394\ \mathrm{kg}$，有风最优轨迹总油耗为 $7707.451\ \mathrm{kg}$，相较无风情形节油约 $13.86\%$，飞行时间由 $777.724\ \mathrm{s}$ 缩短至 $660.884\ \mathrm{s}$。
+
+针对问题四，本文进一步构建了完整的巡航策略综合数值计算模型，对等速基准策略、考虑风场的高度--速度联合最优策略及模型扩展进行了统一分析。在终止质量 $m_f=62000\ \mathrm{kg}$ 下，等速巡航基准策略航程为 $200809.924516\ \mathrm{m}$，总燃油消耗为 $10450\ \mathrm{kg}$；在固定相同航程条件下，考虑风场的联合最优策略总油耗降至 $8394.401214\ \mathrm{kg}$，节油比例达到 \textbf{$19.670802\%$}。最后，本文从\textbf{温度偏差实时修正}和\textbf{发动机安装损失}两个方向进行模型扩展。结果表明，温度修正通过改变真实密度和声速影响气动与马赫数约束，发动机安装损失则通过放大指令推力提高燃油消耗率；二者均未改变原有动力学主框架，但引入了新的非线性耦合关系，使模型更加贴近实际飞行工程场景。
 \end{abstract}
+
+\noindent\textbf{关键词：} 高度--速度联合优化；燃油消耗模型；最优控制；垂直风切变；路径积分
 
 \pagestyle{plain}
 %标准 LaTeX 提供下列四种页版式，可用 \pagestyle{页版式} 命令来设置页面版式：
@@ -688,23 +687,9 @@ $$M_0=0.7957.$$
 	\caption{飞行状态参数随时间变化对比示意图}
 	\label{fig:flight_state}
 \end{figure}
-由图(a)质量剖面可以看出，两种策略均从初始质量 $72450\text{ kg}$ 单调下降至终止质量 $62000\text{ kg}$。由于本问以终止质量作为积分停止条件，因此两种策略的总燃油消耗量均为
-$$m_0-m_f=72450-62000=10450\text{ kg}.$$
+由图(a)可知，两种策略的质量均从 $72450\text{ kg}$ 单调降至 $62000\text{ kg}$，因此总燃油消耗均为 $10450\text{ kg}$。由图(b)和图(c)可知，等速策略最终高度更高、平均爬升率更大，分别为 $10637.1\text{ m}$ 和 $1.49132\text{ m/s}$；等马赫数策略最终高度为 $10437.8\text{ m}$、平均爬升率为 $1.15553\text{ m/s}$。这说明在本文参数下，等速策略更有利于通过升高高度维持升力平衡，而等马赫数策略受温度变化影响更明显，爬升过程也更慢。
 
-由图(b)高度剖面可知，两种策略均随燃油消耗逐渐爬升，符合飞机减重后维持升力平衡的物理规律。等速巡航爬升策略的最终高度为 $10637.1\text{ m}$，高于等马赫数巡航爬升策略的 $10437.8\text{ m}$。结合式（30）可知，等速策略中空速保持不变，质量降低后主要通过升高高度、降低空气密度来维持升力平衡；而等马赫数策略由式（40）可知，高度变化同时受到大气密度和温度变化影响，因此最终高度较低。
-
-由图 (c)爬升率剖面可知，等速策略的平均爬升率为 $1.49132\text{ m/s}$，等马赫数策略的平均爬升率为 $1.15553\text{ m/s}$。在本文采用的参数和标准大气模型下，等速策略爬升率更大。该结果可以由两种策略的爬升率表达式解释。等速策略下有式（54）
-$$\dot h_c(t)=H_\rho\frac{\dot m_f(t)}{m(t)}.$$
-等马赫数策略下有式（56）
-$$\dot h_M(t) = \frac{\dot m_f(t)}{m(t)} \left[ \frac{1}{H_\rho} + \frac{L_T}{T(h(t))} \right]^{-1}.$$
-由于
-$$\frac{1}{H_\rho}+\frac{L_T}{T(h(t))}>\frac{1}{H_\rho},$$
-
-因此在单位质量燃油消耗率相近时，等马赫数策略对应的爬升率系数小于等速策略。由此可见，在本文模型下，不能简单认为等马赫数巡航爬升策略一定具有更大的爬升率，实际结论取决于标准大气模型、声速变化规律和速度约束方式。
-
-由飞行时间可知，等速策略总飞行时间为 $12.7076\text{ min}$，等马赫数策略总飞行时间为 $13.5265\text{ min}$。等马赫数策略耗时更长，主要原因是其空速随声速降低而下降，平均空速低于等速策略。
-
-综上，等速策略具有更高最终高度、更短飞行时间和更大平均爬升率；等马赫数策略飞行时间较长，最终航程略大。两种策略差异的本质来源是速度约束不同：等速策略主要通过密度变化平衡质量下降，等马赫数策略同时受到密度变化和声速变化影响。
+从飞行时间看，等速策略为 $12.7076\text{ min}$，等马赫数策略为 $13.5265\text{ min}$，差异主要来自等马赫数策略空速随声速降低而下降。综合来看，等速策略更快、更高，等马赫数策略则体现了速度约束与大气温度耦合后的响应特征。
 \section{问题二模型建立与求解}
 \subsection{模型建立}
 \subsubsection{巡航全过程燃油消耗积分模型}
@@ -878,7 +863,7 @@ $$J(x_j)\approx \sum_{i=0}^{j-1}\frac{q_i+q_{i+1}}{2}(x_{i+1}-x_i).$$
 \end{tabular}
 \end{table}
 
-由表可知，标准大气条件下，两种策略沿路径积分得到的总油耗均为 $10450.0\text{ kg}$，与由初始质量和终止质量计算得到的燃油消耗量一致。这说明路径积分模型与问题一中的质量变化模型相互吻合，能够正确描述巡航全过程的燃油消耗。为进一步分析油耗在飞行路径上的分布规律，图4给出了标准大气条件下两种策略的单位航程油耗率曲线。
+由表可知，标准大气条件下两种策略的总油耗均为 $10450.0\text{ kg}$，与由初始质量和终止质量计算得到的结果一致，说明路径积分模型与质量变化模型相互吻合。图4表明，等马赫数策略的平均单位航程油耗更低，为 $0.049414\text{ kg/m}$，而等速策略为 $0.052039\text{ kg/m}$，差异主要来自等马赫数策略航程更长、单位航程分摊后的平均油耗更小。
 
 \begin{figure}[H]
 	\centering
@@ -886,7 +871,7 @@ $$J(x_j)\approx \sum_{i=0}^{j-1}\frac{q_i+q_{i+1}}{2}(x_{i+1}-x_i).$$
 	\caption{标准大气条件下单位航程油耗率沿路径分布}
 	\label{fig:nx}
 \end{figure}
-从单位航程油耗率看，等速策略的平均单位航程油耗为$0.052039\text{ kg/m}$，高于等马赫数策略的 $0.049414\text{ kg/m}$。这是因为等马赫数策略飞行时间更长、累计航程更大，在相同总燃油消耗下，其平均单位航程油耗更低。进一步从图4可知，单位航程油耗率并非常数，而是随质量下降、高度变化、阻力变化和地速变化连续改变，体现了高度分布参数场对路径油耗的累积作用。
+进一步看，单位航程油耗率并非常数，而是随质量、高度、阻力和地速变化连续调整，说明路径油耗本质上是大气参数与飞行状态共同作用的结果。
 
 \begin{figure}[H]
 	\centering
@@ -894,11 +879,9 @@ $$J(x_j)\approx \sum_{i=0}^{j-1}\frac{q_i+q_{i+1}}{2}(x_{i+1}-x_i).$$
 	\caption{温度偏差修正前后单位航程油耗率对比}
 	\label{fig:nx1}
 \end{figure}
-为观察温度偏差对路径油耗分布的影响，图5分别给出了等速策略和等马赫数策略下温度修正前后的单位航程油耗率曲线。等速策略中，恒定 $5K$ 温差使总油耗减少 $10.4968\text{ kg}$，线性温差使总油耗减少 $10.9384\text{ kg}$，相对变化约为 $-0.10\%$。等马赫数策略中，恒定温差和线性温差对应的总油耗变化分别为$-10.7486\text{ kg}$ 和 $-11.1239\text{ kg}$，相对变化约为 $-0.10\%$。两种策略下的修正幅度接近，说明在当前温度偏差范围内，温度扰动对最终总油耗影响较弱。
+图5显示，恒定 $5K$ 温差和线性温差下两种策略的总油耗变化都只有约 $0.1\%$，说明在本题给定高度范围内，温度偏差对总油耗影响较弱。其原因是温度扰动主要通过密度和声速进入模型，但扰动幅度较小，传递到阻力、推力和油耗后被进一步削弱。
 
-恒定温差和线性温差结果差异较小，主要原因是本题巡航高度变化范围有限。在线性温差模型中，等速策略对应的温差约从 $5K$ 增至 $5.57K$，等马赫数策略约从 $5K$ 增至 $5.47K$，相较恒定 $5K$ 只增加约 $0.5K$。在一阶扰动近似下，温度影响主要通过 $\Delta T/T_{std}$ 这一小量进入密度和声速修正，因此传递到阻力、推力和总油耗后的差异较小。
-
-从系统结构看，温度修正会改变密度和声速，其中密度变化进一步影响升力系数、阻力、推力和燃油率，声速变化影响马赫数计算以及等马赫状态解释。因此，温度偏差会增加模型的非线性耦合关系，但在当前设定下，其量级较小，最终油耗变化仅约$0.1\%$。因此，当 $\Delta T|/T_{std}$较小、飞行高度范围有限，且总油耗相对变化低于工程允许误差时，可在宏观策略比较中忽略温度偏差；若处于强温度异常环境、长航程累计计算或高精度油耗核算场景，则应保留温度修正项。
+因此，问题二的结论可以概括为：路径积分模型与质量变化模型一致，单位航程油耗更能反映巡航经济性，而温度偏差在当前工况下只带来小幅修正，对策略优劣判断影响有限。
 \section{问题三模型建立与求解}
 \subsection{模型建立}
 \subsubsection{最优巡航控制模型}
@@ -1003,6 +986,12 @@ $$J(x_j)\approx \sum_{i=0}^{j-1}\frac{q_i+q_{i+1}}{2}(x_{i+1}-x_i).$$
     \label{eq:q3_CL_bounds}
 \end{equation}
 
+考虑到乘坐品质和结构安全，还需对爬升率和水平加速度进行限制：
+\begin{equation}
+    |\dot h(t)| \leq \dot h_{\max}, \qquad |\dot V(t)| \leq \dot V_{\max},
+\end{equation}
+其中 $\dot h_{\max}=15\,\text{m/s}$，$\dot V_{\max}=1.0\,\text{m/s}^2$
+
 此外，发动机推力应满足
 \begin{equation}
     0\leq F(t)\leq F_{\max}(h(t),V(t)).
@@ -1072,9 +1061,33 @@ $$J(x_j)\approx \sum_{i=0}^{j-1}\frac{q_i+q_{i+1}}{2}(x_{i+1}-x_i).$$
 \end{equation}
 当高度、速度、升力系数或推力约束处于边界时，上述驻值条件需替换为包含不等式约束乘子的
 KKT 条件。
+\subsection{参数取值与依据}
+\label{sec:params}
+
+本文参考同类机型性能数据\cite{11}\cite{12}、飞行包线理论\cite{10}及乘坐品质标准\cite{12}，设定各约束参数如表4所示。
+
+\begin{table}[htbp]
+\centering
+\caption{约束参数取值}
+\label{tab:const_params}
+\begin{tabular}{cccc}
+\toprule
+参数 & 符号 & 取值 & 依据 \\
+\midrule
+最低高度 & $h_{\min}$ & 8000 m & 安全高度与航线最低航路高度 \\
+最高高度 & $h_{\max}$ & 12000 m & 飞机升限及发动机推力限制 \\
+最小空速 & $V_{\min}$ & 180 m/s & 失速速度 \\
+最大空速 & $V_{\max}$ & 280 m/s & 结构限制与跨音速边界 \\
+最大马赫数 & $M_{\max}$ & 0.85 & 阻力发散马赫数 \\
+最小升力系数 & $C_{L,\min}$ & 0.1 & 迎角过低时操纵性问题 \\
+最大升力系数 & $C_{L,\max}$ & 1.2 & 失速迎角对应升力系数 \\
+最大爬升率 & $\dot h_{\max}$ & 15 m/s & 乘坐品质与结构载荷 \\
+最大水平加速度 & $\dot V_{\max}$ & 1.0 m/s$^2$ & 乘坐舒适度与发动机响应 \\
+\bottomrule
+\end{tabular}
+\end{table}
 \subsection{模型求解}
 \subsubsection{直接离散化求解模型}
-
 由于本问题的燃油消耗率、阻力模型和风场模型均具有明显非线性，采用间接法求解两点边值问题较为困难。
 因此，本文采用直接法进行数值求解。将时间区间 $[0,t_f]$ 划分为 $N$ 个小区间，
 节点记为 $t_i=i\Delta t$，$i=0,1,\ldots,N$。
@@ -1108,6 +1121,10 @@ KKT 条件。
 其中，$\boldsymbol f$ 表示式 (76) 右端函数。
 这样即可将连续最优控制问题转化为带非线性等式与不等式约束的非线性规划问题。
 
+根据时间域梯形配点法的求解结果，本文分别得到无风条件和垂直风切变条件下的高度--速度联合最优巡航轨迹。两种工况均采用相同固定航程 $X_f=182988.940\text{ m}$。该航程取自无风等速巡航爬升基准策略由初始质量 $m_0$飞行至终止剩余质量 $m_f$时对应的航程。在该设置下，无风条件和垂直风切变条件均完成相同航程任务，使两种工况下的高度轨迹、速度轨迹、飞行时间和总燃油消耗具有可比性。
+
+同时，若直接令 $m(t_f)=m_f$，则总燃油消耗$m_0-m_f$ 被预先固定，最小油耗目标将失去优化意义。因此，本文采用固定航程最小油耗形式，并将终端质量设置为安全剩余质量约束。离散后的问题属于带非线性等式约束和不等式约束的非线性规划问题，本文采用 SLSQP 算法进行求解。SLSQP 即序列最小二乘二次规划方法，能够同时处理变量边界、等式约束和不等式约束，适合本文包含配点动力学约束、飞行包线约束、终端巡航状态约束和最小推力约束的最优控制问题。
+
 \subsubsection{风场对最优解结构的影响}
 
 在无风条件下，$W(h)=0$，飞机地速等于空速，水平运动方程不再显式依赖高度。
@@ -1134,6 +1151,35 @@ KKT 条件。
 因此，风场破坏了无风条件下高度与速度之间的简化关系，使最优轨迹必须同时考虑气动效率、
 速度偏离损失和风场收益。
 \subsection{结果分析}
+\begin{table}[htbp]
+\centering
+\caption{三种巡航策略下飞机空速随航程变化曲线}
+\label{tab:opt_results_wind}
+\begin{tabular}{ccccccc}
+\toprule
+工况 & 总油耗/kg & 终端质量/kg & 总飞行时间/s & 最大约束残差 \\
+\midrule
+无风最优轨迹 & 8947.394 & 63502.606 & 777.724& $2.900\times10^{-8}$ \\
+有风最优轨迹 & 7707.451 & 64742.549 & 660.884& $4.013\times10^{-8}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+由表 5 可知，两种工况下优化器均正常收敛，最大约束残差接近 0，说明数值轨迹满足动力学方程及各类路径约束。无风条件下最优总油耗为 $8947.394\text{ kg}$，有风条件下为 $7707.451\text{ kg}$，节油率约 $13.86\%$；对应飞行时间由 $777.724\text{ s}$ 缩短至 $660.884\text{ s}$，降幅约 $15.02\%$。
+
+这表明风场的主要作用不是显著降低单位时间燃油率，而是通过提高地速缩短固定航程所需时间。也就是说，有风最优轨迹的优势主要来自路径时间压缩，而不是发动机瞬时油耗的大幅下降。
+
+\begin{figure}[H]
+	\centering
+	\IfFileExists{6.eps}{\includegraphics[width=0.9\textwidth]{6.eps}}{\fbox{Missing figure}}
+	\caption{无风与有风条件下高度、速度、质量、燃油率和单位航程油耗率对比图}
+	\label{fig:1}
+\end{figure}
+
+图 6 显示，无风条件下最优高度主要维持在 $9500\text{ m}$ 至 $10200\text{ m}$，有风条件下则整体略低，以利用较低高度层的顺风收益。两种工况下速度都基本保持在 $235\text{ m/s}$ 附近，说明速度偏离惩罚项有效约束了空速变化。燃油率和单位航程油耗率则随高度、速度和推力约束共同波动，但有风条件下前中段单位航程油耗率明显更低，因此终端质量更高、总油耗更少。
+
+为验证数值解，本文采用直接法并结合 SLSQP 收敛性、配点残差和约束违背量进行检查，结果表明轨迹满足状态方程和约束，符合直接法意义下的 KKT 最优性条件。综上，时间域梯形配点法能够有效求解高度--速度联合最优巡航问题，有风最优轨迹的节油和节时优势主要来自地速提升和路径时间压缩。
+
 \section{问题四模型建立与求解}
 \subsection{模型建立}
 \subsubsection{综合数值计算框架}
@@ -1341,11 +1387,103 @@ $J_{\mathrm{opt}}$，则固定航程条件下的燃油节省比例定义为
 \end{equation}
 该扩展使模型更接近真实发动机工作状态，但需要额外的发动机安装效率或推力包线数据。
 
-\paragraph{目标函数}
-\paragraph{网络流状态转移}
-\subsubsection{模型汇总}
-\subsubsection{模型求解}
-\subsubsection{结果分析}
+\subsection{模型求解}
+\subsubsection{等速巡航爬升基准策略求解}
+
+根据式（92）—式（97），本文首先求解等速巡航爬升基准策略。计算中取 $V_c=V_0=240\text{ m/s}$，并以飞机质量由 $m_0=72450\text{ kg}$ 下降至 $m_f=62000\text{ kg}$ 作为积分终止条件。
+
+在每一个离散时刻，先由式（94）根据当前质量计算对应飞行高度，再代入阻力模型、推力需求模型和燃油消耗率模型，得到当前推力需求和燃油消耗率。随后利用式（97）对质量和航程进行数值积分，得到等速巡航爬升策略下的高度、速度、质量、时间和航程剖面。
+
+该策略作为问题四的基准方案。由于其终止质量固定为 $m_f$，所以基准燃油消耗量为 $J_{cs}=m_0-m_f=10450\text{ kg}$。数值积分得到基准航程为 $X_{cs}=200809.924516\text{ m}$。后续固定航程节油分析均以 $X_f=X_{cs}$ 为比较航程，固定燃油航程提升分析均以 $J_{cs}$ 为燃油上限。
+
+\subsubsection{固定航程最小油耗模型求解}
+为比较最优策略相对于等速策略的节油效果，本文首先采用固定航程比较方式。令最优策略完成与等速策略相同的航程，即取$X_f=X_{cs}.$
+
+在该条件下，调用问题三建立的高度–速度联合最优控制模型，并以式（102）作为目标函数，以式（103）作为终端航程约束。数值求解时，采用问题三中的时间域梯形配点法，将连续最优控制问题转化为非线性规划问题。目标函数和状态方程分别按式（88）和式（89）离散。
+
+在优化过程中，除满足状态方程外，还同时施加问题四建模部分给出的飞行安全边界、巡航运行约束和怠速推力约束。其中，怠速推力约束用于避免优化器通过过低推力或近似滑翔获得不符合实际巡航运行的低油耗结果。离散后的非线性规划问题采用 SLSQP 算法求解，并以最大约束违反量判断解的可行性。
+
+本文取离散节点数为 $N=21$。优化器返回严格成功标志，且最大约束违反量为 $1.54845\times10^{-10}$，说明固定航程最优解满足数值可行性要求。
+\subsubsection{固定燃油最大航程模型求解}
+固定航程模型可以回答相同航程下的节油效果，但若只固定终止质量，则不同策略的总燃油消耗均接近 $m_0-m_f$，不适合直接比较节油比例。因此，本文进一步采用固定燃油最大航程模型，分析相同燃油消耗下最优策略的航程提升能力。
+
+计算中以等速策略的燃油消耗量$J_{cs}=10450\text{ kg}$ 作为燃油上限。对于给定候选航程 $X$，重新求解高度–速度联合最优轨迹。若优化结果满足燃油消耗不超过 $J_{cs}$，且优化器返回严格可行解，则认为该候选航程可行。
+
+搜索过程分为两步。首先从$1.2X_{cs}$ 开始进行外推搜索，逐步扩大候选航程，直到首次出现不可行解。随后在最后一个可行航程和第一个不可行航程之间进行二分搜索，得到固定燃油条件下的最大可行航程 $X_{opt}$。最终利用式（105）计算航程提升比例。
+\subsubsection{模型扩展计算方法}
+对于温度偏差实时修正扩展，本文在等速基准轨迹上选取离散样本点，计算每个节点处的$\Delta T(h,t)$、$T_{real}(h,t)$、$\rho_{real}(h,t)$ 和 $a_{real}(h,t)$。其中，修正后的密度进入升力系数、阻力和推力需求计算，修正后的声速进入马赫数计算。
+
+对于发动机安装损失扩展，本文在同一组轨迹样本点上计算安装效率 $\eta_{ins}(h,V)$，并由式（110）和式（111）得到考虑安装损失后的发动机指令推力和燃油消耗率。该部分作为模型扩展框架的数值演示，用于说明新增因素进入原模型后的计算方式和影响方向。
+\subsection{结果分析}
+\subsubsection{等速策略与最优策略总体对比}
+根据数值求解结果，等速巡航爬升策略在终止质量 $m_f=62000\text{ kg}$ 下的基准航程为 $200809.924516\text{ m}$，总燃油消耗为 $10450\text{ kg}$。
+
+在固定相同航程 $X_f=X_{cs}$ 的条件下，考虑风场的高度–速度联合最优策略总油耗为 $8394.401214\text{ kg}$。由式（104）可得，固定航程下的燃油节省量为 $2055.598786\text{ kg}$，节油比例为 $19.670802\%$。
+
+在固定燃油 $J_{cs}=10450\text{ kg}$的条件下，最优策略可达到的最大可行航程为 $256785.690975\text{ m}$。由式（105）可得，航程增加 $55975.766459\text{ m}$，航程提升比例为 $27.875000\%$。
+\begin{table}[htbp]
+\centering
+\caption{问题四巡航策略综合对比}
+\label{tab:comprehensive_comparison}
+\begin{tabular}{cccccccc}
+\toprule
+ 策略 & 总航程/km & 总油耗/kg & 终端高度/m  & 总时间/s \\
+\midrule
+ 等速巡航爬升 & 200.81 & 10450 & 10637.1 & 762.454 \\
+ 固定航程最优策略 & 200.81 & 8394.4  & 9500 & 720.876 \\
+ 固定燃油最优策略 & 256.786 & 10446.7  & 9500 & 903.513 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+由表 6 可知，在完成相同航程时，最优策略能够以更少燃油到达终点，终端质量由等速策略的 $62000.0\text{ kg}$ 提高至 $64055.6\text{ kg}$。这说明优化节省的燃油直接表现为更高的终端剩余质量。在消耗近似相同燃油时，最优策略能够将航程由 $200.810\text{ km}$提高至 $256.786\text{ km}$，说明高度–速度联合优化能够显著提升单位燃油的航程效率。
+\begin{figure}[H]
+	\centering
+	\IfFileExists{7.eps}{\includegraphics[width=0.6\textwidth]{7.eps}}{\fbox{Missing figure}}
+	\caption{等速策略与最优策略高度剖面对比}
+	\label{fig:2}
+\end{figure}
+由图7可知，等速巡航爬升策略随燃油消耗持续升高，最终高度达到约 $10637.1\text{ m}$；两类最优策略则先降低高度，再在后段回升到终端约束附近，说明最优轨迹是在风场收益、阻力变化和终端约束之间进行折中。
+
+\subsubsection{最优高度–速度轨迹分析}
+\begin{figure}[H]
+	\centering
+	\IfFileExists{8.eps}{\includegraphics[width=0.6\textwidth]{8.eps}}{\fbox{Missing figure}}
+    \caption{固定航程最优策略的高度、速度、质量与油耗率演化对比}
+	\label{fig:3}
+\end{figure}
+固定航程最优策略的终端高度为 $9500.0\text{ m}$，正好落在高度下界，终端速度为 $228.080\text{ m/s}$，略高于速度下界 $225\text{ m/s}$。平均速度约为 $235\text{ m/s}$，接近参考经济速度 $V_{opt}=235\text{ m/s}$。这表明最优策略并不是单纯追求更高高度，而是在气动阻力、速度偏离损失和风场收益之间折中，并通过适度降速与局部降高提升单位航程效率。
+
+\subsubsection{固定航程节油效果分析}
+\begin{figure}[H]
+	\centering
+	\IfFileExists{9.eps}{\includegraphics[width=0.6\textwidth]{9.eps}}{\fbox{Missing figure}}
+    \caption{固定航程条件下等速策略与最优策略节油效果对比}
+	\label{fig:4}
+\end{figure}
+固定航程下，等速策略完成 $200.810\text{ km}$ 需要 $10450.0\text{ kg}$ 燃油，而最优策略仅需 $8394.4\text{ kg}$，节油比例为 $19.670802\%$。节油主要来自三个方面：速度更接近 $V_{opt}$，风场带来更有利的地速，以及高度和速度的联合调节改善了阻力与爬升推力的平衡。
+
+\subsubsection{固定燃油航程提升分析}
+\begin{figure}[H]
+	\centering
+	\IfFileExists{10.eps}{\includegraphics[width=0.6\textwidth]{10.eps}}{\fbox{Missing figure}}
+    \caption{固定燃油条件下等速策略与最优策略航程提升对比}
+	\label{fig:5}
+\end{figure}
+在燃油上限同为 $10450\text{ kg}$ 的条件下，最优策略最大可行航程为 $256.786\text{ km}$，比等速策略增加 $55.976\text{ km}$，航程提升比例为 $27.875000\%$。这说明高度–速度联合优化不仅能减少相同航程下的燃油消耗，也能在相同燃油储备下显著提升航程能力。
+\subsubsection{模型扩展结果分析}
+\begin{figure}[H]
+	\centering
+	\IfFileExists{11.eps}{\includegraphics[width=1\textwidth]{11.eps}}{\fbox{Missing figure}}
+	\caption{模型扩展参数沿航程变化}
+	\label{fig:6}
+\end{figure}
+图 8-6 展示了温度偏差实时修正和发动机安装损失修正的数值效果。温度修正后，温度偏差与修正声速均随航程变化，说明大气参数不再只是单纯的高度函数，而是受高度和时间共同影响的非定常量。安装损失修正后，安装效率随航程波动，指令推力 $F_{cmd}$ 始终高于有效推力需求，反映出安装损失会放大发动机实际输出要求。
+
+温度偏差扩展表明，密度和声速的同步修正会进一步影响升力系数、阻力、推力需求和马赫数约束；在等速基准轨迹的抽样计算中，温度偏差由初始约 $5.0\text{ K}$ 增至约 $6.04\text{ K}$，但模型结构保持不变，只是需要在每个离散节点更新 $T_{real}$、$\rho_{real}$ 和 $a_{real}$。安装损失扩展则表明，考虑 $\eta_{ins}(h,V)$ 后，初始时刻安装效率约为 $0.97425$，所需有效推力约为 $49172.3\text{ N}$，修正后的指令推力约为 $50472.0\text{ N}$，因此燃油消耗会进一步增加。
+
+总体来看，这两个扩展都没有改变原模型的主框架，但分别通过大气参数和推力需求引入了额外的非线性。若进一步加入最大推力包线，则工程真实性会更强，但也需要更多安装效率和推力包线数据支撑。
+
 \section{灵敏度分析} 
 
 \subsubsection{速度偏离惩罚系数敏感性分析}
@@ -1374,8 +1512,35 @@ $V^*(t;\beta_{\alpha})$。定义目标函数对 $\beta$ 的相对敏感度为
 \end{equation}
 其中，$\varepsilon$ 为小扰动比例。类似地，可定义最终高度、平均速度和总航程等指标的敏感度，
 从而识别模型中对速度惩罚系数变化最敏感的环节。
+\begin{table}[ht]
+\centering
+\caption{速度偏离惩罚系数敏感性分析}
+\label{tab:sensitivity_penalty}
+\begin{tabular}{ccccccc}
+\toprule
+$\lambda_{\alpha}$ & $\lambda_{\beta}$ & 最优油耗/kg & 节油比例/\%  & 终端速度/(m/s) & 平均速度/(m/s) \\
+\midrule
+0.8   & 0.0024 & 8382.1  & 19.7885 & 227.456 & 235.086 \\
+0.9   & 0.0027 & 8388.55 & 19.7268 & 227.801 & 235.097 \\
+1.0   & 0.0030 & 8394.4  & 19.6708 & 228.079 & 235.104 \\
+1.1   & 0.0033 & 8399.7  & 19.6201 & 228.466 & 235.117 \\
+1.2   & 0.0036 & 8404.41 & 19.5750 & 228.801 & 235.129 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
+由表 6 可知，随着 $\beta$增大，最优油耗由 $8382.10\text{ kg}$ 增加至 $48404.41\text{ kg}$，节油比例由 $19.7885\%$ 降低至 $19.5750\%$。该趋势符合速度偏离惩罚项的物理意义：当速度偏离经济速度的代价增大时，优化器在速度调节上的自由度下降，可获得的燃油节省略有减少。
 
+同时，虽然 $\beta$ 变化幅度达到 $\pm 20\%$，但最优油耗变化仅约 $22.31\text{ kg}$，相对于基准油耗 $10450\text{ kg}$ 的比例较小。所有扰动情形下，节油比例均保持在 $19.5\%$ 以上，说明高度–速度联合优化的优势并不依赖某一个特定的 $\beta$ 取值，而是在标称值附近具有较好的稳定性。
+\begin{figure}[H]
+	\centering
+	\IfFileExists{12.eps}{\includegraphics[width=0.7\textwidth]{12.eps}}{\fbox{Missing figure}}
+	\caption{模型扩展参数沿航程变化}
+	\label{fig:7}
+\end{figure}
+图 12 进一步给出了不同 $\beta$ 取值下的最优空速轨迹。各曲线在大部分航段均围绕 $V_{opt}=235\text{ m/s}$ 小幅波动，说明经济速度对最优空速具有稳定吸引作用。随着$\alpha$ 增大，末端空速略有提高，但整体轨迹差异不大，进一步说明速度偏离惩罚系数在标称值附近变化时不会明显改变最优轨迹结构。
+
+从轨迹结构看，不同 $\beta$ 下的终端高度均为 $9500\text{ m}$，说明终端高度约束对最优解具有较强限制作用。平均速度始终维持在 $235\text{ m/s}$ 附近，说明参考经济速度 $V_{opt}$ 对速度轨迹具有明显约束作用。随着 $\beta$ 增大，终端速度由 $227.456\text{ m/s}$ 增至 $228.801\text{ m/s}$，速度轨迹整体略向更平稳、更接近经济速度的方向调整。
 \newpage
 %Reference
 \begin{thebibliography}{40}
@@ -1387,6 +1552,10 @@ $V^*(t;\beta_{\alpha})$。定义目标函数对 $\beta$ 的相对敏感度为
     \bibitem{6}陈兴荣. (1988). 飞机颠簸的气象因素分析. 中国民航学院学报(综合版), (3), 36-45.
     \bibitem{7}吴慰祖. (1989). 飞机全尺寸阻力的预计. 飞行力学, (3), 11-27. https://doi.org/10.13645/j.cnki.f.d.1989.03.002
     \bibitem{8}Tyrén, C. (1982). Magnetic anomalies as a reference for ground-speed and map-matching navigation. The Journal of navigation, 35(2), 242-254.
+    \bibitem{9}Filippone, A. (2012). Advanced aircraft flight performance (Vol. 34). Cambridge University Press.
+    \bibitem{10}Torenbeek, E. (2013). Unified Cruise Performance.
+    \bibitem{11}吴奕铭.(2022).运输类飞机商业飞行的性能分析规范及实例研究(硕士学位论文,中国民用航空飞行学院).硕士https://doi.org/10.27722/d.cnki.gzgmh.2022.000286.
+    \bibitem{12}高浩.(1984).改善乘坐品质纵向增稳器返馈系数的选择.航空学报,(1),18-23.
 \end{thebibliography}
 \newpage
 \newgeometry{left=1.50cm,right=0.5cm,top=3.00cm,bottom=3.0cm}	%修改附录代码的几何页面
@@ -1396,73 +1565,876 @@ $V^*(t;\beta_{\alpha})$。定义目标函数对 $\beta$ 的相对敏感度为
 	
 	
 	\fontsize{10pt}{16pt}		\selectfont	
-	\begin{lstlisting}[ language=MATLAB,numbers=left,numberstyle=\tiny,keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``,xleftmargin=2em,xrightmargin=2em,aboveskip=1em] 
+	\begin{lstlisting}[ language=MATLAB,numbers=left,numberstyle=\tiny,keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=||,xleftmargin=2em,xrightmargin=2em,aboveskip=1em] 
 	%%%问题一
-	%%图形
-	%从1到5商品分别代表着：帮宝适绿帮纸尿裤、黛珂牛油果紫苏水套装
-	%WIS水润面膜、飞利浦电动牙刷HX6616、HFP熊果苷补水面膜
-	%g表示每个商品双十一的销售额(单位：万元)
-	%h表示每个商品平时十天的销售额(单位：万元)
-	clc,clear
-	figure('color','w','name','18年双十一和平时情况下不同商品销售额的对比');
-	x=1:1:5;
-	g=[1901.5;3582.2;1281.1;977.9;1360.8];
-	h=[85.02;5.8716;11.6326;7.8864;10.8621];
-	plot(x,g,'*-','color',[0,6,35]/255,'linewidth',1.1);
-	hold on;
-	plot(x,h,'rd-','linewidth',1.1);
-	grid minor
-	xlabel('对应商品种类','Interpreter', 'none','FontSize',20);
-	ylabel('商品销售额/万元','Interpreter', 'none','FontSize',20);
-	legend('\fontname{华文中宋}18年双十一的销售额','\fontname{华文中宋}18年平时十天的销售额','location','northeast','Fontsize',13);
-	set(gca,'linewidth',1.1,'fontsize',16)
-	
-	%%
-	x3=1:1:5;
-	y3=[1901.5-85.02;3582.2-5.8716;1281.1-11.6326;977.9-7.8864;1360.8-10.8621];
-	
-	dataT=zeros(5,5);
-	for i=1:5
-	dataT(i,i)=y3(i);
-	end
-	data1=dataT(1,:);
-	data2=dataT(2,:);
-	data3=dataT(3,:);
-	data4=dataT(4,:);
-	data5=dataT(5,:);
-	figure('color','w','name','18年双十一和平时情况下对应商品的差值');
-	h1=bar(data1,'FaceColor',[248/255  203/255  127/255],'BarWidth',0.8);
-	set(h1,'edgecolor','none');
-	hold on
-	h2=bar(data2,'FaceColor',[248/255  149/255  136/255],'BarWidth',0.8);
-	set(h2,'edgecolor','none');
-	hold on
-	h3=bar(data3,'FaceColor',[147/255  224/255  255/255],'BarWidth',0.8);
-	set(h3,'edgecolor','none');
-	hold on
-	h4=bar(data4,'FaceColor',[145/255  146/255  171/255],'BarWidth',0.8);
-	set(h4,'edgecolor','none');
-	hold on
-	h5=bar(data5,'FaceColor',[120/255  152/255  225/255],'BarWidth',0.8);
-	set(h5,'edgecolor','none');
-	for i=1:length(x3)
-	string=sprintf('%4.2f',y3(i));
-	text(x3(i)-0.35,y3(i)+100,string)
-	end
-	grid minor
-	xlabel('对应商品种类','Interpreter', 'none','FontSize',20);
-	ylabel('销售额差值/万元','Interpreter', 'none','FontSize',20);
-	%%
-	%%求解相等成本
-	syms c;
-	g=[1901.5;3582.2;1281.1;977.9;1360.8];%五种商品的双十一销售额
-	h=[85.02;5.8716;11.6326;7.8864;10.8621];%五种商品平时的销售额
-	d1=[4.5;6;16;1.0878;12.5];%双十一时五种商品的销量
-	d2=[0.2834;0.0084;0.1187;0.0053;0.0729];%平时五种商品的销量
-	c=(g-h)./(d1-d2)
+	from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from scipy.optimize import brentq
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from common.aerodynamics import drag, lift_coefficient
+from common.atmosphere import T_std, mach_number, sound_speed, wind_for_mode
+from common.fuel_model import speed_penalty
+from common.parameters import PARAMS, Parameters
+from common.utils import (
+    cumulative_trapezoid_from_values,
+    ensure_dir,
+    save_dataframe,
+    save_figure,
+)
+
+
+def compute_constant_speed_profile(
+    n_points: int = 1200,
+    wind_mode: str = "strict",
+    params: Parameters = PARAMS,
+) -> pd.DataFrame:
+    """Constant-air-speed cruise-climb profile integrated over mass."""
+    mass = np.linspace(params.m0, params.mf, n_points)
+    fuel_used = params.m0 - mass
+    V = np.full_like(mass, params.V0)
+
+    # Constant CL gives h = h0 - Hrho*ln(m/m0).
+    CL_c = lift_coefficient(params.m0, params.h0, params.V0, params)
+    h = params.h0 - params.Hrho * np.log(mass / params.m0)
+
+    D = drag(mass, h, V, params)
+    penalty = speed_penalty(V, params)
+    p = params.cF * penalty
+    coupling = params.Hrho * params.g / params.V0
+    denom = 1.0 - p * coupling
+    if np.any(denom <= 0):
+        raise RuntimeError("Constant-speed fuel-rate coupling denominator is non-positive.")
+    rate = p * D / denom
+    hdot = params.Hrho * rate / mass
+    thrust = rate / p
+    CL = lift_coefficient(mass, h, V, params)
+    mach = mach_number(V, h, params)
+    W = wind_for_mode(h, wind_mode)
+    ground_speed = V + W
+
+    time_s = cumulative_trapezoid_from_values(1.0 / rate, fuel_used)
+    distance_m = cumulative_trapezoid_from_values(ground_speed / rate, fuel_used)
+
+    return pd.DataFrame(
+        {
+            "time_s": time_s,
+            "height_m": h,
+            "mass_kg": mass,
+            "velocity_mps": V,
+            "mach": mach,
+            "lift_coefficient": CL,
+            "reference_lift_coefficient": CL_c,
+            "drag_N": D,
+            "thrust_N": thrust,
+            "fuel_rate_kgps": rate,
+            "climb_rate_mps": hdot,
+            "wind_mps": W,
+            "ground_speed_mps": ground_speed,
+            "distance_m": distance_m,
+            "fuel_used_kg": fuel_used,
+        }
+    )
+
+
+def _constant_mach_height_from_mass(mass: float, params: Parameters) -> float:
+    T_ref = T_std(params.h0, params)
+    target = mass / params.m0
+
+    def relation(h):
+        return np.exp(-(h - params.h0) / params.Hrho) * T_std(h, params) / T_ref - target
+
+    if abs(mass - params.m0) < 1e-10:
+        return params.h0
+    return brentq(relation, params.h0, 20000.0, xtol=1e-10, rtol=1e-10)
+
+
+def compute_constant_mach_profile(
+    n_points: int = 1200,
+    wind_mode: str = "strict",
+    params: Parameters = PARAMS,
+) -> pd.DataFrame:
+    """Constant-Mach cruise-climb profile integrated over mass."""
+    mass = np.linspace(params.m0, params.mf, n_points)
+    fuel_used = params.m0 - mass
+    M0 = params.V0 / sound_speed(params.h0, params)
+    h = np.array([_constant_mach_height_from_mass(m, params) for m in mass])
+    T = T_std(h, params)
+    V = M0 * sound_speed(h, params)
+
+    D = drag(mass, h, V, params)
+    penalty = speed_penalty(V, params)
+    p = params.cF * penalty
+
+    # Differentiate ln(m/m0) = -(h-h0)/Hrho + ln(T/T0h).
+    A = -1.0 / params.Hrho - params.LT / T
+    B = -1.0 / (mass * A)  # hdot = B*fuel_rate
+    dVdh = -V * params.LT / (2.0 * T)
+    denom = 1.0 - p * mass * B * (dVdh + params.g / V)
+    if np.any(denom <= 0):
+        raise RuntimeError("Constant-Mach fuel-rate coupling denominator is non-positive.")
+    rate = p * D / denom
+    hdot = B * rate
+    Vdot = dVdh * hdot
+    thrust = rate / p
+    CL = lift_coefficient(mass, h, V, params)
+    mach = mach_number(V, h, params)
+    W = wind_for_mode(h, wind_mode)
+    ground_speed = V + W
+
+    time_s = cumulative_trapezoid_from_values(1.0 / rate, fuel_used)
+    distance_m = cumulative_trapezoid_from_values(ground_speed / rate, fuel_used)
+
+    return pd.DataFrame(
+        {
+            "time_s": time_s,
+            "height_m": h,
+            "mass_kg": mass,
+            "velocity_mps": V,
+            "mach": mach,
+            "lift_coefficient": CL,
+            "drag_N": D,
+            "thrust_N": thrust,
+            "fuel_rate_kgps": rate,
+            "climb_rate_mps": hdot,
+            "acceleration_mps2": Vdot,
+            "wind_mps": W,
+            "ground_speed_mps": ground_speed,
+            "distance_m": distance_m,
+            "fuel_used_kg": fuel_used,
+        }
+    )
+
+
+def build_summary(cs: pd.DataFrame, cm: pd.DataFrame, params: Parameters = PARAMS) -> pd.DataFrame:
+    rows = []
+    for strategy, df in [
+        ("constant_speed", cs),
+        ("constant_mach", cm),
+    ]:
+        total_time = float(df["time_s"].iloc[-1])
+        final_height = float(df["height_m"].iloc[-1])
+        rows.append(
+            {
+                "strategy": strategy,
+                "final_height_m": final_height,
+                "total_time_s": total_time,
+                "total_time_min": total_time / 60.0,
+                "final_distance_m": float(df["distance_m"].iloc[-1]),
+                "final_distance_km": float(df["distance_m"].iloc[-1]) / 1000.0,
+                "fuel_consumption_kg": params.m0 - params.mf,
+                "average_climb_rate_mps": (final_height - params.h0) / total_time,
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def make_figures(cs: pd.DataFrame, cm: pd.DataFrame, figures_dir: Path):
+    ensure_dir(figures_dir)
+    plt.rcParams["font.sans-serif"] = [
+        "Microsoft YaHei",
+        "SimHei",
+        "Noto Sans CJK SC",
+        "Arial Unicode MS",
+        "DejaVu Sans",
+    ]
+    plt.rcParams["axes.unicode_minus"] = False
+    datasets = [("等速策略", cs), ("等马赫策略", cm)]
+
+    def line_plot(filename, y_col, y_label):
+        fig, ax = plt.subplots(figsize=(8, 5))
+        for label, df in datasets:
+            ax.plot(df["time_s"] / 60.0, df[y_col], label=label)
+        ax.set_xlabel("时间/min")
+        ax.set_ylabel(y_label)
+        ax.grid(True, alpha=0.3)
+        ax.legend()
+        save_figure(figures_dir / filename, fig)
+
+    line_plot("height_vs_time.png", "height_m", "高度/m")
+    line_plot("mass_vs_time.png", "mass_kg", "质量/kg")
+    line_plot("climb_rate_vs_time.png", "climb_rate_mps", "爬升率/(m/s)")
+
+
+def write_explanation(summary: pd.DataFrame, path: Path):
+    cs = summary.loc[summary["strategy"] == "constant_speed"].iloc[0]
+    cm = summary.loc[summary["strategy"] == "constant_mach"].iloc[0]
+    content = f"""# 问题 1 数值说明
+
+## 求解目标
+
+
+## 数学模型
+
+`F = D + m Vdot + m g hdot / V`
+
+等马赫策略固定 `M0=V0/a(h0)`，速度随高度由 `V(h)=M0 a(h)` 给出，高度由隐式关系
+
+`m/m0 = exp(-(h-h0)/Hrho) T(h)/T(h0)`
+
+用 `scipy.optimize.brentq` 逐点求解。
+
+## 输出文件
+·
+- `problem1_constant_speed_profile.csv`：等速策略完整剖面。
+- `problem1_constant_mach_profile.csv`：等马赫数策略完整剖面。
+- `problem1_summary.csv`：两种策略终值与总量对比。
+- `height_vs_time.png`、`mass_vs_time.png` 和 `climb_rate_vs_time.png`：剖面图。
+
+## 关键结果
+
+- 等速策略最终高度为 {cs['final_height_m']:.3f} m，总时间为 {cs['total_time_min']:.3f} min，按默认题面风场计算的航程为 {cs['final_distance_km']:.3f} km。
+- 等马赫策略最终高度为 {cm['final_height_m']:.3f} m，总时间为 {cm['total_time_min']:.3f} min，按默认题面风场计算的航程为 {cm['final_distance_km']:.3f} km。
+- 两种策略燃油消耗均为从 `m0` 到 `mf` 的质量差，即 {cs['fuel_consumption_kg']:.3f} kg。
+
+等速策略通过保持参考升力系数使高度随质量下降逐渐升高。等马赫数策略中声速随标准大气温度降低而减小，因此空速会随爬升略降；其爬升率大小取决于阻力、速度惩罚和隐式高度-质量关系的共同作用，不能强行固定为一定大于等速策略。
+
+## 风场数量级提醒
+
+代码默认使用修正后的风场 `W(h)=20+3*10^(-5)(h-10000)^2`。在 9500 m 附近该式给出约 27.5 m/s 的风速，数量级比原先 `0.003` 系数下的结果合理得多。公共函数中仍保留 `capped` 与 `scaled` 模式，便于后续做稳健性检查。
+"""
+    path.write_text(content, encoding="utf-8")
+    print(f"Saved explanation: {path}")
+
+
+def main():
+    print("Problem 1: solving constant-speed and constant-Mach cruise climb.")
+    results_dir = ensure_dir(Path(__file__).resolve().parent / "results")
+    figures_dir = ensure_dir(Path(__file__).resolve().parent / "figures")
+
+    cs = compute_constant_speed_profile()
+    cm = compute_constant_mach_profile()
+    summary = build_summary(cs, cm)
+
+    save_dataframe(cs, results_dir / "problem1_constant_speed_profile.csv")
+    save_dataframe(cm, results_dir / "problem1_constant_mach_profile.csv")
+    save_dataframe(summary, results_dir / "problem1_summary.csv")
+    make_figures(cs, cm, figures_dir)
+    write_explanation(summary, Path(__file__).resolve().parent / "explanation.md")
+    print("Problem 1 complete.")
+
+
+if __name__ == "__main__":
+    main()
 
 	
 	
+	
+	\end{lstlisting}
+    \begin{lstlisting}[ language=MATLAB,numbers=left,numberstyle=\tiny,keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=||,xleftmargin=2em,xrightmargin=2em,aboveskip=1em] 
+	%%%问题二
+	from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from common.aerodynamics import drag, lift_coefficient
+from common.atmosphere import T_std, mach_number, rho_exp, sound_speed
+from common.fuel_model import fuel_rate
+from common.parameters import PARAMS, Parameters
+from common.utils import (
+    cumulative_trapezoid_from_values,
+    ensure_dir,
+    relative_change,
+    save_dataframe,
+    save_figure,
+)
+from problem1.solve_problem1 import compute_constant_mach_profile, compute_constant_speed_profile
+
+plt.rcParams["font.sans-serif"] = [
+    "Microsoft YaHei",
+    "SimHei",
+    "SimSun",
+    "Arial Unicode MS",
+    "DejaVu Sans",
+]
+plt.rcParams["axes.unicode_minus"] = False
+
+STRATEGY_LABELS = {
+    "constant_speed": "等速巡航爬升",
+    "constant_mach": "等马赫数巡航爬升",
+}
+STRATEGY_ORDER = ["constant_speed", "constant_mach"]
+CASE_LABELS = {
+    "standard": "标准大气",
+    "deltaT_constant_5K": "恒定 5K 温差",
+    "deltaT_linear": "线性温差",
+}
+CASE_ORDER = ["standard", "deltaT_constant_5K", "deltaT_linear"]
+CASE_STYLES = {
+    "standard": {"color": "#1f77b4", "linestyle": "-", "linewidth": 2.6, "zorder": 3},
+    "deltaT_constant_5K": {
+        "color": "#ff7f0e",
+        "linestyle": "--",
+        "linewidth": 2.6,
+        "zorder": 4,
+    },
+    "deltaT_linear": {
+        "color": "#2ca02c",
+        "linestyle": ":",
+        "linewidth": 3.0,
+        "zorder": 5,
+    },
+}
+
+
+def _path_integral(q_kg_per_m: np.ndarray, distance_m: np.ndarray) -> np.ndarray:
+    return cumulative_trapezoid_from_values(q_kg_per_m, distance_m)
+
+
+def standard_path_fuel(profile: pd.DataFrame, strategy: str) -> pd.DataFrame:
+    df = profile.copy()
+    df["path_fuel_kg_per_m"] = df["fuel_rate_kgps"] / df["ground_speed_mps"]
+    df["cumulative_path_fuel_kg"] = _path_integral(
+        df["path_fuel_kg_per_m"].to_numpy(), df["distance_m"].to_numpy()
+    )
+    df["strategy"] = strategy
+    df["case"] = "standard"
+    return df[
+        [
+            "strategy",
+            "case",
+            "distance_m",
+            "time_s",
+            "height_m",
+            "mass_kg",
+            "velocity_mps",
+            "wind_mps",
+            "ground_speed_mps",
+            "fuel_rate_kgps",
+            "path_fuel_kg_per_m",
+            "cumulative_path_fuel_kg",
+            "mach",
+            "lift_coefficient",
+        ]
+    ]
+
+
+def _delta_t_constant(h: np.ndarray, params: Parameters) -> np.ndarray:
+    return np.full_like(h, 5.0, dtype=float)
+
+
+def _delta_t_linear(h: np.ndarray, params: Parameters) -> np.ndarray:
+    return 5.0 + 0.0005 * (h - params.h0)
+
+
+def temperature_corrected_path_fuel(
+    profile: pd.DataFrame,
+    delta_t_func,
+    case_name: str,
+    strategy: str,
+    params: Parameters = PARAMS,
+) -> pd.DataFrame:
+    h = profile["height_m"].to_numpy()
+    V = profile["velocity_mps"].to_numpy()
+    m = profile["mass_kg"].to_numpy()
+    hdot = profile["climb_rate_mps"].to_numpy()
+    Vdot = (
+        profile["acceleration_mps2"].to_numpy()
+        if "acceleration_mps2" in profile.columns
+        else np.zeros_like(h)
+    )
+    U = profile["ground_speed_mps"].to_numpy()
+    distance = profile["distance_m"].to_numpy()
+
+    T_base = T_std(h, params)
+    rho_base = rho_exp(h, params)
+    a_base = sound_speed(h, params)
+    delta_t = delta_t_func(h, params)
+
+    # First-order perturbation specified in the task statement.
+    a_delta = a_base * (1.0 + delta_t / (2.0 * T_base))
+    rho_delta = rho_base * (1.0 - delta_t / T_base)
+    rho_delta = np.maximum(rho_delta, 1e-6)
+
+    D_delta = drag(m, h, V, params, rho=rho_delta)
+    thrust_delta = D_delta + m * Vdot + m * params.g * hdot / V
+    rate_delta = fuel_rate(thrust_delta, V, params)
+    q_delta = rate_delta / U
+    cumulative = _path_integral(q_delta, distance)
+    CL_delta = lift_coefficient(m, h, V, params, rho=rho_delta)
+    mach_delta = V / a_delta
+
+    return pd.DataFrame(
+        {
+            "strategy": strategy,
+            "case": case_name,
+            "distance_m": distance,
+            "time_s": profile["time_s"].to_numpy(),
+            "height_m": h,
+            "mass_kg": m,
+            "velocity_mps": V,
+            "wind_mps": profile["wind_mps"].to_numpy(),
+            "ground_speed_mps": U,
+            "delta_T_K": delta_t,
+            "T_std_K": T_base,
+            "T_real_K": T_base + delta_t,
+            "rho_standard_kgpm3": rho_base,
+            "rho_corrected_kgpm3": rho_delta,
+            "sound_speed_standard_mps": a_base,
+            "sound_speed_corrected_mps": a_delta,
+            "drag_N": D_delta,
+            "thrust_N": thrust_delta,
+            "fuel_rate_kgps": rate_delta,
+            "path_fuel_kg_per_m": q_delta,
+            "cumulative_path_fuel_kg": cumulative,
+            "mach_corrected": mach_delta,
+            "lift_coefficient_corrected": CL_delta,
+        }
+    )
+
+
+def build_summary(standard: pd.DataFrame, corrected: pd.DataFrame, strategy: str) -> pd.DataFrame:
+    rows = []
+    standard_total = float(standard["cumulative_path_fuel_kg"].iloc[-1])
+    for case_name, df in [("standard", standard), *list(corrected.groupby("case"))]:
+        total = float(df["cumulative_path_fuel_kg"].iloc[-1])
+        rows.append(
+            {
+                "strategy": strategy,
+                "case": case_name,
+                "total_fuel_kg": total,
+                "absolute_change_kg": total - standard_total,
+                "relative_change_percent": 100.0 * relative_change(total, standard_total),
+                "max_fuel_rate_kgps": float(df["fuel_rate_kgps"].max()),
+                "mean_path_fuel_kg_per_m": total / float(df["distance_m"].iloc[-1]),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def _figure_path(figures_dir: Path, stem: str, suffix: str) -> Path:
+    return figures_dir / f"{stem}{suffix}.png"
+
+
+def _save_figure_to_paths(fig: plt.Figure, *paths: Path, dpi: int = 180) -> None:
+    for path in paths:
+        ensure_dir(path.parent)
+        fig.savefig(path, dpi=dpi, bbox_inches="tight")
+        print(f"Saved figure: {path}")
+    plt.close(fig)
+
+
+def _caption(fig: plt.Figure, text: str, y: float = 0.035, fontsize: int = 13) -> None:
+    fig.text(0.5, y, text, ha="center", va="center", fontsize=fontsize)
+
+
+def _subcaption(fig: plt.Figure, ax: plt.Axes, text: str, offset: float = 0.075) -> None:
+    box = ax.get_position()
+    fig.text(
+        0.5 * (box.x0 + box.x1),
+        box.y0 - offset,
+        text,
+        ha="center",
+        va="center",
+        fontsize=12,
+    )
+
+
+def _strategy_df(data: pd.DataFrame, strategy: str) -> pd.DataFrame:
+    return data[data["strategy"] == strategy].sort_values("distance_m")
+
+
+def _case_df(data: pd.DataFrame, strategy: str, case_name: str) -> pd.DataFrame:
+    return data[(data["strategy"] == strategy) & (data["case"] == case_name)].sort_values(
+        "distance_m"
+    )
+
+
+def make_figures(standard: pd.DataFrame, corrected: pd.DataFrame, figures_dir: Path, suffix: str = ""):
+    """Legacy single-strategy figures kept for the original folder contract."""
+    ensure_dir(figures_dir)
+    strategy = str(standard["strategy"].iloc[0])
+    strategy_label = STRATEGY_LABELS.get(strategy, strategy)
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.plot(standard["distance_m"] / 1000.0, standard["path_fuel_kg_per_m"], label=strategy_label)
+    ax.set_xlabel("航程/km")
+    ax.set_ylabel("单位航程油耗率/(kg/m)")
+    ax.grid(True, alpha=0.3)
+    ax.legend()
+    fig.subplots_adjust(bottom=0.18)
+    _caption(fig, f"标准大气条件下{strategy_label}单位航程油耗率沿路径分布")
+    save_figure(_figure_path(figures_dir, "path_fuel_rate_standard", suffix), fig)
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.plot(standard["distance_m"] / 1000.0, standard["path_fuel_kg_per_m"], label="标准大气")
+    for case in CASE_ORDER[1:]:
+        df = corrected[corrected["case"] == case]
+        ax.plot(df["distance_m"] / 1000.0, df["path_fuel_kg_per_m"], label=CASE_LABELS[case])
+    ax.set_xlabel("航程/km")
+    ax.set_ylabel("单位航程油耗率/(kg/m)")
+    ax.grid(True, alpha=0.3)
+    ax.legend()
+    fig.subplots_adjust(bottom=0.18)
+    _caption(fig, f"{strategy_label}温度偏差修正前后单位航程油耗率对比")
+    save_figure(_figure_path(figures_dir, "path_fuel_rate_temperature_comparison", suffix), fig)
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.plot(
+        standard["distance_m"] / 1000.0,
+        standard["cumulative_path_fuel_kg"],
+        label="标准大气",
+    )
+    for case in CASE_ORDER[1:]:
+        df = corrected[corrected["case"] == case]
+        ax.plot(df["distance_m"] / 1000.0, df["cumulative_path_fuel_kg"], label=CASE_LABELS[case])
+    ax.set_xlabel("航程/km")
+    ax.set_ylabel("累计燃油消耗量/kg")
+    ax.grid(True, alpha=0.3)
+    ax.legend()
+    fig.subplots_adjust(bottom=0.18)
+    _caption(fig, f"{strategy_label}累计燃油消耗量随航程变化曲线")
+    save_figure(_figure_path(figures_dir, "cumulative_fuel_vs_distance", suffix), fig)
+
+
+def make_strategy_comparison_figures(
+    standard_all: pd.DataFrame,
+    corrected_all: pd.DataFrame,
+    summary_all: pd.DataFrame,
+    figures_dir: Path,
+):
+    ensure_dir(figures_dir)
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    for strategy in STRATEGY_ORDER:
+        df = _strategy_df(standard_all, strategy)
+        ax.plot(
+            df["distance_m"] / 1000.0,
+            df["path_fuel_kg_per_m"],
+            label=STRATEGY_LABELS[strategy],
+        )
+    ax.set_xlabel("航程/km")
+    ax.set_ylabel("单位航程油耗率/(kg/m)")
+    ax.grid(True, alpha=0.3)
+    ax.legend()
+    fig.subplots_adjust(bottom=0.14)
+    _save_figure_to_paths(
+        fig,
+        figures_dir / "figure_5_5_standard_path_fuel_rate.png",
+        figures_dir / "path_fuel_rate_standard_strategy_comparison.png",
+    )
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    for strategy in STRATEGY_ORDER:
+        df = _strategy_df(standard_all, strategy)
+        ax.plot(
+            df["distance_m"] / 1000.0,
+            df["cumulative_path_fuel_kg"],
+            label=STRATEGY_LABELS[strategy],
+        )
+    ax.set_xlabel("航程/km")
+    ax.set_ylabel("累计燃油消耗量/kg")
+    ax.grid(True, alpha=0.3)
+    ax.legend()
+    fig.subplots_adjust(bottom=0.14)
+    _save_figure_to_paths(
+        fig,
+        figures_dir / "figure_5_6_cumulative_fuel_vs_distance.png",
+        figures_dir / "cumulative_fuel_strategy_comparison.png",
+    )
+
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
+    for ax, strategy, subcaption in zip(
+        axes,
+        STRATEGY_ORDER,
+        ["(a) 等速巡航爬升", "(b) 等马赫数巡航爬升"],
+    ):
+        standard = _strategy_df(standard_all, strategy)
+        ax.plot(
+            standard["distance_m"] / 1000.0,
+            standard["path_fuel_kg_per_m"],
+            label=CASE_LABELS["standard"],
+            **CASE_STYLES["standard"],
+        )
+        for case in CASE_ORDER[1:]:
+            df = _case_df(corrected_all, strategy, case)
+            ax.plot(
+                df["distance_m"] / 1000.0,
+                df["path_fuel_kg_per_m"],
+                label=CASE_LABELS[case],
+                **CASE_STYLES[case],
+            )
+        ax.set_xlabel("航程/km")
+        ax.set_ylabel("单位航程油耗率/(kg/m)")
+        ax.grid(True, alpha=0.3)
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.subplots_adjust(bottom=0.36, top=0.96, wspace=0.22)
+    fig.legend(
+        handles,
+        labels,
+        loc="lower center",
+        bbox_to_anchor=(0.5, 0.16),
+        ncol=3,
+        frameon=False,
+        fontsize=12,
+        handlelength=2.4,
+        columnspacing=1.8,
+    )
+    for ax, text in zip(axes, ["(a) 等速巡航爬升", "(b) 等马赫数巡航爬升"]):
+        _subcaption(fig, ax, text, offset=0.27)
+    _save_figure_to_paths(
+        fig,
+        figures_dir / "figure_5_7_temperature_path_fuel_comparison.png",
+        figures_dir / "path_fuel_rate_temperature_strategy_comparison.png",
+    )
+
+    delta_summary = summary_all[summary_all["case"].isin(CASE_ORDER[1:])]
+    x = np.arange(2)
+    width = 0.34
+    fig, ax = plt.subplots(figsize=(8, 5))
+    for offset, strategy in [(-0.5 * width, "constant_speed"), (0.5 * width, "constant_mach")]:
+        values = [
+            float(
+                delta_summary[
+                    (delta_summary["strategy"] == strategy) & (delta_summary["case"] == case)
+                ]["relative_change_percent"].iloc[0]
+            )
+            for case in CASE_ORDER[1:]
+        ]
+        bars = ax.bar(x + offset, values, width=width, label=STRATEGY_LABELS[strategy])
+        for bar, value in zip(bars, values):
+            ax.text(
+                bar.get_x() + bar.get_width() / 2.0,
+                value * 0.55,
+                f"{value:.4f}%",
+                ha="center",
+                va="center",
+                fontsize=10,
+                color="white",
+            )
+    ax.axhline(0.0, color="black", linewidth=0.8)
+    ax.set_xticks(x)
+    ax.set_xticklabels([CASE_LABELS[case] for case in CASE_ORDER[1:]])
+    ax.set_ylabel("总油耗相对变化/%")
+    ax.grid(True, axis="y", alpha=0.3)
+    ax.legend()
+    fig.subplots_adjust(bottom=0.14)
+    _save_figure_to_paths(fig, figures_dir / "figure_5_8_temperature_relative_change.png")
+
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5.6))
+    atmosphere_specs = [
+        ("rho", "密度/(kg/m³)", "(a) 大气密度 ρ(h) 随航程变化"),
+        ("temperature", "温度/K", "(b) 温度 T(h) 随航程变化"),
+        ("sound_speed", "声速/(m/s)", "(c) 声速 a(h) 随航程变化"),
+    ]
+    for strategy in STRATEGY_ORDER:
+        df = _strategy_df(standard_all, strategy)
+        h = df["height_m"].to_numpy()
+        x_km = df["distance_m"].to_numpy() / 1000.0
+        values = {
+            "rho": rho_exp(h),
+            "temperature": T_std(h),
+            "sound_speed": sound_speed(h),
+        }
+        for ax, (key, _, _) in zip(axes, atmosphere_specs):
+            ax.plot(x_km, values[key], label=STRATEGY_LABELS[strategy])
+    for ax, (_, ylabel, _) in zip(axes, atmosphere_specs):
+        ax.set_xlabel("航程/km")
+        ax.set_ylabel(ylabel)
+        ax.grid(True, alpha=0.3)
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.subplots_adjust(bottom=0.36, top=0.96, wspace=0.32)
+    fig.legend(
+        handles,
+        labels,
+        loc="lower center",
+        bbox_to_anchor=(0.5, 0.155),
+        ncol=2,
+        frameon=False,
+        fontsize=12,
+        handlelength=2.4,
+        columnspacing=2.2,
+    )
+    for ax, (_, _, text) in zip(axes, atmosphere_specs):
+        _subcaption(fig, ax, text, offset=0.27)
+    _save_figure_to_paths(fig, figures_dir / "figure_5_9_atmosphere_parameters_along_path.png")
+
+    standard_summary = summary_all[summary_all["case"] == "standard"]
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.bar(
+        [STRATEGY_LABELS.get(x, x) for x in standard_summary["strategy"]],
+        standard_summary["mean_path_fuel_kg_per_m"],
+        color=["#2563eb", "#f97316"],
+    )
+    ax.set_ylabel("平均单位航程油耗率/(kg/m)")
+    ax.grid(True, axis="y", alpha=0.3)
+    fig.subplots_adjust(bottom=0.18)
+    _caption(fig, "标准大气条件下平均单位航程油耗率对比")
+    save_figure(figures_dir / "mean_path_fuel_strategy_bar.png", fig)
+
+
+def write_explanation(summary_all: pd.DataFrame, path: Path):
+    rows = []
+    for _, row in summary_all.iterrows():
+        rows.append(
+            f"- {row['strategy']} / {row['case']}: total_fuel={row['total_fuel_kg']:.3f} kg, "
+            f"change={row['absolute_change_kg']:.3f} kg "
+            f"({row['relative_change_percent']:.4f}%)."
+        )
+    result_text = "\n".join(rows)
+    standards = summary_all[summary_all["case"] == "standard"].set_index("strategy")
+    cs = standards.loc["constant_speed"]
+    cm = standards.loc["constant_mach"]
+    content = f"""# 问题 2 数值说明
+
+## 求解目标
+
+本问分别将问题 1 的等速巡航爬升轨迹和等马赫数巡航爬升轨迹作为输入，建立沿飞行路径的单位航程油耗积分模型，并比较标准大气和温度偏差一阶修正下的总油耗。两套策略均保留，不互相覆盖。
+
+## 路径积分模型
+
+地速取 `U(h,V)=V+W(h)`，单位航程油耗为：
+
+`q(x) = fuel_rate / U(h,V)`
+
+总燃油消耗沿路径积分：
+
+`J = integral q(x) dx`
+
+这种写法直接衡量每飞行 1 m 地面航程需要消耗的燃油，比单纯时间积分更适合比较航程经济性。时间积分只说明单位时间消耗，而路径积分把风场导致的地速变化纳入了分母。
+
+## 大气参数进入方式
+
+- 密度 `rho(h)` 进入升力系数 `CL` 和阻力 `D`。
+- 温度 `T(h)` 进入声速 `a=sqrt(gamma R T)`，进而影响马赫数和等马赫速度关系。
+- 声速 `a(h)` 进入 `M=V/a(h)`，用于约束和物理解释。
+
+温度偏差采用题目要求的一阶扰动近似：
+
+`a_delta = a [1 + DeltaT/(2T_std)]`
+
+`rho_delta = rho [1 - DeltaT/T_std]`
+
+代码计算了两种偏差：`DeltaT=5 K` 和 `DeltaT(h)=5+0.0005(h-h0)`。
+
+## 输出文件
+
+- `problem2_path_fuel_standard.csv`：等速策略标准大气路径油耗曲线。
+- `problem2_path_fuel_temperature_corrected.csv`：等速策略两种温度修正曲线。
+- `problem2_temperature_summary.csv`：等速策略汇总。
+- `problem2_path_fuel_standard_constant_mach.csv`：等马赫策略标准大气路径油耗曲线。
+- `problem2_path_fuel_temperature_corrected_constant_mach.csv`：等马赫策略两种温度修正曲线。
+- `problem2_temperature_summary_constant_mach.csv`：等马赫策略汇总。
+- `problem2_path_fuel_standard_all_strategies.csv`、`problem2_path_fuel_temperature_corrected_all_strategies.csv` 和 `problem2_temperature_summary_all_strategies.csv`：两套策略合并结果，含 `strategy` 列。
+- `figure_5_5_standard_path_fuel_rate.png`：图 5-5，标准大气条件下单位航程油耗率沿路径分布。
+- `figure_5_6_cumulative_fuel_vs_distance.png`：图 5-6，标准大气条件下累计燃油消耗量随航程变化曲线。
+- `figure_5_7_temperature_path_fuel_comparison.png`：图 5-7，温度偏差修正前后单位航程油耗率对比。
+- `figure_5_8_temperature_relative_change.png`：图 5-8，温度偏差修正下总油耗相对变化。
+- `figure_5_9_atmosphere_parameters_along_path.png`：图 5-9，标准大气参数沿飞行路径变化曲线。
+
+## 图像说明
+
+图 5-5 给出了标准大气条件下两种策略的单位航程油耗率沿路径分布。等速策略单位航程油耗率整体高于等马赫数策略，说明在相同总燃油消耗下，等马赫数策略因累计航程更长而具有更低的平均单位航程油耗。两条曲线均随路径变化，说明单位航程油耗不是常数，而受到质量、高度、阻力和风场共同影响。
+
+图 5-6 用累计燃油消耗量验证路径积分模型。两条曲线最终均达到 `m0-mf=10450 kg`，说明将时间油耗率转化为单位航程油耗率后，模型仍能正确刻画总燃油消耗。等马赫数策略曲线在更长航程处达到相同总油耗，因此平均单位航程油耗更低。
+
+图 5-7 分别比较等速巡航爬升和等马赫数巡航爬升在温度修正前后的单位航程油耗率。温度修正后曲线整体略低于标准大气曲线，但偏移幅度很小；恒定 5K 温差和线性温差曲线几乎重合，说明当前高度变化范围内温度偏差修正对路径油耗率影响有限。
+
+图 5-8 使用相对变化而非总油耗绝对值展示温度修正影响。两种策略下温度修正引起的总油耗变化均约为 -0.1%，说明温度偏差在当前设定下不会改变两种策略的比较结论。
+
+图 5-9 展示标准大气参数沿飞行路径的连续变化。随着飞机爬升，高度不断变化，大气密度、温度和声速均沿路径连续变化。其中密度进入升力和阻力模型，温度进入声速模型，声速进一步影响马赫数和等马赫数策略下的速度关系。该图说明本问不是使用单一常数大气，而是在高度分布参数场中积分油耗。
+
+## 关键结果
+
+标准大气下，等速策略路径积分油耗为 {cs['total_fuel_kg']:.3f} kg，平均单位航程油耗为 {cs['mean_path_fuel_kg_per_m']:.6f} kg/m；等马赫策略路径积分油耗为 {cm['total_fuel_kg']:.3f} kg，平均单位航程油耗为 {cm['mean_path_fuel_kg_per_m']:.6f} kg/m。各情形结果如下：
+
+{result_text}
+
+温度升高会降低一阶近似密度，通常会改变阻力、所需推力和燃油率；同时声速提高会降低同一空速下的马赫数。若 `|DeltaT|/T_std` 很小、飞行高度变化范围有限，且目标是粗略比较策略而非高精度油耗核算，则可以忽略温度偏差。若需要评估约束边界、马赫数裕度或精细燃油节省比例，则应保留修正项。
+
+## 风场说明
+
+本问默认沿用修正后的风场 `W(h)=20+3*10^(-5)(h-10000)^2`。在问题 1 等速轨迹高度范围内，风速约为 20 到 32.18 m/s，数量级较合理。风场通过地速 `U=V+W(h)` 进入单位航程油耗 `q=fuel_rate/U`，因此会改变路径油耗曲线的横向尺度和单位航程油耗。
+"""
+    path.write_text(content, encoding="utf-8")
+    print(f"Saved explanation: {path}")
+
+
+def main():
+    print("Problem 2: computing path fuel integral and temperature corrections.")
+    base_dir = Path(__file__).resolve().parent
+    results_dir = ensure_dir(base_dir / "results")
+    figures_dir = ensure_dir(base_dir / "figures")
+
+    profile_speed = compute_constant_speed_profile()
+    profile_mach = compute_constant_mach_profile()
+
+    standard_speed = standard_path_fuel(profile_speed, "constant_speed")
+    corrected_speed_cases = [
+        temperature_corrected_path_fuel(
+            profile_speed, _delta_t_constant, "deltaT_constant_5K", "constant_speed"
+        ),
+        temperature_corrected_path_fuel(
+            profile_speed, _delta_t_linear, "deltaT_linear", "constant_speed"
+        ),
+    ]
+    corrected_speed = pd.concat(corrected_speed_cases, ignore_index=True)
+    summary_speed = build_summary(standard_speed, corrected_speed, "constant_speed")
+
+    standard_mach = standard_path_fuel(profile_mach, "constant_mach")
+    corrected_mach_cases = [
+        temperature_corrected_path_fuel(
+            profile_mach, _delta_t_constant, "deltaT_constant_5K", "constant_mach"
+        ),
+        temperature_corrected_path_fuel(
+            profile_mach, _delta_t_linear, "deltaT_linear", "constant_mach"
+        ),
+    ]
+    corrected_mach = pd.concat(corrected_mach_cases, ignore_index=True)
+    summary_mach = build_summary(standard_mach, corrected_mach, "constant_mach")
+
+    standard_all = pd.concat([standard_speed, standard_mach], ignore_index=True)
+    corrected_all = pd.concat([corrected_speed, corrected_mach], ignore_index=True)
+    summary_all = pd.concat([summary_speed, summary_mach], ignore_index=True)
+
+    save_dataframe(standard_speed, results_dir / "problem2_path_fuel_standard.csv")
+    save_dataframe(corrected_speed, results_dir / "problem2_path_fuel_temperature_corrected.csv")
+    save_dataframe(summary_speed, results_dir / "problem2_temperature_summary.csv")
+    save_dataframe(standard_mach, results_dir / "problem2_path_fuel_standard_constant_mach.csv")
+    save_dataframe(
+        corrected_mach, results_dir / "problem2_path_fuel_temperature_corrected_constant_mach.csv"
+    )
+    save_dataframe(summary_mach, results_dir / "problem2_temperature_summary_constant_mach.csv")
+    save_dataframe(standard_all, results_dir / "problem2_path_fuel_standard_all_strategies.csv")
+    save_dataframe(
+        corrected_all, results_dir / "problem2_path_fuel_temperature_corrected_all_strategies.csv"
+    )
+    save_dataframe(summary_all, results_dir / "problem2_temperature_summary_all_strategies.csv")
+
+    make_figures(standard_speed, corrected_speed, figures_dir)
+    make_figures(standard_mach, corrected_mach, figures_dir, suffix="_constant_mach")
+    make_strategy_comparison_figures(standard_all, corrected_all, summary_all, figures_dir)
+    write_explanation(summary_all, base_dir / "explanation.md")
+    print("Problem 2 complete.")
+
+
+if __name__ == "__main__":
+    main()
+
 	
 	\end{lstlisting}
 \end{center}
